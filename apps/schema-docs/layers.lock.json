@@ -1,0 +1,11 @@
+{
+  "updatedAt": "2026-04-03T14:19:20.846Z",
+  "layers": [
+    {
+      "name": "auth",
+      "version": "0.1.0",
+      "hash": "67f9c8ba3c1e05b6d3c1feba040a51a8d9d593c191d62dc99b11ef7d591f70af",
+      "source": "/Users/michaelpeters/Dev/mpd/projects/raven/raven-turbo/apps/schema/layers/auth"
+    }
+  ]
+}

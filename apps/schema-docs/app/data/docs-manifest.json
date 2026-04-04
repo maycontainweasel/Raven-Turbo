@@ -1,0 +1,240 @@
+{
+  "generatedAt": "2026-04-03T14:19:20.877Z",
+  "source": "config/specs",
+  "instances": {
+    "default": "local",
+    "active": [
+      "local"
+    ],
+    "all": [
+      "local"
+    ]
+  },
+  "tables": {
+    "user": {
+      "key": "user",
+      "name": "User",
+      "model": "u",
+      "description": "Minimal user profile",
+      "data": "source",
+      "fields": [
+        {
+          "key": "email",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "uniqueId",
+          "type": "string",
+          "required": false,
+          "rawType": "md5<$email>",
+          "format": "md5",
+          "assign": true
+        },
+        {
+          "key": "firstName",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "surname",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "role",
+          "type": "record",
+          "required": true,
+          "rawType": "record<t_u_role>",
+          "format": "record"
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [
+          "role"
+        ],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "taxonomies": [
+        {
+          "key": "role",
+          "hierarchical": false,
+          "cardinality": "one",
+          "storeOnModel": true,
+          "required": true,
+          "processor": "functions",
+          "payloadField": "role",
+          "labels": {
+            "singular": "Role",
+            "plural": "Roles"
+          },
+          "taxonomy": {
+            "fields": [
+              {
+                "key": "key",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "label",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "hierarchical",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "permalink",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "description",
+                "type": "User roles",
+                "required": false
+              }
+            ]
+          },
+          "term": {
+            "fields": [
+              {
+                "key": "key",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "label",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "description",
+                "type": "object",
+                "required": false
+              },
+              {
+                "key": "parent",
+                "type": "object",
+                "required": false
+              }
+            ]
+          }
+        }
+      ],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/user/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "email",
+        "exportName": "UserId",
+        "exportType": true
+      }
+    },
+    "post": {
+      "key": "post",
+      "name": "Post",
+      "model": "p",
+      "description": "A Post is the content connected to a record for use in content management systems.",
+      "data": "source",
+      "fields": [
+        {
+          "key": "contentTable",
+          "type": "string",
+          "required": false,
+          "default": "record::tb($id)"
+        },
+        {
+          "key": "contentId",
+          "type": "string",
+          "required": false,
+          "default": "record::id($id)"
+        },
+        {
+          "key": "createdAt",
+          "type": "string",
+          "required": false,
+          "rawType": "datetime",
+          "format": "datetime",
+          "default": "time::now()"
+        },
+        {
+          "key": "updatedAt",
+          "type": "string",
+          "required": false,
+          "rawType": "datetime",
+          "format": "datetime",
+          "default": "time::now()"
+        },
+        {
+          "key": "publishedAt",
+          "type": "datetimee",
+          "required": false,
+          "default": null
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "required": false,
+          "default": "{\n  $title ?? record::id($id)\n}"
+        },
+        {
+          "key": "permalink",
+          "type": "string",
+          "required": false,
+          "default": "{\n  if($title) {\n      string::slug(<string> $title)\n  } else {\n      string::slug(<string> record::id($id))\n  }\n}"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"draft\" | \"publish\">",
+          "required": false,
+          "default": "draft"
+        }
+      ],
+      "capabilities": {
+        "router": false,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": true,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/post/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "fn::PID($id)",
+        "exportName": "__NAME__ID",
+        "exportType": true
+      }
+    }
+  }
+}
