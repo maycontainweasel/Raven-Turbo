@@ -1,0 +1,50 @@
+{
+  "name": "raven",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "dotenv -e .env.staging -- nuxi build",
+    "build-local": "nuxt build",
+    "dev": "nuxt dev --port 9274",
+    "generate": "nuxt generate",
+    "deploy": "pnpm -C ../schema run site:deploy -- $npm_package_name",
+    "inst": "pnpm -C ../.. --filter $npm_package_name install",
+    "preview": "nuxt preview",
+    "start": "NITRO_HOST=0.0.0.0 NITRO_PORT=3123 node .output/server/index.mjs",
+    "postinstall": "nuxt prepare",
+    "add": "pnpm -C ../.. --filter raven add",
+    "remove": "pnpm -C ../.. --filter raven remove"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "1.13.0",
+    "@nuxt/fonts": "0.13.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.0.0",
+    "nuxt": "^4.3.0",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4",
+    "@ark-ui/vue": "^5.35.0",
+    "@pinia/nuxt": "^0.11.2",
+    "@trpc/client": "^11.4.4",
+    "@trpc/server": "^11.4.4",
+    "iron-webcrypto": "^1.2.1",
+    "pinia": "^2.3.1",
+    "superjson": "^2.2.2",
+    "surrealdb": "^2.0.0-alpha.16",
+    "trpc-nuxt": "1.2.0",
+    "typesense": "^1.8.2",
+    "dotenv-cli": "^10.0.0"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.97.3",
+    "vite": "^7.3.1",
+    "dotenv-cli": "^10.0.0",
+    "@iconify-json/lucide": "^1.2.88",
+    "@unocss/nuxt": "^66.6.0",
+    "@unocss/preset-attributify": "^66.6.0",
+    "@unocss/preset-icons": "^66.6.0",
+    "@unocss/preset-wind4": "^66.6.0",
+    "@unocss/transformer-variant-group": "^66.6.0",
+    "unocss": "^66.6.0"
+  }
+}

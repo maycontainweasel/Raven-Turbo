@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-04-04T15:52:48.759Z",
+  "layers": [
+    {
+      "name": "helios",
+      "version": "0.1.0",
+      "hash": "0a9a8aa682ea620f6630b187de4f1aa62ef8ace3cb4b7ab90f106729ed72eae0",
+      "source": "/Users/michaelpeters/Dev/mpd/projects/raven/raven-turbo/apps/schema/layers/helios"
+    },
+    {
+      "name": "schema-core",
+      "version": "0.1.0",
+      "hash": "68d318200779f73e9259aa6dff63da7425a439d1fe9e0374f490a171b4cc900d",
+      "source": "/Users/michaelpeters/Dev/mpd/projects/raven/raven-turbo/apps/schema/layers/schema-core"
+    }
+  ]
+}

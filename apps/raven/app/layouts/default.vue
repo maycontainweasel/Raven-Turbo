@@ -14,12 +14,19 @@
   position: relative;
   min-height: 100vh;
   overflow: hidden;
+  font-family: 'Space Grotesk', sans-serif;
+  font-optical-sizing: auto;
   background:
     radial-gradient(circle at top left, rgba(34, 211, 238, 0.16), transparent 34%),
     radial-gradient(circle at 82% 18%, rgba(59, 130, 246, 0.11), transparent 28%),
     radial-gradient(circle at 50% 110%, rgba(16, 185, 129, 0.08), transparent 30%),
     linear-gradient(180deg, #02040a 0%, #040814 46%, #02040a 100%);
   color: #e5eefb;
+}
+
+:global(body) {
+  margin: 0;
+  background: #02040a;
 }
 
 .raven-shell__mesh {

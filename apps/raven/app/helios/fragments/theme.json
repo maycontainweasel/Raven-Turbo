@@ -1,0 +1,36 @@
+{
+  "activeThemeId": "default",
+  "themes": [
+    {
+      "id": "default",
+      "label": "Default",
+      "enabled": true,
+      "tokens": {
+        "bg": {
+          "canvas": "#ffffff",
+          "surface": "palette:slate:50",
+          "surfaceAlt": "palette:slate:100",
+          "primary": "palette:blue:600",
+          "secondary": "palette:indigo:600",
+          "success": "palette:green:600",
+          "warning": "palette:amber:500",
+          "danger": "palette:red:600"
+        },
+        "text": {
+          "primary": "palette:slate:900",
+          "secondary": "palette:slate:700",
+          "muted": "palette:slate:500",
+          "inverse": "#ffffff",
+          "onPrimary": "#ffffff",
+          "onSurface": "palette:slate:900"
+        },
+        "border": {
+          "default": "palette:slate:200",
+          "muted": "palette:slate:100",
+          "strong": "palette:slate:300",
+          "primary": "palette:blue:600"
+        }
+      }
+    }
+  ]
+}

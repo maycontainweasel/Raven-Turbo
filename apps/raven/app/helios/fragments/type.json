@@ -1,0 +1,10 @@
+{
+  "baseFontPx": 16,
+  "typeRatio": 1.2,
+  "gridRatio": 1.4,
+  "spaceRatio": 1.25,
+  "minStep": -2,
+  "maxStep": 6,
+  "step": 0.25,
+  "brandColor": "#2858ff"
+}
