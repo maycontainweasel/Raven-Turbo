@@ -269,6 +269,7 @@ async function main() {
   const meta = parseMetadata(content);
   const statementPeriodStart = meta.statementStart || '2026-02-18';
   const statementPeriodEnd = meta.statementEnd || '2026-03-18';
+  const statementStamp = statementPeriodEnd.slice(0, 10);
   const statementYear = Number.parseInt(statementPeriodEnd.slice(0, 4), 10) || 2026;
   const rows = parseMarkdownTable(content).map((row) => {
     const amount = parseNumber(row.amount_zar);
@@ -335,7 +336,7 @@ async function main() {
   });
 
   const lines = [];
-  lines.push('-- Generated from docs/statements/business/2026-03-18.import.md');
+  lines.push(`-- Generated from ${path.relative(process.cwd(), inputPath)}`);
   lines.push(`-- Source: ${meta.sourceFileName}`);
   lines.push('');
   lines.push('USE NS raven DB raven1;');
@@ -372,8 +373,8 @@ async function main() {
     `LET $import = fn::createStatementImport(${renderObject({
       space: expr('$space'),
       account: expr('$account'),
-      key: '2026-03-18-fnb-business',
-      sourceFileName: meta.sourceFileName || 'docs/statements/business/18 March 2026.pdf',
+      key: `${statementStamp}-fnb-business`,
+      sourceFileName: meta.sourceFileName || path.basename(inputPath).replace(/\.import\.md$/i, '.pdf'),
       sourceFormat: 'pdf',
       importedAt: expr('time::now()'),
       statementDate: `${statementPeriodEnd}T00:00:00Z`,
@@ -434,8 +435,8 @@ async function main() {
   for (const row of rows) {
     const rowKey = `row-${String(row.row_no).padStart(2, '0')}`;
     const rowVar = variableName('row', rowKey);
-    const txVar = variableName('tx', `stmt-2026-03-18-${rowKey}`);
-    const txKey = `stmt-2026-03-18-${rowKey}`;
+    const txVar = variableName('tx', `stmt-${statementStamp}-${rowKey}`);
+    const txKey = `stmt-${statementStamp}-${rowKey}`;
     const isClarified = row.clarification_status === 'clarified';
     const rowStatus = isClarified ? 'clarified' : 'matched';
     const txStatus = isClarified ? 'clarified' : 'matched';
@@ -519,8 +520,8 @@ async function main() {
 
     if (!isClarified) {
       clarificationCount += 1;
-      const taskKey = `stmt-2026-03-18-row-${String(row.row_no).padStart(2, '0')}`;
-      const taskVar = variableName('task', `stmt-2026-03-18-${rowKey}`);
+      const taskKey = `stmt-${statementStamp}-row-${String(row.row_no).padStart(2, '0')}`;
+      const taskVar = variableName('task', `stmt-${statementStamp}-${rowKey}`);
       lines.push(
         `LET $${taskVar} = fn::createClarificationTask(${renderObject({
           space: expr('$space'),
