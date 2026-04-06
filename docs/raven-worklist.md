@@ -10,6 +10,11 @@
   - `Vsa_Inner-Theliven.Com Limassol Cy`
   - `Pbrands Warsaw`
 - Review the October 2025 FNB fee cluster, including the `R123.80` row on `18 Oct`.
+- Review the September 2025 FNB fee cluster, including the unlabeled rows on `23 Aug`, `2 Sep`, `17 Sep`, and the `18 Sep` month-end fee lines.
+- Verify the September 2025 `Takealot` credit-card order for `R2,459.00`.
+- Identify the September 2025 unknown credit-card merchants:
+  - `Bex Paarl`
+  - `C*Smw 0751 Paarl`
 
 ## Data Backlog
 

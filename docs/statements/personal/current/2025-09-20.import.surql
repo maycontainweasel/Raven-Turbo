@@ -69,14 +69,6 @@ LET $cat_fees = fn::createCategory({
   active: true,
   notes: "Imported from 2025-09-20.import.md"
 });
-LET $cat_unclassified = fn::createCategory({
-  space: $space,
-  key: "unclassified",
-  name: "Unclassified",
-  categoryKind: "expense",
-  active: true,
-  notes: "Imported from 2025-09-20.import.md"
-});
 LET $cat_transfer = fn::createCategory({
   space: $space,
   key: "transfer",
@@ -106,6 +98,15 @@ LET $cat_fees_overdraft_interest = fn::createCategory({
   space: $space,
   key: "fees-overdraft-interest",
   name: "Overdraft Interest",
+  categoryKind: "expense",
+  parentCategory: $cat_fees,
+  active: true,
+  notes: "Imported from 2025-09-20.import.md"
+});
+LET $cat_fees_service_fee = fn::createCategory({
+  space: $space,
+  key: "fees-service-fee",
+  name: "Service Fee",
   categoryKind: "expense",
   parentCategory: $cat_fees,
   active: true,
@@ -152,22 +153,6 @@ LET $merchant_nedbank = fn::createMerchant({
   key: "nedbank",
   name: "Nedbank",
   normalizedName: "Nedbank",
-  active: true,
-  notes: "Imported from 2025-09-20.import.md"
-});
-LET $merchant_service_fee_28_07_26_08 = fn::createMerchant({
-  space: $space,
-  key: "service-fee-28-07-26-08",
-  name: "SERVICE FEE 28/07 - 26/08",
-  normalizedName: "SERVICE FEE 28/07 - 26/08",
-  active: true,
-  notes: "Imported from 2025-09-20.import.md"
-});
-LET $merchant_transfer = fn::createMerchant({
-  space: $space,
-  key: "transfer",
-  name: "transfer",
-  normalizedName: "transfer",
   active: true,
   notes: "Imported from 2025-09-20.import.md"
 });
@@ -430,29 +415,29 @@ LET $row_row_05 = fn::createStatementRow({
   rowNumber: 5,
   postedAt: "2025-08-27T00:00:00Z",
   description: "SERVICE FEE 28/07 - 26/08",
-  normalizedDescription: "SERVICE FEE 28/07 - 26/08",
+  normalizedDescription: "Service Fee",
   amount: 5,
   balance: -158.03,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Aug 2025 - 20 Sep 2025.pdf",
     statementPeriodStart: "2025-08-21",
     statementPeriodEnd: "2025-09-20",
     rowNo: 5,
     rawRowText: "SERVICE FEE 28/07 - 26/08; 5.00; -158.03",
-    transactionType: "expense",
-    normalizedMerchant: "SERVICE FEE 28/07 - 26/08",
-    category: "Unclassified",
-    feeType: "",
-    clarificationStatus: "unclarified",
+    transactionType: "fee",
+    normalizedMerchant: "Nedbank",
+    category: "Fees",
+    feeType: "service fee",
+    clarificationStatus: "clarified",
     amountZar: 5,
     bankChargeZar: null,
     balanceZar: -158.03
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Nedbank service fee."
 });
 LET $tx_stmt_2025_09_20_row_05 = fn::createTransaction({
   space: $space,
@@ -461,40 +446,26 @@ LET $tx_stmt_2025_09_20_row_05 = fn::createTransaction({
   sourceRow: $row_row_05,
   postedAt: "2025-08-27T00:00:00Z",
   description: "SERVICE FEE 28/07 - 26/08",
-  normalizedDescription: "SERVICE FEE 28/07 - 26/08",
+  normalizedDescription: "Service Fee",
   amount: 5,
   balance: -158.03,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "SERVICE FEE 28/07 - 26/08",
-  merchant: $merchant_service_fee_28_07_26_08,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Nedbank",
+  merchant: $merchant_nedbank,
+  category: $cat_fees_service_fee,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Nedbank service fee."
 });
-fn::updateStatementRow($row_row_05.id, { transaction: $tx_stmt_2025_09_20_row_05.id, status: "matched" });
+fn::updateStatementRow($row_row_05.id, { transaction: $tx_stmt_2025_09_20_row_05.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_05.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_05.id, "StatementRowTransactions", $tx_stmt_2025_09_20_row_05.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_09_20_row_05.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_09_20_row_05.id, "TransactionMerchant", $merchant_service_fee_28_07_26_08.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_09_20_row_05.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_09_20_row_05 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-09-20-row-05",
-  transaction: $tx_stmt_2025_09_20_row_05,
-  status: "open",
-  question: "What is the exact purpose of this SERVICE FEE 28/07 - 26/08 transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_service_fee_28_07_26_08,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-09-20.import.md"
-});
-fn::createEdge($tx_stmt_2025_09_20_row_05.id, "TransactionClarificationTasks", $task_stmt_2025_09_20_row_05.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_09_20_row_05.id, "TransactionMerchant", $merchant_nedbank.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_09_20_row_05.id, "TransactionCategory", $cat_fees_service_fee.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 6
 LET $row_row_06 = fn::createStatementRow({
@@ -684,29 +655,29 @@ LET $row_row_09 = fn::createStatementRow({
   rowNumber: 9,
   postedAt: "2025-08-29T00:00:00Z",
   description: "transfer",
-  normalizedDescription: "transfer",
+  normalizedDescription: "Nedbank Credit Card",
   amount: 18667,
   balance: -8949.03,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Aug 2025 - 20 Sep 2025.pdf",
     statementPeriodStart: "2025-08-21",
     statementPeriodEnd: "2025-09-20",
     rowNo: 9,
     rawRowText: "transfer; 18667.00; -8949.03",
-    transactionType: "expense",
-    normalizedMerchant: "transfer",
-    category: "Unclassified",
+    transactionType: "transfer",
+    normalizedMerchant: "Nedbank Credit Card",
+    category: "Debt payment",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 18667,
     bankChargeZar: null,
     balanceZar: -8949.03
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Transfer from current account to the credit card."
 });
 LET $tx_stmt_2025_09_20_row_09 = fn::createTransaction({
   space: $space,
@@ -715,40 +686,26 @@ LET $tx_stmt_2025_09_20_row_09 = fn::createTransaction({
   sourceRow: $row_row_09,
   postedAt: "2025-08-29T00:00:00Z",
   description: "transfer",
-  normalizedDescription: "transfer",
+  normalizedDescription: "Nedbank Credit Card",
   amount: 18667,
   balance: -8949.03,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "transfer",
-  merchant: $merchant_transfer,
-  category: $cat_unclassified,
-  isTransfer: false,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Nedbank Credit Card",
+  merchant: $merchant_nedbank_credit_card,
+  category: $cat_debt_payment,
+  isTransfer: true,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Transfer from current account to the credit card."
 });
-fn::updateStatementRow($row_row_09.id, { transaction: $tx_stmt_2025_09_20_row_09.id, status: "matched" });
+fn::updateStatementRow($row_row_09.id, { transaction: $tx_stmt_2025_09_20_row_09.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_09.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_09.id, "StatementRowTransactions", $tx_stmt_2025_09_20_row_09.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_09_20_row_09.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_09_20_row_09.id, "TransactionMerchant", $merchant_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_09_20_row_09.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_09_20_row_09 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-09-20-row-09",
-  transaction: $tx_stmt_2025_09_20_row_09,
-  status: "open",
-  question: "What is the exact purpose of this transfer transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_transfer,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-09-20.import.md"
-});
-fn::createEdge($tx_stmt_2025_09_20_row_09.id, "TransactionClarificationTasks", $task_stmt_2025_09_20_row_09.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_09_20_row_09.id, "TransactionMerchant", $merchant_nedbank_credit_card.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_09_20_row_09.id, "TransactionCategory", $cat_debt_payment.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 10
 LET $row_row_10 = fn::createStatementRow({
@@ -1234,7 +1191,7 @@ fn::createEdge($tx_stmt_2025_09_20_row_17.id, "TransactionCategory", $cat_debt_p
 fn::updateStatementImport($import.id, {
   rowCount: 17,
   normalizedCount: 17,
-  clarificationCount: 2,
+  clarificationCount: 0,
   status: "matched",
   statementDate: "2025-09-20T00:00:00Z",
   notes: "Imported from 2025-09-20.import.md"
