@@ -5,6 +5,11 @@
 - Identify the underlying service behind the December 2025 `PayPal *Help` charge for `R520.27`.
 - Inspect the unlabeled FNB fee rows from 27 Nov and 9 Dec to understand what FNB is charging for and why.
 - Identify the unknown `Alana Banana` credit-card merchant from January 2026.
+- Identify the October 2025 unknown credit-card merchants:
+  - `Sunset B51000002213225 Western Cape Za`
+  - `Vsa_Inner-Theliven.Com Limassol Cy`
+  - `Pbrands Warsaw`
+- Review the October 2025 FNB fee cluster, including the `R123.80` row on `18 Oct`.
 
 ## Data Backlog
 
