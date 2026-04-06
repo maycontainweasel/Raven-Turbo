@@ -69,10 +69,10 @@ LET $cat_fees = fn::createCategory({
   active: true,
   notes: "Imported from 2025-12-20.import.md"
 });
-LET $cat_business_expenses_paid_personally_voucher_testing = fn::createCategory({
+LET $cat_client_income = fn::createCategory({
   space: $space,
-  key: "business-expenses-paid-personally-voucher-testing",
-  name: "Business expenses paid personally / voucher testing",
+  key: "client-income",
+  name: "Client income",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-12-20.import.md"
@@ -181,11 +181,11 @@ LET $merchant_nedbank = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-12-20.import.md"
 });
-LET $merchant_oz_lucky_isibaya = fn::createMerchant({
+LET $merchant_lucky_isibaya = fn::createMerchant({
   space: $space,
-  key: "oz-lucky-isibaya",
-  name: "Oz-Lucky Isibaya",
-  normalizedName: "Oz-Lucky Isibaya",
+  key: "lucky-isibaya",
+  name: "Lucky Isibaya",
+  normalizedName: "Lucky Isibaya",
   active: true,
   notes: "Imported from 2025-12-20.import.md"
 });
@@ -824,29 +824,29 @@ LET $row_row_11 = fn::createStatementRow({
   rowNumber: 11,
   postedAt: "2025-12-04T00:00:00Z",
   description: "Oz-Lucky Isibaya",
-  normalizedDescription: "Oz-Lucky Isibaya",
+  normalizedDescription: "Lucky Isibaya",
   amount: 50,
   balance: 10953.12,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  direction: "credit",
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Nov 2025 - 20 Dec 2025.pdf",
     statementPeriodStart: "2025-11-21",
     statementPeriodEnd: "2025-12-20",
     rowNo: 11,
     rawRowText: "Oz-Lucky Isibaya; 50.00; 10953.12",
-    transactionType: "expense",
-    normalizedMerchant: "Oz-Lucky Isibaya",
-    category: "Business expenses paid personally / voucher testing",
+    transactionType: "income",
+    normalizedMerchant: "Lucky Isibaya",
+    category: "Client income",
     feeType: "payment rail fee",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 50,
     bankChargeZar: 7.8,
     balanceZar: 10953.12
 },
-  notes: "Likely business voucher testing paid from the personal account; keep visible for review."
+  notes: "Stage payment from Lucky Isibaya routed into the personal current account."
 });
 LET $tx_stmt_2025_12_20_row_11 = fn::createTransaction({
   space: $space,
@@ -855,40 +855,26 @@ LET $tx_stmt_2025_12_20_row_11 = fn::createTransaction({
   sourceRow: $row_row_11,
   postedAt: "2025-12-04T00:00:00Z",
   description: "Oz-Lucky Isibaya",
-  normalizedDescription: "Oz-Lucky Isibaya",
+  normalizedDescription: "Lucky Isibaya",
   amount: 50,
   balance: 10953.12,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Oz-Lucky Isibaya",
-  merchant: $merchant_oz_lucky_isibaya,
-  category: $cat_business_expenses_paid_personally_voucher_testing,
+  direction: "credit",
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Lucky Isibaya",
+  merchant: $merchant_lucky_isibaya,
+  category: $cat_client_income,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely business voucher testing paid from the personal account; keep visible for review."
+  notes: "Stage payment from Lucky Isibaya routed into the personal current account."
 });
-fn::updateStatementRow($row_row_11.id, { transaction: $tx_stmt_2025_12_20_row_11.id, status: "matched" });
+fn::updateStatementRow($row_row_11.id, { transaction: $tx_stmt_2025_12_20_row_11.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_11.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_11.id, "StatementRowTransactions", $tx_stmt_2025_12_20_row_11.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_20_row_11.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_20_row_11.id, "TransactionMerchant", $merchant_oz_lucky_isibaya.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_20_row_11.id, "TransactionCategory", $cat_business_expenses_paid_personally_voucher_testing.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_20_row_11 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-20-row-11",
-  transaction: $tx_stmt_2025_12_20_row_11,
-  status: "open",
-  question: "What is the exact purpose of this Oz-Lucky Isibaya transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_oz_lucky_isibaya,
-  suggestedCategory: $cat_business_expenses_paid_personally_voucher_testing,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-20.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_20_row_11.id, "TransactionClarificationTasks", $task_stmt_2025_12_20_row_11.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_20_row_11.id, "TransactionMerchant", $merchant_lucky_isibaya.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_20_row_11.id, "TransactionCategory", $cat_client_income.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 12
 LET $row_row_12 = fn::createStatementRow({
@@ -1614,7 +1600,7 @@ fn::createEdge($tx_stmt_2025_12_20_row_23.id, "TransactionCategory", $cat_debt_p
 fn::updateStatementImport($import.id, {
   rowCount: 23,
   normalizedCount: 23,
-  clarificationCount: 1,
+  clarificationCount: 0,
   status: "matched",
   statementDate: "2025-12-20T00:00:00Z",
   notes: "Imported from 2025-12-20.import.md"
