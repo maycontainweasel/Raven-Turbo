@@ -77,10 +77,18 @@ LET $cat_fees = fn::createCategory({
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
-LET $cat_internal_transfer = fn::createCategory({
+LET $cat_business_to_personal_transfer = fn::createCategory({
   space: $space,
-  key: "internal-transfer",
-  name: "Internal transfer",
+  key: "business-to-personal-transfer",
+  name: "Business to personal transfer",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
+LET $cat_education_training = fn::createCategory({
+  space: $space,
+  key: "education-training",
+  name: "Education / training",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-12-18.import.md"
@@ -97,6 +105,14 @@ LET $cat_insurance = fn::createCategory({
   space: $space,
   key: "insurance",
   name: "Insurance",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
+LET $cat_design_media_assets = fn::createCategory({
+  space: $space,
+  key: "design-media-assets",
+  name: "Design / media assets",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-12-18.import.md"
@@ -129,6 +145,15 @@ LET $cat_fees_card_charge = fn::createCategory({
   space: $space,
   key: "fees-card-charge",
   name: "Card Charge",
+  categoryKind: "expense",
+  parentCategory: $cat_fees,
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
+LET $cat_fees_declined_payment_fee = fn::createCategory({
+  space: $space,
+  key: "fees-declined-payment-fee",
+  name: "Declined Payment Fee",
   categoryKind: "expense",
   parentCategory: $cat_fees,
   active: true,
@@ -172,11 +197,11 @@ LET $cat_fees_service_fees = fn::createCategory({
 });
 
 -- Merchant records
-LET $merchant_paypal = fn::createMerchant({
+LET $merchant_elitehost = fn::createMerchant({
   space: $space,
-  key: "paypal",
-  name: "PayPal",
-  normalizedName: "PayPal",
+  key: "elitehost",
+  name: "Elitehost",
+  normalizedName: "Elitehost",
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
@@ -212,6 +237,14 @@ LET $merchant_atlassian = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
+LET $merchant_paypal = fn::createMerchant({
+  space: $space,
+  key: "paypal",
+  name: "PayPal",
+  normalizedName: "PayPal",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
 LET $merchant_cursor = fn::createMerchant({
   space: $space,
   key: "cursor",
@@ -220,11 +253,19 @@ LET $merchant_cursor = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
-LET $merchant_mpire_digital_market = fn::createMerchant({
+LET $merchant_michael_peters = fn::createMerchant({
   space: $space,
-  key: "mpire-digital-market",
-  name: "Mpire Digital Market",
-  normalizedName: "Mpire Digital Market",
+  key: "michael-peters",
+  name: "Michael Peters",
+  normalizedName: "Michael Peters",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
+LET $merchant_madm = fn::createMerchant({
+  space: $space,
+  key: "madm",
+  name: "MADM",
+  normalizedName: "MADM",
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
@@ -276,6 +317,22 @@ LET $merchant_diamatrix = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-12-18.import.md"
 });
+LET $merchant_vecteezy = fn::createMerchant({
+  space: $space,
+  key: "vecteezy",
+  name: "Vecteezy",
+  normalizedName: "Vecteezy",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
+LET $merchant_screencast_o_matic = fn::createMerchant({
+  space: $space,
+  key: "screencast-o-matic",
+  name: "Screencast-O-Matic",
+  normalizedName: "Screencast-O-Matic",
+  active: true,
+  notes: "Imported from 2025-12-18.import.md"
+});
 
 -- Rows, transactions, and clarification tasks
 
@@ -287,13 +344,13 @@ LET $row_row_01 = fn::createStatementRow({
   rowNumber: 1,
   postedAt: "2025-11-19T00:00:00Z",
   description: "POS Purchase 57.55 Paypal *Elite                                                    485442*7050 17 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Elitehost",
   amount: 57.55,
   balance: 8952.37,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -301,15 +358,15 @@ LET $row_row_01 = fn::createStatementRow({
     rowNo: 1,
     rawRowText: "POS Purchase 57.55 Paypal *Elite                                                    485442*7050 17 Nov; 57.55; 8,952.37 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "PayPal",
+    normalizedMerchant: "Elitehost",
     category: "Hosting / internet",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 57.55,
     bankChargeZar: 3.68,
     balanceZar: 8952.37
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "ET Systems hosting expense paid to Elitehost."
 });
 LET $tx_stmt_2025_12_18_row_01 = fn::createTransaction({
   space: $space,
@@ -318,40 +375,26 @@ LET $tx_stmt_2025_12_18_row_01 = fn::createTransaction({
   sourceRow: $row_row_01,
   postedAt: "2025-11-19T00:00:00Z",
   description: "POS Purchase 57.55 Paypal *Elite                                                    485442*7050 17 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Elitehost",
   amount: 57.55,
   balance: 8952.37,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "PayPal",
-  merchant: $merchant_paypal,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Elitehost",
+  merchant: $merchant_elitehost,
   category: $cat_hosting_internet,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "ET Systems hosting expense paid to Elitehost."
 });
-fn::updateStatementRow($row_row_01.id, { transaction: $tx_stmt_2025_12_18_row_01.id, status: "matched" });
+fn::updateStatementRow($row_row_01.id, { transaction: $tx_stmt_2025_12_18_row_01.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_01.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_01.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_01.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_01.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_01.id, "TransactionMerchant", $merchant_paypal.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_01.id, "TransactionMerchant", $merchant_elitehost.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($tx_stmt_2025_12_18_row_01.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_01 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-01",
-  transaction: $tx_stmt_2025_12_18_row_01,
-  status: "open",
-  question: "What exactly is the Magtape Unpaid / Not Provided For reversal?",
-  reason: "Underlying PayPal purchase still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_paypal,
-  suggestedCategory: $cat_hosting_internet,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_01.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_01.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 2
 LET $row_row_02 = fn::createStatementRow({
@@ -481,13 +524,13 @@ LET $row_row_04 = fn::createStatementRow({
   rowNumber: 4,
   postedAt: "2025-11-21T00:00:00Z",
   description: "POS Purchase 400.78 Paypal *Elit                                                    485442*7050 18 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Elitehost",
   amount: 400.78,
   balance: 4807.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -495,15 +538,15 @@ LET $row_row_04 = fn::createStatementRow({
     rowNo: 4,
     rawRowText: "POS Purchase 400.78 Paypal *Elit                                                    485442*7050 18 Nov; 400.78; 4,807.34 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "PayPal",
+    normalizedMerchant: "Elitehost",
     category: "Hosting / internet",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 400.78,
     bankChargeZar: 3.68,
     balanceZar: 4807.34
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Elitehost reseller and shared-hosting bundle for mpiredigital.co.za and related sites."
 });
 LET $tx_stmt_2025_12_18_row_04 = fn::createTransaction({
   space: $space,
@@ -512,40 +555,26 @@ LET $tx_stmt_2025_12_18_row_04 = fn::createTransaction({
   sourceRow: $row_row_04,
   postedAt: "2025-11-21T00:00:00Z",
   description: "POS Purchase 400.78 Paypal *Elit                                                    485442*7050 18 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Elitehost",
   amount: 400.78,
   balance: 4807.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "PayPal",
-  merchant: $merchant_paypal,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Elitehost",
+  merchant: $merchant_elitehost,
   category: $cat_hosting_internet,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Elitehost reseller and shared-hosting bundle for mpiredigital.co.za and related sites."
 });
-fn::updateStatementRow($row_row_04.id, { transaction: $tx_stmt_2025_12_18_row_04.id, status: "matched" });
+fn::updateStatementRow($row_row_04.id, { transaction: $tx_stmt_2025_12_18_row_04.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_04.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_04.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_04.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_04.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_04.id, "TransactionMerchant", $merchant_paypal.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_04.id, "TransactionMerchant", $merchant_elitehost.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($tx_stmt_2025_12_18_row_04.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_04 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-04",
-  transaction: $tx_stmt_2025_12_18_row_04,
-  status: "open",
-  question: "What is the underlying purchase or service behind this PayPal charge?",
-  reason: "Underlying PayPal purchase still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_paypal,
-  suggestedCategory: $cat_hosting_internet,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_04.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_04.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 5
 LET $row_row_05 = fn::createStatementRow({
@@ -555,13 +584,13 @@ LET $row_row_05 = fn::createStatementRow({
   rowNumber: 5,
   postedAt: "2025-11-22T00:00:00Z",
   description: "6.00",
-  normalizedDescription: "Bank Fee",
+  normalizedDescription: "Declined Payment Fee",
   amount: 6,
   balance: 4801.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -571,13 +600,13 @@ LET $row_row_05 = fn::createStatementRow({
     transactionType: "fee",
     normalizedMerchant: "FNB",
     category: "Fees",
-    feeType: "bank fee",
-    clarificationStatus: "unclarified",
+    feeType: "declined payment fee",
+    clarificationStatus: "clarified",
     amountZar: 6,
     bankChargeZar: null,
     balanceZar: 4801.34
 },
-  notes: "FNB fee line without an explicit label on the statement."
+  notes: "Declined or insufficient-funds fee charged when the account could not cover a card attempt."
 });
 LET $tx_stmt_2025_12_18_row_05 = fn::createTransaction({
   space: $space,
@@ -586,40 +615,26 @@ LET $tx_stmt_2025_12_18_row_05 = fn::createTransaction({
   sourceRow: $row_row_05,
   postedAt: "2025-11-22T00:00:00Z",
   description: "6.00",
-  normalizedDescription: "Bank Fee",
+  normalizedDescription: "Declined Payment Fee",
   amount: 6,
   balance: 4801.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   merchantName: "FNB",
   merchant: $merchant_fnb,
-  category: $cat_fees_bank_fee,
+  category: $cat_fees_declined_payment_fee,
   isTransfer: false,
   manualOverride: false,
-  notes: "FNB fee line without an explicit label on the statement."
+  notes: "Declined or insufficient-funds fee charged when the account could not cover a card attempt."
 });
-fn::updateStatementRow($row_row_05.id, { transaction: $tx_stmt_2025_12_18_row_05.id, status: "matched" });
+fn::updateStatementRow($row_row_05.id, { transaction: $tx_stmt_2025_12_18_row_05.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_05.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_05.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_05.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_05.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($tx_stmt_2025_12_18_row_05.id, "TransactionMerchant", $merchant_fnb.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_05.id, "TransactionCategory", $cat_fees_bank_fee.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_05 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-05",
-  transaction: $tx_stmt_2025_12_18_row_05,
-  status: "open",
-  question: "What is the exact purpose of this FNB transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_fnb,
-  suggestedCategory: $cat_fees_bank_fee,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_05.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_05.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_05.id, "TransactionCategory", $cat_fees_declined_payment_fee.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 6
 LET $row_row_06 = fn::createStatementRow({
@@ -771,7 +786,7 @@ LET $row_row_08 = fn::createStatementRow({
     bankChargeZar: 3.68,
     balanceZar: 3705.89
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Underlying PayPal charge is still unknown and needs identification."
 });
 LET $tx_stmt_2025_12_18_row_08 = fn::createTransaction({
   space: $space,
@@ -792,7 +807,7 @@ LET $tx_stmt_2025_12_18_row_08 = fn::createTransaction({
   category: $cat_hosting_internet,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Underlying PayPal charge is still unknown and needs identification."
 });
 fn::updateStatementRow($row_row_08.id, { transaction: $tx_stmt_2025_12_18_row_08.id, status: "matched" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_08.id, { boundId: true, overwrite: false, skipExists: true });
@@ -883,13 +898,13 @@ LET $row_row_10 = fn::createStatementRow({
   rowNumber: 10,
   postedAt: "2025-11-26T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 2000,
   balance: 1347.46,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -897,15 +912,15 @@ LET $row_row_10 = fn::createStatementRow({
     rowNo: 10,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market; 2,000.00; 1,347.46 Cr; 8.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 2000,
     bankChargeZar: 8,
     balanceZar: 1347.46
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_10 = fn::createTransaction({
   space: $space,
@@ -914,40 +929,26 @@ LET $tx_stmt_2025_12_18_row_10 = fn::createTransaction({
   sourceRow: $row_row_10,
   postedAt: "2025-11-26T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 2000,
   balance: 1347.46,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_10.id, { transaction: $tx_stmt_2025_12_18_row_10.id, status: "matched" });
+fn::updateStatementRow($row_row_10.id, { transaction: $tx_stmt_2025_12_18_row_10.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_10.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_10.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_10.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_10.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_10.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_10.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_10 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-10",
-  transaction: $tx_stmt_2025_12_18_row_10,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_10.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_10.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_10.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_10.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 11
 LET $row_row_11 = fn::createStatementRow({
@@ -957,13 +958,13 @@ LET $row_row_11 = fn::createStatementRow({
   rowNumber: 11,
   postedAt: "2025-11-26T00:00:00Z",
   description: "POS Purchase 728.33 Paypal *Madm                                                    485442*7050 22 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "MADM",
   amount: 728.33,
   balance: 619.13,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -971,15 +972,15 @@ LET $row_row_11 = fn::createStatementRow({
     rowNo: 11,
     rawRowText: "POS Purchase 728.33 Paypal *Madm                                                    485442*7050 22 Nov; 728.33; 619.13 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "PayPal",
-    category: "Hosting / internet",
+    normalizedMerchant: "MADM",
+    category: "Education / training",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 728.33,
     bankChargeZar: 3.68,
     balanceZar: 619.13
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "One-month gym education provider subscription that was cancelled after the first month."
 });
 LET $tx_stmt_2025_12_18_row_11 = fn::createTransaction({
   space: $space,
@@ -988,40 +989,26 @@ LET $tx_stmt_2025_12_18_row_11 = fn::createTransaction({
   sourceRow: $row_row_11,
   postedAt: "2025-11-26T00:00:00Z",
   description: "POS Purchase 728.33 Paypal *Madm                                                    485442*7050 22 Nov",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "MADM",
   amount: 728.33,
   balance: 619.13,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "PayPal",
-  merchant: $merchant_paypal,
-  category: $cat_hosting_internet,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "MADM",
+  merchant: $merchant_madm,
+  category: $cat_education_training,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "One-month gym education provider subscription that was cancelled after the first month."
 });
-fn::updateStatementRow($row_row_11.id, { transaction: $tx_stmt_2025_12_18_row_11.id, status: "matched" });
+fn::updateStatementRow($row_row_11.id, { transaction: $tx_stmt_2025_12_18_row_11.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_11.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_11.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_11.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_11.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_11.id, "TransactionMerchant", $merchant_paypal.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_11.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_11 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-11",
-  transaction: $tx_stmt_2025_12_18_row_11,
-  status: "open",
-  question: "What is the underlying purchase or service behind this PayPal charge?",
-  reason: "Underlying PayPal purchase still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_paypal,
-  suggestedCategory: $cat_hosting_internet,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_11.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_11.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_11.id, "TransactionMerchant", $merchant_madm.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_11.id, "TransactionCategory", $cat_education_training.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 12
 LET $row_row_12 = fn::createStatementRow({
@@ -1313,13 +1300,13 @@ LET $row_row_16 = fn::createStatementRow({
   rowNumber: 16,
   postedAt: "2025-11-28T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 5000,
   balance: 2447.11,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -1327,15 +1314,15 @@ LET $row_row_16 = fn::createStatementRow({
     rowNo: 16,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market; 5,000.00; 2,447.11 Cr; 15.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 5000,
     bankChargeZar: 15,
     balanceZar: 2447.11
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_16 = fn::createTransaction({
   space: $space,
@@ -1344,40 +1331,26 @@ LET $tx_stmt_2025_12_18_row_16 = fn::createTransaction({
   sourceRow: $row_row_16,
   postedAt: "2025-11-28T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 5000,
   balance: 2447.11,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_16.id, { transaction: $tx_stmt_2025_12_18_row_16.id, status: "matched" });
+fn::updateStatementRow($row_row_16.id, { transaction: $tx_stmt_2025_12_18_row_16.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_16.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_16.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_16.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_16.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_16.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_16.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_16 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-16",
-  transaction: $tx_stmt_2025_12_18_row_16,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_16.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_16.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_16.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_16.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 17
 LET $row_row_17 = fn::createStatementRow({
@@ -1567,13 +1540,13 @@ LET $row_row_20 = fn::createStatementRow({
   rowNumber: 20,
   postedAt: "2025-12-03T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 30000,
   balance: 3069.56,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -1581,15 +1554,15 @@ LET $row_row_20 = fn::createStatementRow({
     rowNo: 20,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market; 30,000.00; 3,069.56 Cr; 15.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 30000,
     bankChargeZar: 15,
     balanceZar: 3069.56
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_20 = fn::createTransaction({
   space: $space,
@@ -1598,40 +1571,26 @@ LET $tx_stmt_2025_12_18_row_20 = fn::createTransaction({
   sourceRow: $row_row_20,
   postedAt: "2025-12-03T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                             Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 30000,
   balance: 3069.56,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_20.id, { transaction: $tx_stmt_2025_12_18_row_20.id, status: "matched" });
+fn::updateStatementRow($row_row_20.id, { transaction: $tx_stmt_2025_12_18_row_20.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_20.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_20.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_20.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_20.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_20.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_20.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_20 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-20",
-  transaction: $tx_stmt_2025_12_18_row_20,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_20.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_20.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_20.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_20.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 21
 LET $row_row_21 = fn::createStatementRow({
@@ -1821,13 +1780,13 @@ LET $row_row_24 = fn::createStatementRow({
   rowNumber: 24,
   postedAt: "2025-12-06T00:00:00Z",
   description: "POS Purchase 125.05 Paypal *Vect                                                    485442*7050 04 Dec",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Vecteezy",
   amount: 125.05,
   balance: 2002.76,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -1835,15 +1794,15 @@ LET $row_row_24 = fn::createStatementRow({
     rowNo: 24,
     rawRowText: "POS Purchase 125.05 Paypal *Vect                                                    485442*7050 04 Dec; 125.05; 2,002.76 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "PayPal",
-    category: "Hosting / internet",
+    normalizedMerchant: "Vecteezy",
+    category: "Design / media assets",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 125.05,
     bankChargeZar: 3.68,
     balanceZar: 2002.76
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Recurring Vecteezy stock-image and video subscription."
 });
 LET $tx_stmt_2025_12_18_row_24 = fn::createTransaction({
   space: $space,
@@ -1852,40 +1811,26 @@ LET $tx_stmt_2025_12_18_row_24 = fn::createTransaction({
   sourceRow: $row_row_24,
   postedAt: "2025-12-06T00:00:00Z",
   description: "POS Purchase 125.05 Paypal *Vect                                                    485442*7050 04 Dec",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Vecteezy",
   amount: 125.05,
   balance: 2002.76,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "PayPal",
-  merchant: $merchant_paypal,
-  category: $cat_hosting_internet,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Vecteezy",
+  merchant: $merchant_vecteezy,
+  category: $cat_design_media_assets,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Recurring Vecteezy stock-image and video subscription."
 });
-fn::updateStatementRow($row_row_24.id, { transaction: $tx_stmt_2025_12_18_row_24.id, status: "matched" });
+fn::updateStatementRow($row_row_24.id, { transaction: $tx_stmt_2025_12_18_row_24.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_24.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_24.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_24.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_24.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_24.id, "TransactionMerchant", $merchant_paypal.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_24.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_24 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-24",
-  transaction: $tx_stmt_2025_12_18_row_24,
-  status: "open",
-  question: "What is the underlying purchase or service behind this PayPal charge?",
-  reason: "Underlying PayPal purchase still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_paypal,
-  suggestedCategory: $cat_hosting_internet,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_24.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_24.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_24.id, "TransactionMerchant", $merchant_vecteezy.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_24.id, "TransactionCategory", $cat_design_media_assets.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 25
 LET $row_row_25 = fn::createStatementRow({
@@ -1895,13 +1840,13 @@ LET $row_row_25 = fn::createStatementRow({
   rowNumber: 25,
   postedAt: "2025-12-06T00:00:00Z",
   description: "POS Purchase 354.04 Paypal *Scre                                                    485442*7050 04 Dec",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Screencast-O-Matic",
   amount: 354.04,
   balance: 1648.72,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -1909,15 +1854,15 @@ LET $row_row_25 = fn::createStatementRow({
     rowNo: 25,
     rawRowText: "POS Purchase 354.04 Paypal *Scre                                                    485442*7050 04 Dec; 354.04; 1,648.72 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "PayPal",
-    category: "Hosting / internet",
+    normalizedMerchant: "Screencast-O-Matic",
+    category: "Software / SaaS",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 354.04,
     bankChargeZar: 3.68,
     balanceZar: 1648.72
 },
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Yearly subscription for Screencast-O-Matic screen recording software."
 });
 LET $tx_stmt_2025_12_18_row_25 = fn::createTransaction({
   space: $space,
@@ -1926,40 +1871,26 @@ LET $tx_stmt_2025_12_18_row_25 = fn::createTransaction({
   sourceRow: $row_row_25,
   postedAt: "2025-12-06T00:00:00Z",
   description: "POS Purchase 354.04 Paypal *Scre                                                    485442*7050 04 Dec",
-  normalizedDescription: "PayPal",
+  normalizedDescription: "Screencast-O-Matic",
   amount: 354.04,
   balance: 1648.72,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "PayPal",
-  merchant: $merchant_paypal,
-  category: $cat_hosting_internet,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Screencast-O-Matic",
+  merchant: $merchant_screencast_o_matic,
+  category: $cat_software_saas,
   isTransfer: false,
   manualOverride: false,
-  notes: "Likely hosting-related PayPal charge; exact underlying service still needs confirmation."
+  notes: "Yearly subscription for Screencast-O-Matic screen recording software."
 });
-fn::updateStatementRow($row_row_25.id, { transaction: $tx_stmt_2025_12_18_row_25.id, status: "matched" });
+fn::updateStatementRow($row_row_25.id, { transaction: $tx_stmt_2025_12_18_row_25.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_25.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_25.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_25.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_25.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_25.id, "TransactionMerchant", $merchant_paypal.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_25.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_25 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-25",
-  transaction: $tx_stmt_2025_12_18_row_25,
-  status: "open",
-  question: "What is the underlying purchase or service behind this PayPal charge?",
-  reason: "Underlying PayPal purchase still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_paypal,
-  suggestedCategory: $cat_hosting_internet,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_25.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_25.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_25.id, "TransactionMerchant", $merchant_screencast_o_matic.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_25.id, "TransactionCategory", $cat_software_saas.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 26
 LET $row_row_26 = fn::createStatementRow({
@@ -2117,13 +2048,13 @@ LET $row_row_28 = fn::createStatementRow({
   rowNumber: 28,
   postedAt: "2025-12-11T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 1000,
   balance: 637.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -2131,15 +2062,15 @@ LET $row_row_28 = fn::createStatementRow({
     rowNo: 28,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market; 1,000.00; 637.94 Cr; 8.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1000,
     bankChargeZar: 8,
     balanceZar: 637.94
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_28 = fn::createTransaction({
   space: $space,
@@ -2148,40 +2079,26 @@ LET $tx_stmt_2025_12_18_row_28 = fn::createTransaction({
   sourceRow: $row_row_28,
   postedAt: "2025-12-11T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 1000,
   balance: 637.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_28.id, { transaction: $tx_stmt_2025_12_18_row_28.id, status: "matched" });
+fn::updateStatementRow($row_row_28.id, { transaction: $tx_stmt_2025_12_18_row_28.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_28.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_28.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_28.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_28.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_28 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-28",
-  transaction: $tx_stmt_2025_12_18_row_28,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_28.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_28.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_28.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 29
 LET $row_row_29 = fn::createStatementRow({
@@ -2251,13 +2168,13 @@ LET $row_row_30 = fn::createStatementRow({
   rowNumber: 30,
   postedAt: "2025-12-12T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 5500,
   balance: 1987.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -2265,15 +2182,15 @@ LET $row_row_30 = fn::createStatementRow({
     rowNo: 30,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market; 5,500.00; 1,987.94 Cr; 15.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 5500,
     bankChargeZar: 15,
     balanceZar: 1987.94
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_30 = fn::createTransaction({
   space: $space,
@@ -2282,40 +2199,26 @@ LET $tx_stmt_2025_12_18_row_30 = fn::createTransaction({
   sourceRow: $row_row_30,
   postedAt: "2025-12-12T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 5500,
   balance: 1987.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_30.id, { transaction: $tx_stmt_2025_12_18_row_30.id, status: "matched" });
+fn::updateStatementRow($row_row_30.id, { transaction: $tx_stmt_2025_12_18_row_30.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_30.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_30.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_30.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_30.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_30.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_30.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_30 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-30",
-  transaction: $tx_stmt_2025_12_18_row_30,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_30.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_30.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_30.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_30.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 31
 LET $row_row_31 = fn::createStatementRow({
@@ -2325,13 +2228,13 @@ LET $row_row_31 = fn::createStatementRow({
   rowNumber: 31,
   postedAt: "2025-12-13T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 1000,
   balance: 987.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_86.pdf",
     statementPeriodStart: "2025-11-18",
@@ -2339,15 +2242,15 @@ LET $row_row_31 = fn::createStatementRow({
     rowNo: 31,
     rawRowText: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market; 1,000.00; 987.94 Cr; 8.00",
     transactionType: "transfer",
-    normalizedMerchant: "Mpire Digital Market",
-    category: "Internal transfer",
+    normalizedMerchant: "Michael Peters",
+    category: "Business to personal transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1000,
     bankChargeZar: 8,
     balanceZar: 987.94
 },
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
 LET $tx_stmt_2025_12_18_row_31 = fn::createTransaction({
   space: $space,
@@ -2356,40 +2259,26 @@ LET $tx_stmt_2025_12_18_row_31 = fn::createTransaction({
   sourceRow: $row_row_31,
   postedAt: "2025-12-13T00:00:00Z",
   description: "Rtc Express Pmt To Supplier Michael Pet                                         Mpire Digital Market",
-  normalizedDescription: "Mpire Digital Market",
+  normalizedDescription: "Michael Peters",
   amount: 1000,
   balance: 987.94,
   currency: "ZAR",
   direction: "transfer",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Mpire Digital Market",
-  merchant: $merchant_mpire_digital_market,
-  category: $cat_internal_transfer,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Michael Peters",
+  merchant: $merchant_michael_peters,
+  category: $cat_business_to_personal_transfer,
   isTransfer: true,
   manualOverride: false,
-  notes: "Likely internal transfer, possibly related to the business savings or fixed-deposit account; destination still needs confirmation."
+  notes: "Express supplier payment from the business account into the personal current account."
 });
-fn::updateStatementRow($row_row_31.id, { transaction: $tx_stmt_2025_12_18_row_31.id, status: "matched" });
+fn::updateStatementRow($row_row_31.id, { transaction: $tx_stmt_2025_12_18_row_31.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_31.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_31.id, "StatementRowTransactions", $tx_stmt_2025_12_18_row_31.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_12_18_row_31.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_31.id, "TransactionMerchant", $merchant_mpire_digital_market.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_12_18_row_31.id, "TransactionCategory", $cat_internal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_12_18_row_31 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-12-18-row-31",
-  transaction: $tx_stmt_2025_12_18_row_31,
-  status: "open",
-  question: "Which internal account or transfer does this Mpire Digital Market payment belong to?",
-  reason: "Likely internal transfer, but the destination still needs confirmation.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_mpire_digital_market,
-  suggestedCategory: $cat_internal_transfer,
-  confidence: 0.25,
-  notes: "Imported from 2025-12-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_12_18_row_31.id, "TransactionClarificationTasks", $task_stmt_2025_12_18_row_31.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_31.id, "TransactionMerchant", $merchant_michael_peters.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_12_18_row_31.id, "TransactionCategory", $cat_business_to_personal_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 32
 LET $row_row_32 = fn::createStatementRow({
@@ -2575,7 +2464,7 @@ fn::createEdge($tx_stmt_2025_12_18_row_34.id, "TransactionCategory", $cat_fees_s
 fn::updateStatementImport($import.id, {
   rowCount: 34,
   normalizedCount: 34,
-  clarificationCount: 18,
+  clarificationCount: 6,
   status: "matched",
   statementDate: "2025-12-18T00:00:00Z",
   notes: "Imported from 2025-12-18.import.md"
