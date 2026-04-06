@@ -17,6 +17,9 @@ export function useRavenExplorerApi() {
     getAccountTransferMatches: async (spaceKey: string, accountKey: string, month: string) => {
       return await $api.account.transferMatches.query({ spaceKey, accountKey, month })
     },
+    getClarificationQueue: async (spaceKey: string, accountKey?: string, status: 'open' | 'resolved' | 'all' = 'open') => {
+      return await $api.clarificationTask.queue.query({ spaceKey, accountKey, status })
+    },
     getTransactionDetail: async (transactionId: string) => {
       return await $api.transaction.detail.query({ transactionId })
     },

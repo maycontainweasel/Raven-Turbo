@@ -492,9 +492,20 @@ const refreshAll = async () => {
                 {{ selectedAccount?.name || 'No account selected' }}
               </h2>
             </div>
-            <button class="raven-link raven-link--ghost" type="button" @click="refreshAll()">
-              Refresh
-            </button>
+            <div class="flex items-center gap-2">
+              <NuxtLink
+                :to="{
+                  path: `/environments/${spaceKey}/clarifications`,
+                  query: selectedAccountKey ? { account: selectedAccountKey } : undefined,
+                }"
+                class="raven-link raven-link--ghost"
+              >
+                Clarifications
+              </NuxtLink>
+              <button class="raven-link raven-link--ghost" type="button" @click="refreshAll()">
+                Refresh
+              </button>
+            </div>
           </div>
 
           <dl class="grid gap-3 sm:grid-cols-3">
