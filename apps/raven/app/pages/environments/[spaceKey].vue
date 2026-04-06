@@ -142,6 +142,67 @@ type MonthSummary = {
   net: number
 }
 
+type TransferMatchCandidate = {
+  id: string
+  postedAt: string
+  amount: number
+  description: string
+  merchantName?: string | null
+  categoryKey?: string | null
+  categoryName?: string | null
+  accountKey?: string | null
+  accountName?: string | null
+  accountType?: string | null
+  accountLast4?: string | null
+  spaceKey?: string | null
+  spaceName?: string | null
+}
+
+type TransferMatchRow = {
+  source: {
+    id: string
+    postedAt: string
+    amount: number
+    description: string
+    merchantName?: string | null
+    categoryKey?: string | null
+    categoryName?: string | null
+    notes?: string | null
+    rawRowText?: string | null
+    accountKey?: string | null
+    accountName?: string | null
+    spaceKey?: string | null
+    spaceName?: string | null
+  }
+  bestMatch?: {
+    confidence: 'high' | 'medium' | 'low'
+    score: number
+    dayDelta: number
+    inferredKind: string
+    reason: string
+    candidate: TransferMatchCandidate
+  } | null
+  candidates: Array<{
+    confidence: 'high' | 'medium' | 'low'
+    score: number
+    dayDelta: number
+    inferredKind: string
+    reason: string
+    candidate: TransferMatchCandidate
+  }>
+}
+
+type TransferMatchesResult = {
+  summary: {
+    transferCount: number
+    matchedCount: number
+    unmatchedCount: number
+    matchedAmount: number
+    unmatchedAmount: number
+  }
+  matches: TransferMatchRow[]
+}
+
 const route = useRoute()
 const router = useRouter()
 const explorerApi = useRavenExplorerApi()
@@ -208,6 +269,19 @@ const categoryShare = (amount: number, maxAmount: number) => {
   if (!maxAmount) return 0
   return Math.max(8, Math.round((amount / maxAmount) * 100))
 }
+
+const transferConfidenceTone = (value: 'high' | 'medium' | 'low' | null | undefined) => {
+  if (value === 'high') return 'border-emerald-300/30 bg-emerald-400/10 text-emerald-100'
+  if (value === 'medium') return 'border-amber-300/30 bg-amber-400/10 text-amber-100'
+  return 'border-white/10 bg-white/5 text-slate-300'
+}
+
+const transferKindLabel = (value: string | null | undefined) =>
+  String(value || 'internal_transfer')
+    .split(/[_-]+/)
+    .filter(Boolean)
+    .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ')
 
 const spaceKey = computed(() => routeString(route.params.spaceKey))
 const requestedAccountKey = computed(() => routeString(route.query.account))
@@ -279,6 +353,19 @@ const { data: monthData, pending: monthPending, error: monthError, refresh: refr
   },
 )
 
+const { data: transferMatchesData, pending: transferMatchesPending, error: transferMatchesError, refresh: refreshTransferMatches } = await useAsyncData<TransferMatchesResult | null>(
+  () => `raven-environment-transfer-matches:${spaceKey.value}:${selectedAccountKey.value || 'none'}:${selectedMonth.value || 'none'}`,
+  async () => {
+    if (!spaceKey.value || !selectedAccountKey.value || !selectedMonth.value) return null
+
+    return await explorerApi.getAccountTransferMatches(spaceKey.value, selectedAccountKey.value, selectedMonth.value)
+  },
+  {
+    server: false,
+    watch: [spaceKey, selectedAccountKey, selectedMonth],
+  },
+)
+
 const { data: transactionPanelData, pending: transactionPending, error: transactionError } = await useAsyncData(
   () => `raven-transaction-detail:${selectedTransactionId.value || 'none'}`,
   async () => {
@@ -300,6 +387,22 @@ const feeTotal = computed(() =>
   (monthData.value?.categories || [])
     .filter(category => String(category.categoryKey || '').startsWith('fees'))
     .reduce((total, category) => total + category.amountTotal, 0),
+)
+
+const matchedTransferRows = computed(() =>
+  (transferMatchesData.value?.matches || []).filter(row => row.bestMatch),
+)
+
+const unmatchedTransferRows = computed(() =>
+  (transferMatchesData.value?.matches || []).filter(row => !row.bestMatch),
+)
+
+const linkedTransferAccountCount = computed(() =>
+  new Set(
+    matchedTransferRows.value
+      .map(row => row.bestMatch?.candidate.accountKey)
+      .filter((value): value is string => Boolean(value)),
+  ).size,
 )
 
 const toggleQuery = async (patch: Record<string, string | undefined>) => {
@@ -344,6 +447,7 @@ const refreshAll = async () => {
     refreshEnvironment(),
     refreshAccount(),
     refreshMonth(),
+    refreshTransferMatches(),
   ])
 }
 </script>
@@ -568,6 +672,190 @@ const refreshAll = async () => {
                 </div>
               </div>
             </button>
+          </div>
+        </section>
+
+        <section class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.34em] text-slate-400">Cross-account flows</p>
+              <h2 class="mt-2 text-2xl font-semibold tracking-[-0.04em] text-white">Matched transfers for {{ formatMonthLabel(selectedMonth) }}</h2>
+              <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+                Review how money moved between tracked accounts. The matches below stay explicit so business-to-personal movement, savings flows, and credit servicing remain visible.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid gap-4 xl:grid-cols-4">
+            <article class="raven-card p-5">
+              <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Transfer rows</p>
+              <p class="mt-3 text-2xl font-semibold text-white">
+                {{ formatCount(transferMatchesData?.summary.transferCount ?? 0) }}
+              </p>
+            </article>
+
+            <article class="raven-card p-5">
+              <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Matched</p>
+              <p class="mt-3 text-2xl font-semibold text-emerald-100">
+                {{ formatCount(transferMatchesData?.summary.matchedCount ?? 0) }}
+              </p>
+              <p class="mt-2 text-sm text-slate-300">
+                {{ formatMoney(transferMatchesData?.summary.matchedAmount, selectedAccount?.currency || 'ZAR') }}
+              </p>
+            </article>
+
+            <article class="raven-card p-5">
+              <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Needs linking</p>
+              <p class="mt-3 text-2xl font-semibold text-amber-100">
+                {{ formatCount(transferMatchesData?.summary.unmatchedCount ?? 0) }}
+              </p>
+              <p class="mt-2 text-sm text-slate-300">
+                {{ formatMoney(transferMatchesData?.summary.unmatchedAmount, selectedAccount?.currency || 'ZAR') }}
+              </p>
+            </article>
+
+            <article class="raven-card p-5">
+              <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Linked accounts</p>
+              <p class="mt-3 text-2xl font-semibold text-cyan-100">
+                {{ formatCount(linkedTransferAccountCount) }}
+              </p>
+              <p class="mt-2 text-sm text-slate-300">Visible counterpart accounts this month</p>
+            </article>
+          </div>
+
+          <div v-if="transferMatchesError" class="raven-card space-y-3 p-6">
+            <p class="text-sm font-medium text-rose-200">The transfer matcher could not load.</p>
+            <p class="text-sm leading-6 text-slate-300">{{ transferMatchesError.message }}</p>
+            <button class="raven-link" type="button" @click="refreshTransferMatches()">
+              Retry
+            </button>
+          </div>
+
+          <div v-else-if="transferMatchesPending" class="grid gap-4 lg:grid-cols-2">
+            <article v-for="index in 2" :key="index" class="raven-card animate-pulse space-y-4 p-6">
+              <div class="h-3 w-28 rounded-full bg-white/8" />
+              <div class="h-8 w-full rounded-full bg-white/10" />
+              <div class="h-24 rounded-3xl bg-white/5" />
+            </article>
+          </div>
+
+          <div v-else-if="!transferMatchesData?.matches.length" class="raven-card p-6 text-sm leading-6 text-slate-300">
+            No transfer-like rows were found for this account in the selected month yet.
+          </div>
+
+          <div v-else class="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+            <article class="raven-card p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Matched flows</p>
+                  <h2 class="mt-2 text-xl font-semibold text-white">Top counterpart matches</h2>
+                </div>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.22em] text-slate-300">
+                  {{ formatCount(matchedTransferRows.length) }} matched
+                </span>
+              </div>
+
+              <div v-if="!matchedTransferRows.length" class="mt-5 rounded-3xl border border-white/8 bg-slate-950/35 p-5 text-sm leading-6 text-slate-300">
+                No counterpart matches were found yet. The transfers still remain visible in the unmatched list.
+              </div>
+
+              <ul v-else class="mt-5 space-y-3">
+                <li v-for="row in matchedTransferRows" :key="row.source.id" class="rounded-3xl border border-white/8 bg-slate-950/35 p-4">
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm font-medium text-white">{{ row.source.description }}</p>
+                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">
+                        {{ formatCompactDate(row.source.postedAt) }} · {{ row.source.accountName }}
+                      </p>
+                    </div>
+
+                    <div class="text-right">
+                      <p class="text-sm font-semibold text-amber-100">
+                        {{ formatMoney(row.source.amount, selectedAccount?.currency || 'ZAR') }}
+                      </p>
+                      <span
+                        class="mt-2 inline-flex rounded-full border px-3 py-1 text-xs uppercase tracking-[0.2em]"
+                        :class="transferConfidenceTone(row.bestMatch?.confidence)"
+                      >
+                        {{ row.bestMatch?.confidence || 'Unmatched' }}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div v-if="row.bestMatch" class="mt-4 rounded-2xl border border-cyan-300/12 bg-cyan-400/[0.05] p-4">
+                    <div class="flex flex-wrap items-start justify-between gap-3">
+                      <div>
+                        <p class="text-[11px] uppercase tracking-[0.22em] text-cyan-100/70">
+                          {{ transferKindLabel(row.bestMatch.inferredKind) }}
+                        </p>
+                        <p class="mt-2 text-sm font-medium text-white">
+                          {{ row.bestMatch.candidate.accountName || 'Tracked account' }}
+                          <span class="text-slate-400">· {{ row.bestMatch.candidate.spaceName || 'Unknown environment' }}</span>
+                        </p>
+                        <p class="mt-1 text-sm text-slate-300">
+                          {{ row.bestMatch.candidate.description }}
+                        </p>
+                      </div>
+
+                      <div class="text-right text-sm text-slate-300">
+                        <div>{{ formatCompactDate(row.bestMatch.candidate.postedAt) }}</div>
+                        <div class="mt-1">{{ formatMoney(row.bestMatch.candidate.amount, selectedAccount?.currency || 'ZAR') }}</div>
+                      </div>
+                    </div>
+
+                    <p class="mt-3 text-sm leading-6 text-slate-300">
+                      {{ row.bestMatch.reason }}
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </article>
+
+            <article class="raven-card p-5 sm:p-6">
+              <div class="flex items-center justify-between gap-4">
+                <div>
+                  <p class="text-[11px] uppercase tracking-[0.28em] text-slate-400">Needs manual linking</p>
+                  <h2 class="mt-2 text-xl font-semibold text-white">Unmatched transfer rows</h2>
+                </div>
+                <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.22em] text-slate-300">
+                  {{ formatCount(unmatchedTransferRows.length) }} unmatched
+                </span>
+              </div>
+
+              <div v-if="!unmatchedTransferRows.length" class="mt-5 rounded-3xl border border-white/8 bg-slate-950/35 p-5 text-sm leading-6 text-slate-300">
+                Every transfer-like row in this month has a counterpart candidate.
+              </div>
+
+              <ul v-else class="mt-5 space-y-3">
+                <li v-for="row in unmatchedTransferRows" :key="row.source.id" class="rounded-3xl border border-white/8 bg-slate-950/35 p-4">
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p class="text-sm font-medium text-white">{{ row.source.description }}</p>
+                      <p class="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">
+                        {{ formatCompactDate(row.source.postedAt) }} · {{ row.source.categoryName || 'Transfer' }}
+                      </p>
+                    </div>
+
+                    <p class="text-sm font-semibold text-amber-100">
+                      {{ formatMoney(row.source.amount, selectedAccount?.currency || 'ZAR') }}
+                    </p>
+                  </div>
+
+                  <p v-if="row.source.notes" class="mt-3 text-sm leading-6 text-slate-300">
+                    {{ row.source.notes }}
+                  </p>
+
+                  <button
+                    type="button"
+                    class="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-300/20 hover:text-white"
+                    @click="openTransaction(row.source.id)"
+                  >
+                    Open transaction
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </li>
+              </ul>
+            </article>
           </div>
         </section>
 
