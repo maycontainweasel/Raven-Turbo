@@ -71,6 +71,42 @@ function shortDateFromDmy(value) {
   return `${Number.parseInt(day, 10)} ${labels[Number.parseInt(month, 10) - 1]}`;
 }
 
+function parseDmyRangeFromFilename(filePath) {
+  const base = path.basename(filePath);
+  const match = base.match(/(\d{2} \w{3} \d{4}) - (\d{2} \w{3} \d{4})/i);
+  if (!match) {
+    return null;
+  }
+
+  const parseHuman = (value) => {
+    const [day, monthName, year] = value.split(' ');
+    const months = {
+      jan: '01',
+      feb: '02',
+      mar: '03',
+      apr: '04',
+      may: '05',
+      jun: '06',
+      jul: '07',
+      aug: '08',
+      sep: '09',
+      oct: '10',
+      nov: '11',
+      dec: '12',
+    };
+    const month = months[monthName.toLowerCase()];
+    return month ? `${year}-${month}-${day}` : null;
+  };
+
+  const start = parseHuman(match[1]);
+  const end = parseHuman(match[2]);
+  if (!start || !end) {
+    return null;
+  }
+
+  return { start, end };
+}
+
 function shortDateFromBusiness(value) {
   return value;
 }
@@ -287,6 +323,7 @@ function parseNedbankCurrent(pdfPath, outputPath) {
   const lines = text.split(/\r?\n/);
 
   const statementPeriodMatch = plainText.match(/Statement period:\s*([0-9/]+)\s+[–-]\s+([0-9/]+)/);
+  const filenamePeriod = parseDmyRangeFromFilename(pdfPath);
   const openingBalanceMatch = plainText.match(/Opening balance\s*([-\w\s]*)\s*(-?R[0-9,]+\.[0-9]{2})/);
   const closingBalanceMatch = plainText.match(/Closing balance\s*([-\w\s]*)\s*(-?R[0-9,]+\.[0-9]{2})/);
 
@@ -361,11 +398,11 @@ function parseNedbankCurrent(pdfPath, outputPath) {
       currency: 'ZAR',
       last4: '7185',
     },
-    statementStart: isoDateFromDmy(statementPeriodMatch?.[1] || '21/11/2025'),
-    statementEnd: isoDateFromDmy(statementPeriodMatch?.[2] || '20/12/2025'),
+    statementStart: statementPeriodMatch?.[1] ? isoDateFromDmy(statementPeriodMatch[1]) : (filenamePeriod?.start || '2025-11-21'),
+    statementEnd: statementPeriodMatch?.[2] ? isoDateFromDmy(statementPeriodMatch[2]) : (filenamePeriod?.end || '2025-12-20'),
     openingBalance: parseMoney(openingBalanceMatch?.[2]) ?? openingBalanceFromTable ?? 0,
     closingBalance: parseMoney(closingBalanceMatch?.[2]) ?? rawRows.at(-1)?.balanceValue ?? 0,
-    importKey: `${isoDateFromDmy(statementPeriodMatch?.[2] || '20/12/2025')}-nedbank-current`,
+    importKey: `${statementPeriodMatch?.[2] ? isoDateFromDmy(statementPeriodMatch[2]) : (filenamePeriod?.end || '2025-12-20')}-nedbank-current`,
   };
 
   return renderMarkdown(meta, rows, [
