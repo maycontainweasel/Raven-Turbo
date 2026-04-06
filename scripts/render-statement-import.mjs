@@ -101,6 +101,18 @@ function parseMetadata(content) {
   const [statementStart = '', statementEnd = ''] = getMatch(/Statement period:\s*\n-\s*`([^`]+)`\s*to\s*`([^`]+)`/);
   const [openingBalance = ''] = getMatch(/Opening balance:\s*`([^`]+)`/);
   const [closingBalance = ''] = getMatch(/Closing balance:\s*`([^`]+)`/);
+  const [spaceKey = 'mpire-business'] = getMatch(/Environment key:\s*`([^`]+)`/);
+  const [spaceName = 'MPIRE Business'] = getMatch(/Environment name:\s*`([^`]+)`/);
+  const [spaceType = 'business'] = getMatch(/Environment type:\s*`([^`]+)`/);
+  const [spaceCurrency = 'ZAR'] = getMatch(/Environment currency:\s*`([^`]+)`/);
+  const [spaceDescription = 'Business environment for MPIRE'] = getMatch(/Environment description:\s*`([^`]+)`/);
+  const [accountKey = 'fnb-gold-business-27821'] = getMatch(/Account key:\s*`([^`]+)`/);
+  const [accountName = 'FNB Gold Business Account'] = getMatch(/Account name:\s*`([^`]+)`/);
+  const [accountBank = 'FNB'] = getMatch(/Account bank:\s*`([^`]+)`/);
+  const [accountType = 'current'] = getMatch(/Account type:\s*`([^`]+)`/);
+  const [accountCurrency = 'ZAR'] = getMatch(/Account currency:\s*`([^`]+)`/);
+  const [accountLast4 = '27821'] = getMatch(/Account last4:\s*`([^`]+)`/);
+  const [importKey = ''] = getMatch(/Import key:\s*`([^`]+)`/);
 
   return {
     sourceFileName,
@@ -109,6 +121,18 @@ function parseMetadata(content) {
     statementEnd,
     openingBalance,
     closingBalance,
+    spaceKey,
+    spaceName,
+    spaceType,
+    spaceCurrency,
+    spaceDescription,
+    accountKey,
+    accountName,
+    accountBank,
+    accountType,
+    accountCurrency,
+    accountLast4,
+    importKey,
   };
 }
 
@@ -124,7 +148,7 @@ function parseNumber(value) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
-function parseDateLabel(dateLabel, year) {
+function parseDateLabel(dateLabel, statementStart, statementEnd) {
   const match = String(dateLabel).trim().match(/^(\d{1,2})\s+([A-Za-z]{3})$/);
   if (!match) {
     throw new Error(`Could not parse statement date label: ${dateLabel}`);
@@ -151,7 +175,21 @@ function parseDateLabel(dateLabel, year) {
     throw new Error(`Could not parse statement month label: ${monthAbbrev}`);
   }
 
-  return `${year}-${month}-${String(day).padStart(2, '0')}T00:00:00Z`;
+  const endYear = Number.parseInt(String(statementEnd).slice(0, 4), 10) || 2026;
+  const endMonth = Number.parseInt(String(statementEnd).slice(5, 7), 10) || 12;
+  const startYear = Number.parseInt(String(statementStart).slice(0, 4), 10) || endYear;
+  const startMonth = Number.parseInt(String(statementStart).slice(5, 7), 10) || 1;
+  const monthNumber = Number.parseInt(month, 10);
+
+  let resolvedYear = endYear;
+  if (startYear !== endYear) {
+    resolvedYear = monthNumber > endMonth ? startYear : endYear;
+  }
+  else if (monthNumber < startMonth || monthNumber > endMonth) {
+    resolvedYear = endYear;
+  }
+
+  return `${resolvedYear}-${month}-${String(day).padStart(2, '0')}T00:00:00Z`;
 }
 
 function extractBalance(rawRowText) {
@@ -270,7 +308,6 @@ async function main() {
   const statementPeriodStart = meta.statementStart || '2026-02-18';
   const statementPeriodEnd = meta.statementEnd || '2026-03-18';
   const statementStamp = statementPeriodEnd.slice(0, 10);
-  const statementYear = Number.parseInt(statementPeriodEnd.slice(0, 4), 10) || 2026;
   const rows = parseMarkdownTable(content).map((row) => {
     const amount = parseNumber(row.amount_zar);
     const bankCharge = parseNumber(row.bank_charge_zar);
@@ -279,8 +316,8 @@ async function main() {
       row_no: Number.parseInt(row.row_no, 10),
       amount_zar: amount,
       bank_charge_zar: bankCharge,
-      balance_zar: extractBalance(row.raw_row_text),
-      posted_at: parseDateLabel(row.date, statementYear),
+      balance_zar: row.balance_zar ? parseNumber(row.balance_zar) : extractBalance(row.raw_row_text),
+      posted_at: parseDateLabel(row.date, statementPeriodStart, statementPeriodEnd),
       description_label: extractLeadingLabel(row.raw_row_text),
     };
   });
@@ -344,23 +381,23 @@ async function main() {
   lines.push('-- Base environment and account');
   lines.push(
     `LET $space = fn::createFinancialSpace(${renderObject({
-      key: 'mpire-business',
-      name: 'MPIRE Business',
-      spaceType: 'business',
-      currency: 'ZAR',
+      key: meta.spaceKey,
+      name: meta.spaceName,
+      spaceType: meta.spaceType,
+      currency: meta.spaceCurrency,
       active: true,
-      description: 'Business environment for MPIRE',
+      description: meta.spaceDescription,
     })});`,
   );
   lines.push(
     `LET $account = fn::createAccount(${renderObject({
       space: expr('$space'),
-      key: 'fnb-gold-business-27821',
-      name: 'FNB Gold Business Account',
-      bankName: 'FNB',
-      accountType: 'current',
-      currency: 'ZAR',
-      accountNumberLast4: '27821',
+      key: meta.accountKey,
+      name: meta.accountName,
+      bankName: meta.accountBank,
+      accountType: meta.accountType,
+      currency: meta.accountCurrency,
+      accountNumberLast4: meta.accountLast4,
       openingBalance: openingBalance ?? 0,
       active: true,
       notes: `Imported from ${path.basename(meta.sourceFileName || 'statement.pdf')}`,
@@ -373,7 +410,7 @@ async function main() {
     `LET $import = fn::createStatementImport(${renderObject({
       space: expr('$space'),
       account: expr('$account'),
-      key: `${statementStamp}-fnb-business`,
+      key: meta.importKey || `${statementStamp}-${meta.accountKey}`,
       sourceFileName: meta.sourceFileName || path.basename(inputPath).replace(/\.import\.md$/i, '.pdf'),
       sourceFormat: 'pdf',
       importedAt: expr('time::now()'),
@@ -478,7 +515,7 @@ async function main() {
         normalizedDescription,
         amount,
         balance,
-        currency: 'ZAR',
+        currency: meta.accountCurrency || 'ZAR',
         direction: rowDirection(row.transaction_type),
         status: rowStatus,
         confidence: isClarified ? 0.95 : 0.55,
@@ -497,7 +534,7 @@ async function main() {
         normalizedDescription,
         amount,
         balance,
-        currency: 'ZAR',
+        currency: meta.accountCurrency || 'ZAR',
         direction: rowDirection(row.transaction_type),
         status: txStatus,
         confidence: isClarified ? 0.95 : 0.55,
