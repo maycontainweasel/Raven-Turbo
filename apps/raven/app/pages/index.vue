@@ -23,6 +23,8 @@ useHead({
   ],
 })
 
+const explorerApi = useRavenExplorerApi()
+
 const formatCount = (value: number) => new Intl.NumberFormat('en-ZA').format(value || 0)
 
 const formatSpaceType = (value: string) =>
@@ -33,44 +35,7 @@ const formatSpaceType = (value: string) =>
     .join(' ')
 
 const { data, pending, error, refresh } = await useAsyncData('raven-home-environments', async () => {
-  const response = await queryRavenDb(
-    `
-      SELECT id, key, name, spaceType, currency, description
-      FROM financialSpace
-      WHERE active = true
-      ORDER BY name;
-
-      SELECT space, count() AS total
-      FROM account
-      WHERE active = true
-      GROUP BY space;
-
-      SELECT space, count() AS total
-      FROM transaction
-      GROUP BY space;
-
-      SELECT space, count() AS total
-      FROM clarificationTask
-      WHERE status = 'open'
-      GROUP BY space;
-    `,
-  )
-
-  const spaces = statementResult<SpaceRow[]>(response, 0)
-  const accountCounts = statementResult<CountRow[]>(response, 1)
-  const transactionCounts = statementResult<CountRow[]>(response, 2)
-  const clarificationCounts = statementResult<CountRow[]>(response, 3)
-
-  const accountCountMap = new Map(accountCounts.map(row => [row.space, row.total]))
-  const transactionCountMap = new Map(transactionCounts.map(row => [row.space, row.total]))
-  const clarificationCountMap = new Map(clarificationCounts.map(row => [row.space, row.total]))
-
-  return spaces.map(space => ({
-    ...space,
-    accountCount: accountCountMap.get(space.id) ?? 0,
-    transactionCount: transactionCountMap.get(space.id) ?? 0,
-    openClarificationCount: clarificationCountMap.get(space.id) ?? 0,
-  }))
+  return await explorerApi.listEnvironments()
 }, {
   server: false,
 })

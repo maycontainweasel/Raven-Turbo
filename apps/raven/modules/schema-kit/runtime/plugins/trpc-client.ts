@@ -59,7 +59,21 @@ superjson.registerCustom<any, { tb: string; id: any }>(
 export default defineNuxtPlugin({
   name: 'trpc-client',
   setup(nuxtApp) {
-    const requestFetch = import.meta.server ? useRequestFetch() : fetch
+    const requestUrl = import.meta.server ? useRequestURL() : null
+    const requestHeaders = import.meta.server ? useRequestHeaders(['cookie', 'accept-language']) : {}
+
+    const resolveServerUrl = (url: string | URL) => {
+      const value = url.toString()
+      if (!requestUrl) return value
+      if (/^https?:\/\//.test(value)) return value
+
+      // Local dev runs Nuxt on 9274 behind nginx on 4443.
+      if (requestUrl.hostname === 'raven.local' && requestUrl.port === '4443') {
+        return new URL(value, 'http://127.0.0.1:9274').toString()
+      }
+
+      return new URL(value, requestUrl.origin).toString()
+    }
 
     const client = createTRPCProxyClient<AppRouter>({
       links: [
@@ -67,8 +81,16 @@ export default defineNuxtPlugin({
           url: '/api/trpc',
           transformer: superjson,
           fetch: async (url, opts) => {
-            console.log('🔗 [TRPC] Fetching:', url)
-            const res = await requestFetch(url, { ...opts, credentials: 'include' })
+            const res = import.meta.server
+              ? await fetch(resolveServerUrl(url), {
+                ...opts,
+                credentials: 'include',
+                headers: {
+                  ...(opts?.headers || {}),
+                  ...requestHeaders,
+                },
+              })
+              : await fetch(url, { ...opts, credentials: 'include' })
             if (res.status === 401) {
               // Optional: guard for recursive loops if logout triggers calls
               // try { await $auth.logout() } catch {}

@@ -144,6 +144,7 @@ type MonthSummary = {
 
 const route = useRoute()
 const router = useRouter()
+const explorerApi = useRavenExplorerApi()
 
 const routeString = (value: unknown) => {
   if (Array.isArray(value)) return typeof value[0] === 'string' ? value[0] : ''
@@ -222,47 +223,7 @@ const { data: environmentData, pending: environmentPending, error: environmentEr
   async () => {
     if (!spaceKey.value) return null
 
-    const response = await queryRavenDb(
-      `
-        LET $space = (SELECT * FROM financialSpace WHERE key = $spaceKey LIMIT 1)[0];
-
-        RETURN $space;
-
-        SELECT id, key, name, bankName, accountType, currency, accountNumberLast4, openingBalance, active, notes
-        FROM account
-        WHERE space = $space.id AND active = true
-        ORDER BY name;
-
-        SELECT account, count() AS transactionCount, math::max(postedAt) AS latestTransactionAt
-        FROM transaction
-        WHERE space = $space.id
-        GROUP BY account;
-
-        SELECT transaction.account AS account, count() AS openClarificationCount
-        FROM clarificationTask
-        WHERE space = $space.id AND status = 'open'
-        GROUP BY account;
-      `,
-      { spaceKey: spaceKey.value },
-    )
-
-    const space = statementResult<SpaceRow | null>(response, 0)
-    const accounts = statementResult<AccountRow[]>(response, 1)
-    const transactionStats = statementResult<TransactionCountRow[]>(response, 2)
-    const clarificationStats = statementResult<ClarificationCountRow[]>(response, 3)
-
-    const transactionMap = new Map(transactionStats.map(row => [row.account, row]))
-    const clarificationMap = new Map(clarificationStats.map(row => [row.account, row]))
-
-    return {
-      space,
-      accounts: accounts.map(account => ({
-        ...account,
-        transactionCount: transactionMap.get(account.id)?.transactionCount ?? 0,
-        latestTransactionAt: transactionMap.get(account.id)?.latestTransactionAt ?? null,
-        openClarificationCount: clarificationMap.get(account.id)?.openClarificationCount ?? 0,
-      })),
-    }
+    return await explorerApi.getEnvironmentExplorer(spaceKey.value)
   },
   {
     server: false,
@@ -286,79 +247,7 @@ const { data: accountData, pending: accountPending, error: accountError, refresh
   async () => {
     if (!spaceKey.value || !selectedAccountKey.value) return null
 
-    const response = await queryRavenDb(
-      `
-        LET $space = (SELECT VALUE id FROM financialSpace WHERE key = $spaceKey LIMIT 1)[0];
-        LET $account = (SELECT * FROM account WHERE key = $accountKey AND space = $space LIMIT 1)[0];
-
-        RETURN $account;
-
-        SELECT id, key, statementDate, sourceFileName, rowCount, normalizedCount, clarificationCount, status
-        FROM statementImport
-        WHERE account = $account.id
-        ORDER BY statementDate DESC;
-
-        SELECT string::slice(postedAt, 0, 7) AS month, direction, count() AS total, math::sum(amount) AS amountTotal
-        FROM transaction
-        WHERE account = $account.id
-        GROUP BY month, direction
-        ORDER BY month DESC, direction;
-
-        SELECT count() AS openClarificationCount
-        FROM clarificationTask
-        WHERE transaction.account = $account.id AND status = 'open'
-        GROUP ALL;
-      `,
-      {
-        spaceKey: spaceKey.value,
-        accountKey: selectedAccountKey.value,
-      },
-    )
-
-    const account = statementResult<AccountRow | null>(response, 0)
-    const statementImports = statementResult<StatementImportRow[]>(response, 1)
-    const monthDirectionRows = statementResult<MonthDirectionRow[]>(response, 2)
-    const clarificationCountRows = statementResult<{ openClarificationCount: number }[]>(response, 3)
-
-    const monthMap = new Map<string, MonthSummary>()
-    for (const row of monthDirectionRows) {
-      const current = monthMap.get(row.month) || {
-        month: row.month,
-        income: 0,
-        outgoing: 0,
-        transfers: 0,
-        transactionCount: 0,
-        creditCount: 0,
-        debitCount: 0,
-        transferCount: 0,
-        net: 0,
-      }
-
-      if (row.direction === 'credit') {
-        current.income = row.amountTotal
-        current.creditCount = row.total
-      }
-      else if (row.direction === 'transfer') {
-        current.transfers = row.amountTotal
-        current.transferCount = row.total
-      }
-      else {
-        current.outgoing = row.amountTotal
-        current.debitCount = row.total
-      }
-
-      current.transactionCount = current.creditCount + current.debitCount + current.transferCount
-      current.net = current.income - current.outgoing - current.transfers
-
-      monthMap.set(row.month, current)
-    }
-
-    return {
-      account,
-      statementImports,
-      months: Array.from(monthMap.values()).sort((left, right) => right.month.localeCompare(left.month)),
-      openClarificationCount: clarificationCountRows[0]?.openClarificationCount ?? 0,
-    }
+    return await explorerApi.getAccountExplorer(spaceKey.value, selectedAccountKey.value)
   },
   {
     server: false,
@@ -382,43 +271,7 @@ const { data: monthData, pending: monthPending, error: monthError, refresh: refr
   async () => {
     if (!spaceKey.value || !selectedAccountKey.value || !selectedMonth.value) return null
 
-    const response = await queryRavenDb(
-      `
-        LET $space = (SELECT VALUE id FROM financialSpace WHERE key = $spaceKey LIMIT 1)[0];
-        LET $account = (SELECT VALUE id FROM account WHERE key = $accountKey AND space = $space LIMIT 1)[0];
-
-        SELECT category, category.name AS categoryName, category.key AS categoryKey, count() AS total, math::sum(amount) AS amountTotal
-        FROM transaction
-        WHERE account = $account AND string::slice(postedAt, 0, 7) = $month
-        GROUP BY category, categoryName, categoryKey
-        ORDER BY amountTotal DESC;
-
-        SELECT id, postedAt, description, normalizedDescription, amount, balance, direction, status, merchantName, category, category.name AS categoryName, category.key AS categoryKey, notes, sourceRow.rowNumber AS rowNumber, sourceRow.rawData.bankChargeZar AS bankChargeZar, sourceRow.rawData.rawRowText AS rawRowText
-        FROM transaction
-        WHERE account = $account AND string::slice(postedAt, 0, 7) = $month
-        ORDER BY postedAt DESC, rowNumber DESC, id DESC;
-
-        SELECT count() AS openClarificationCount
-        FROM clarificationTask
-        WHERE transaction.account = $account AND string::slice(transaction.postedAt, 0, 7) = $month AND status = 'open'
-        GROUP ALL;
-      `,
-      {
-        spaceKey: spaceKey.value,
-        accountKey: selectedAccountKey.value,
-        month: selectedMonth.value,
-      },
-    )
-
-    const categories = statementResult<CategoryTotalRow[]>(response, 0)
-    const transactions = statementResult<TransactionRow[]>(response, 1)
-    const clarificationCounts = statementResult<{ openClarificationCount: number }[]>(response, 2)
-
-    return {
-      categories,
-      transactions,
-      openClarificationCount: clarificationCounts[0]?.openClarificationCount ?? 0,
-    }
+    return await explorerApi.getAccountMonth(spaceKey.value, selectedAccountKey.value, selectedMonth.value)
   },
   {
     server: false,
@@ -431,24 +284,7 @@ const { data: transactionPanelData, pending: transactionPending, error: transact
   async () => {
     if (!selectedTransactionId.value) return null
 
-    const response = await queryRavenDb(
-      `
-        LET $transaction = <record>$transactionId;
-
-        SELECT * FROM only $transaction FETCH category, merchant, sourceRow;
-
-        SELECT id, key, status, question, reason, confidence, resolutionNotes
-        FROM clarificationTask
-        WHERE transaction = $transaction
-        ORDER BY status, key;
-      `,
-      { transactionId: selectedTransactionId.value },
-    )
-
-    return {
-      transaction: statementResult<TransactionDetail | null>(response, 0),
-      clarificationTasks: statementResult<ClarificationTaskRow[]>(response, 1),
-    }
+    return await explorerApi.getTransactionDetail(selectedTransactionId.value)
   },
   {
     server: false,
