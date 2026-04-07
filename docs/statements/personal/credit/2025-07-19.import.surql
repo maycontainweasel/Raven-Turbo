@@ -61,18 +61,18 @@ LET $cat_fees = fn::createCategory({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $cat_unclassified = fn::createCategory({
-  space: $space,
-  key: "unclassified",
-  name: "Unclassified",
-  categoryKind: "expense",
-  active: true,
-  notes: "Imported from 2025-07-19.import.md"
-});
 LET $cat_groceries_household = fn::createCategory({
   space: $space,
   key: "groceries-household",
   name: "Groceries / household",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_fast_food_takeout = fn::createCategory({
+  space: $space,
+  key: "fast-food-takeout",
+  name: "Fast food / takeout",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
@@ -85,6 +85,30 @@ LET $cat_crypto_trading = fn::createCategory({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
+LET $cat_holiday_travel = fn::createCategory({
+  space: $space,
+  key: "holiday-travel",
+  name: "Holiday / travel",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_dining_lifestyle = fn::createCategory({
+  space: $space,
+  key: "dining-lifestyle",
+  name: "Dining / lifestyle",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_business_expenses_paid_personally_mobile_phone = fn::createCategory({
+  space: $space,
+  key: "business-expenses-paid-personally-mobile-phone",
+  name: "Business expenses paid personally / mobile phone",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
 LET $cat_subscription_media = fn::createCategory({
   space: $space,
   key: "subscription-media",
@@ -93,10 +117,42 @@ LET $cat_subscription_media = fn::createCategory({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
+LET $cat_clothing = fn::createCategory({
+  space: $space,
+  key: "clothing",
+  name: "Clothing",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_unclassified = fn::createCategory({
+  space: $space,
+  key: "unclassified",
+  name: "Unclassified",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
 LET $cat_business_expenses_paid_personally_trading_tools = fn::createCategory({
   space: $space,
   key: "business-expenses-paid-personally-trading-tools",
   name: "Business expenses paid personally / trading tools",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_fuel_transport = fn::createCategory({
+  space: $space,
+  key: "fuel-transport",
+  name: "Fuel / transport",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
+LET $cat_social_holiday = fn::createCategory({
+  space: $space,
+  key: "social-holiday",
+  name: "Social / holiday",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
@@ -170,6 +226,15 @@ LET $cat_fees_vat_on_fees = fn::createCategory({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
+LET $cat_fees_cross_border_transaction_fee = fn::createCategory({
+  space: $space,
+  key: "fees-cross-border-transaction-fee",
+  name: "Cross Border Transaction Fee",
+  categoryKind: "expense",
+  parentCategory: $cat_fees,
+  active: true,
+  notes: "Imported from 2025-07-19.import.md"
+});
 
 -- Merchant records
 LET $merchant_nedbank_current_account = fn::createMerchant({
@@ -188,14 +253,6 @@ LET $merchant_nedbank = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_cross_border_transaction_fee = fn::createMerchant({
-  space: $space,
-  key: "cross-border-transaction-fee",
-  name: "Cross Border Transaction Fee",
-  normalizedName: "Cross Border Transaction Fee",
-  active: true,
-  notes: "Imported from 2025-07-19.import.md"
-});
 LET $merchant_the_local_choic_202880_val_de_vie_e_za = fn::createMerchant({
   space: $space,
   key: "the-local-choic-202880-val-de-vie-e-za",
@@ -204,11 +261,11 @@ LET $merchant_the_local_choic_202880_val_de_vie_e_za = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_backs_restaurant_and_d_paarl_za = fn::createMerchant({
+LET $merchant_backs_restaurant_and_d = fn::createMerchant({
   space: $space,
-  key: "backs-restaurant-and-d-paarl-za",
-  name: "Backs Restaurant And D Paarl     Za",
-  normalizedName: "Backs Restaurant And D Paarl     Za",
+  key: "backs-restaurant-and-d",
+  name: "Backs Restaurant And D",
+  normalizedName: "Backs Restaurant And D",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
@@ -220,27 +277,27 @@ LET $merchant_valr = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_rogers_hospitali9030263bel_ombre_mu = fn::createMerchant({
+LET $merchant_rogers_hospitality = fn::createMerchant({
   space: $space,
-  key: "rogers-hospitali9030263bel-ombre-mu",
-  name: "Rogers Hospitali9030263bel Ombre   Mu",
-  normalizedName: "Rogers Hospitali9030263bel Ombre   Mu",
+  key: "rogers-hospitality",
+  name: "Rogers Hospitality",
+  normalizedName: "Rogers Hospitality",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_casa_pizza_2_casa_pizza_2_mu = fn::createMerchant({
+LET $merchant_casa_pizza_2 = fn::createMerchant({
   space: $space,
-  key: "casa-pizza-2-casa-pizza-2-mu",
-  name: "Casa Pizza 2        >Casa Pizza 2 Mu",
-  normalizedName: "Casa Pizza 2        >Casa Pizza 2 Mu",
+  key: "casa-pizza-2",
+  name: "Casa Pizza 2",
+  normalizedName: "Casa Pizza 2",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_i_afrihost_com_4_cape_town_za = fn::createMerchant({
+LET $merchant_afrihost = fn::createMerchant({
   space: $space,
-  key: "i-afrihost-com-4-cape-town-za",
-  name: "I Afrihost.Com 4     Cape Town Za",
-  normalizedName: "I Afrihost.Com 4     Cape Town Za",
+  key: "afrihost",
+  name: "Afrihost",
+  normalizedName: "Afrihost",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
@@ -252,35 +309,35 @@ LET $merchant_spotify = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_london_supermarket_b_r_london_supermmu = fn::createMerchant({
+LET $merchant_london_supermarket = fn::createMerchant({
   space: $space,
-  key: "london-supermarket-b-r-london-supermmu",
-  name: "London Supermarket B/R >London Supermmu",
-  normalizedName: "London Supermarket B/R >London Supermmu",
+  key: "london-supermarket",
+  name: "London Supermarket",
+  normalizedName: "London Supermarket",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_quiksilver_quiksilver_mu = fn::createMerchant({
+LET $merchant_quiksilver = fn::createMerchant({
   space: $space,
-  key: "quiksilver-quiksilver-mu",
-  name: "Quiksilver       >Quiksilver Mu",
-  normalizedName: "Quiksilver       >Quiksilver Mu",
+  key: "quiksilver",
+  name: "Quiksilver",
+  normalizedName: "Quiksilver",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_living_the_food_1134634grand_baie_mu = fn::createMerchant({
+LET $merchant_living_the_food = fn::createMerchant({
   space: $space,
-  key: "living-the-food-1134634grand-baie-mu",
-  name: "Living The Food 1134634grand Baie Mu",
-  normalizedName: "Living The Food 1134634grand Baie Mu",
+  key: "living-the-food",
+  name: "Living The Food",
+  normalizedName: "Living The Food",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_bakerlux_ltd_bakerlux_ltd_mu = fn::createMerchant({
+LET $merchant_bakerlux_ltd = fn::createMerchant({
   space: $space,
-  key: "bakerlux-ltd-bakerlux-ltd-mu",
-  name: "Bakerlux Ltd        >Bakerlux Ltd Mu",
-  normalizedName: "Bakerlux Ltd        >Bakerlux Ltd Mu",
+  key: "bakerlux-ltd",
+  name: "Bakerlux Ltd",
+  normalizedName: "Bakerlux Ltd",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
@@ -292,27 +349,27 @@ LET $merchant_trade_travel_chill = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_msf_leisure_company_ltd_msf_leisure_cmu = fn::createMerchant({
+LET $merchant_msf_leisure_company_ltd = fn::createMerchant({
   space: $space,
-  key: "msf-leisure-company-ltd-msf-leisure-cmu",
-  name: "Msf Leisure Company Ltd >Msf Leisure Cmu",
-  normalizedName: "Msf Leisure Company Ltd >Msf Leisure Cmu",
+  key: "msf-leisure-company-ltd",
+  name: "Msf Leisure Company Ltd",
+  normalizedName: "Msf Leisure Company Ltd",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_emeralda_service_station_medine_mu = fn::createMerchant({
+LET $merchant_emeralda_service_station = fn::createMerchant({
   space: $space,
-  key: "emeralda-service-station-medine-mu",
-  name: "Emeralda Service Station Medine   Mu",
-  normalizedName: "Emeralda Service Station Medine   Mu",
+  key: "emeralda-service-station",
+  name: "Emeralda Service Station",
+  normalizedName: "Emeralda Service Station",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
-LET $merchant_take_off_bar_plaisance_mu = fn::createMerchant({
+LET $merchant_take_off_bar = fn::createMerchant({
   space: $space,
-  key: "take-off-bar-plaisance-mu",
-  name: "Take Off Bar         Plaisance Mu",
-  normalizedName: "Take Off Bar         Plaisance Mu",
+  key: "take-off-bar",
+  name: "Take Off Bar",
+  normalizedName: "Take Off Bar",
   active: true,
   notes: "Imported from 2025-07-19.import.md"
 });
@@ -1052,24 +1109,24 @@ LET $row_row_13 = fn::createStatementRow({
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
     statementPeriodEnd: "2025-07-19",
     rowNo: 13,
     rawRowText: "Cross Border Transaction Fee; 81.91",
-    transactionType: "expense",
-    normalizedMerchant: "Cross Border Transaction Fee",
-    category: "Unclassified",
-    feeType: "",
-    clarificationStatus: "unclarified",
+    transactionType: "fee",
+    normalizedMerchant: "Nedbank",
+    category: "Fees",
+    feeType: "cross border transaction fee",
+    clarificationStatus: "clarified",
     amountZar: 81.91,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Cross-border transaction fee."
 });
 LET $tx_stmt_2025_07_19_row_13 = fn::createTransaction({
   space: $space,
@@ -1083,35 +1140,21 @@ LET $tx_stmt_2025_07_19_row_13 = fn::createTransaction({
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Cross Border Transaction Fee",
-  merchant: $merchant_cross_border_transaction_fee,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Nedbank",
+  merchant: $merchant_nedbank,
+  category: $cat_fees_cross_border_transaction_fee,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Cross-border transaction fee."
 });
-fn::updateStatementRow($row_row_13.id, { transaction: $tx_stmt_2025_07_19_row_13.id, status: "matched" });
+fn::updateStatementRow($row_row_13.id, { transaction: $tx_stmt_2025_07_19_row_13.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_13.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_13.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_13.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_13.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_13.id, "TransactionMerchant", $merchant_cross_border_transaction_fee.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_13.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_13 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-13",
-  transaction: $tx_stmt_2025_07_19_row_13,
-  status: "open",
-  question: "What is the exact purpose of this Cross Border Transaction Fee transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_cross_border_transaction_fee,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_13.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_13.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_13.id, "TransactionMerchant", $merchant_nedbank.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_13.id, "TransactionCategory", $cat_fees_cross_border_transaction_fee.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 14
 LET $row_row_14 = fn::createStatementRow({
@@ -1241,13 +1284,13 @@ LET $row_row_16 = fn::createStatementRow({
   rowNumber: 16,
   postedAt: "2025-06-24T00:00:00Z",
   description: "Backs Restaurant And D Paarl     Za",
-  normalizedDescription: "Backs Restaurant And D Paarl     Za",
+  normalizedDescription: "Backs Restaurant And D",
   amount: 295,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1255,15 +1298,15 @@ LET $row_row_16 = fn::createStatementRow({
     rowNo: 16,
     rawRowText: "Backs Restaurant And D Paarl     Za; 295.00",
     transactionType: "expense",
-    normalizedMerchant: "Backs Restaurant And D Paarl     Za",
-    category: "Unclassified",
+    normalizedMerchant: "Backs Restaurant And D",
+    category: "Fast food / takeout",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 295,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food takeout."
 });
 LET $tx_stmt_2025_07_19_row_16 = fn::createTransaction({
   space: $space,
@@ -1272,40 +1315,26 @@ LET $tx_stmt_2025_07_19_row_16 = fn::createTransaction({
   sourceRow: $row_row_16,
   postedAt: "2025-06-24T00:00:00Z",
   description: "Backs Restaurant And D Paarl     Za",
-  normalizedDescription: "Backs Restaurant And D Paarl     Za",
+  normalizedDescription: "Backs Restaurant And D",
   amount: 295,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Backs Restaurant And D Paarl     Za",
-  merchant: $merchant_backs_restaurant_and_d_paarl_za,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Backs Restaurant And D",
+  merchant: $merchant_backs_restaurant_and_d,
+  category: $cat_fast_food_takeout,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food takeout."
 });
-fn::updateStatementRow($row_row_16.id, { transaction: $tx_stmt_2025_07_19_row_16.id, status: "matched" });
+fn::updateStatementRow($row_row_16.id, { transaction: $tx_stmt_2025_07_19_row_16.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_16.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_16.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_16.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_16.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_16.id, "TransactionMerchant", $merchant_backs_restaurant_and_d_paarl_za.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_16.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_16 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-16",
-  transaction: $tx_stmt_2025_07_19_row_16,
-  status: "open",
-  question: "What is the exact purpose of this Backs Restaurant And D Paarl     Za transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_backs_restaurant_and_d_paarl_za,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_16.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_16.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_16.id, "TransactionMerchant", $merchant_backs_restaurant_and_d.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_16.id, "TransactionCategory", $cat_fast_food_takeout.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 17
 LET $row_row_17 = fn::createStatementRow({
@@ -1375,13 +1404,13 @@ LET $row_row_18 = fn::createStatementRow({
   rowNumber: 18,
   postedAt: "2025-06-30T00:00:00Z",
   description: "Rogers Hospitali9030263bel Ombre   Mu",
-  normalizedDescription: "Rogers Hospitali9030263bel Ombre   Mu",
+  normalizedDescription: "Rogers Hospitality",
   amount: 4095.62,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1389,15 +1418,15 @@ LET $row_row_18 = fn::createStatementRow({
     rowNo: 18,
     rawRowText: "Rogers Hospitali9030263bel Ombre   Mu; 4095.62",
     transactionType: "expense",
-    normalizedMerchant: "Rogers Hospitali9030263bel Ombre   Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Rogers Hospitality",
+    category: "Holiday / travel",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 4095.62,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Holiday expense in Mauritius."
 });
 LET $tx_stmt_2025_07_19_row_18 = fn::createTransaction({
   space: $space,
@@ -1406,40 +1435,26 @@ LET $tx_stmt_2025_07_19_row_18 = fn::createTransaction({
   sourceRow: $row_row_18,
   postedAt: "2025-06-30T00:00:00Z",
   description: "Rogers Hospitali9030263bel Ombre   Mu",
-  normalizedDescription: "Rogers Hospitali9030263bel Ombre   Mu",
+  normalizedDescription: "Rogers Hospitality",
   amount: 4095.62,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Rogers Hospitali9030263bel Ombre   Mu",
-  merchant: $merchant_rogers_hospitali9030263bel_ombre_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Rogers Hospitality",
+  merchant: $merchant_rogers_hospitality,
+  category: $cat_holiday_travel,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Holiday expense in Mauritius."
 });
-fn::updateStatementRow($row_row_18.id, { transaction: $tx_stmt_2025_07_19_row_18.id, status: "matched" });
+fn::updateStatementRow($row_row_18.id, { transaction: $tx_stmt_2025_07_19_row_18.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_18.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_18.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_18.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_18.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_18.id, "TransactionMerchant", $merchant_rogers_hospitali9030263bel_ombre_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_18.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_18 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-18",
-  transaction: $tx_stmt_2025_07_19_row_18,
-  status: "open",
-  question: "What is the exact purpose of this Rogers Hospitali9030263bel Ombre   Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_rogers_hospitali9030263bel_ombre_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_18.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_18.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_18.id, "TransactionMerchant", $merchant_rogers_hospitality.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_18.id, "TransactionCategory", $cat_holiday_travel.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 19
 LET $row_row_19 = fn::createStatementRow({
@@ -1449,13 +1464,13 @@ LET $row_row_19 = fn::createStatementRow({
   rowNumber: 19,
   postedAt: "2025-06-30T00:00:00Z",
   description: "Casa Pizza 2        >Casa Pizza 2 Mu",
-  normalizedDescription: "Casa Pizza 2        >Casa Pizza 2 Mu",
+  normalizedDescription: "Casa Pizza 2",
   amount: 1068.96,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1463,15 +1478,15 @@ LET $row_row_19 = fn::createStatementRow({
     rowNo: 19,
     rawRowText: "Casa Pizza 2        >Casa Pizza 2 Mu; 1068.96",
     transactionType: "expense",
-    normalizedMerchant: "Casa Pizza 2        >Casa Pizza 2 Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Casa Pizza 2",
+    category: "Dining / lifestyle",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1068.96,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Restaurant or eating-out spend."
 });
 LET $tx_stmt_2025_07_19_row_19 = fn::createTransaction({
   space: $space,
@@ -1480,40 +1495,26 @@ LET $tx_stmt_2025_07_19_row_19 = fn::createTransaction({
   sourceRow: $row_row_19,
   postedAt: "2025-06-30T00:00:00Z",
   description: "Casa Pizza 2        >Casa Pizza 2 Mu",
-  normalizedDescription: "Casa Pizza 2        >Casa Pizza 2 Mu",
+  normalizedDescription: "Casa Pizza 2",
   amount: 1068.96,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Casa Pizza 2        >Casa Pizza 2 Mu",
-  merchant: $merchant_casa_pizza_2_casa_pizza_2_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Casa Pizza 2",
+  merchant: $merchant_casa_pizza_2,
+  category: $cat_dining_lifestyle,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Restaurant or eating-out spend."
 });
-fn::updateStatementRow($row_row_19.id, { transaction: $tx_stmt_2025_07_19_row_19.id, status: "matched" });
+fn::updateStatementRow($row_row_19.id, { transaction: $tx_stmt_2025_07_19_row_19.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_19.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_19.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_19.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_19.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_19.id, "TransactionMerchant", $merchant_casa_pizza_2_casa_pizza_2_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_19.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_19 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-19",
-  transaction: $tx_stmt_2025_07_19_row_19,
-  status: "open",
-  question: "What is the exact purpose of this Casa Pizza 2        >Casa Pizza 2 Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_casa_pizza_2_casa_pizza_2_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_19.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_19.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_19.id, "TransactionMerchant", $merchant_casa_pizza_2.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_19.id, "TransactionCategory", $cat_dining_lifestyle.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 20
 LET $row_row_20 = fn::createStatementRow({
@@ -1523,13 +1524,13 @@ LET $row_row_20 = fn::createStatementRow({
   rowNumber: 20,
   postedAt: "2025-07-01T00:00:00Z",
   description: "I Afrihost.Com 4     Cape Town Za",
-  normalizedDescription: "I Afrihost.Com 4     Cape Town Za",
+  normalizedDescription: "Afrihost",
   amount: 419,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1537,15 +1538,15 @@ LET $row_row_20 = fn::createStatementRow({
     rowNo: 20,
     rawRowText: "I Afrihost.Com 4     Cape Town Za; 419.00",
     transactionType: "expense",
-    normalizedMerchant: "I Afrihost.Com 4     Cape Town Za",
-    category: "Unclassified",
+    normalizedMerchant: "Afrihost",
+    category: "Business expenses paid personally / mobile phone",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 419,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Mobile phone contract that should be paid by the business."
 });
 LET $tx_stmt_2025_07_19_row_20 = fn::createTransaction({
   space: $space,
@@ -1554,40 +1555,26 @@ LET $tx_stmt_2025_07_19_row_20 = fn::createTransaction({
   sourceRow: $row_row_20,
   postedAt: "2025-07-01T00:00:00Z",
   description: "I Afrihost.Com 4     Cape Town Za",
-  normalizedDescription: "I Afrihost.Com 4     Cape Town Za",
+  normalizedDescription: "Afrihost",
   amount: 419,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "I Afrihost.Com 4     Cape Town Za",
-  merchant: $merchant_i_afrihost_com_4_cape_town_za,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Afrihost",
+  merchant: $merchant_afrihost,
+  category: $cat_business_expenses_paid_personally_mobile_phone,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Mobile phone contract that should be paid by the business."
 });
-fn::updateStatementRow($row_row_20.id, { transaction: $tx_stmt_2025_07_19_row_20.id, status: "matched" });
+fn::updateStatementRow($row_row_20.id, { transaction: $tx_stmt_2025_07_19_row_20.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_20.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_20.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_20.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_20.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_20.id, "TransactionMerchant", $merchant_i_afrihost_com_4_cape_town_za.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_20.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_20 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-20",
-  transaction: $tx_stmt_2025_07_19_row_20,
-  status: "open",
-  question: "What is the exact purpose of this I Afrihost.Com 4     Cape Town Za transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_i_afrihost_com_4_cape_town_za,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_20.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_20.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_20.id, "TransactionMerchant", $merchant_afrihost.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_20.id, "TransactionCategory", $cat_business_expenses_paid_personally_mobile_phone.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 21
 LET $row_row_21 = fn::createStatementRow({
@@ -1657,13 +1644,13 @@ LET $row_row_22 = fn::createStatementRow({
   rowNumber: 22,
   postedAt: "2025-07-03T00:00:00Z",
   description: "London Supermarket B/R >London Supermmu",
-  normalizedDescription: "London Supermarket B/R >London Supermmu",
+  normalizedDescription: "London Supermarket",
   amount: 289.61,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1671,15 +1658,15 @@ LET $row_row_22 = fn::createStatementRow({
     rowNo: 22,
     rawRowText: "London Supermarket B/R >London Supermmu; 289.61",
     transactionType: "expense",
-    normalizedMerchant: "London Supermarket B/R >London Supermmu",
-    category: "Unclassified",
+    normalizedMerchant: "London Supermarket",
+    category: "Groceries / household",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 289.61,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Grocery spend."
 });
 LET $tx_stmt_2025_07_19_row_22 = fn::createTransaction({
   space: $space,
@@ -1688,40 +1675,26 @@ LET $tx_stmt_2025_07_19_row_22 = fn::createTransaction({
   sourceRow: $row_row_22,
   postedAt: "2025-07-03T00:00:00Z",
   description: "London Supermarket B/R >London Supermmu",
-  normalizedDescription: "London Supermarket B/R >London Supermmu",
+  normalizedDescription: "London Supermarket",
   amount: 289.61,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "London Supermarket B/R >London Supermmu",
-  merchant: $merchant_london_supermarket_b_r_london_supermmu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "London Supermarket",
+  merchant: $merchant_london_supermarket,
+  category: $cat_groceries_household,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Grocery spend."
 });
-fn::updateStatementRow($row_row_22.id, { transaction: $tx_stmt_2025_07_19_row_22.id, status: "matched" });
+fn::updateStatementRow($row_row_22.id, { transaction: $tx_stmt_2025_07_19_row_22.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_22.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_22.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_22.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_22.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_22.id, "TransactionMerchant", $merchant_london_supermarket_b_r_london_supermmu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_22.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_22 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-22",
-  transaction: $tx_stmt_2025_07_19_row_22,
-  status: "open",
-  question: "What is the exact purpose of this London Supermarket B/R >London Supermmu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_london_supermarket_b_r_london_supermmu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_22.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_22.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_22.id, "TransactionMerchant", $merchant_london_supermarket.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_22.id, "TransactionCategory", $cat_groceries_household.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 23
 LET $row_row_23 = fn::createStatementRow({
@@ -1731,13 +1704,13 @@ LET $row_row_23 = fn::createStatementRow({
   rowNumber: 23,
   postedAt: "2025-07-03T00:00:00Z",
   description: "Quiksilver       >Quiksilver Mu",
-  normalizedDescription: "Quiksilver       >Quiksilver Mu",
+  normalizedDescription: "Quiksilver",
   amount: 501.49,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -1745,15 +1718,15 @@ LET $row_row_23 = fn::createStatementRow({
     rowNo: 23,
     rawRowText: "Quiksilver       >Quiksilver Mu; 501.49",
     transactionType: "expense",
-    normalizedMerchant: "Quiksilver       >Quiksilver Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Quiksilver",
+    category: "Clothing",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 501.49,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Clothing spend."
 });
 LET $tx_stmt_2025_07_19_row_23 = fn::createTransaction({
   space: $space,
@@ -1762,40 +1735,26 @@ LET $tx_stmt_2025_07_19_row_23 = fn::createTransaction({
   sourceRow: $row_row_23,
   postedAt: "2025-07-03T00:00:00Z",
   description: "Quiksilver       >Quiksilver Mu",
-  normalizedDescription: "Quiksilver       >Quiksilver Mu",
+  normalizedDescription: "Quiksilver",
   amount: 501.49,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Quiksilver       >Quiksilver Mu",
-  merchant: $merchant_quiksilver_quiksilver_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Quiksilver",
+  merchant: $merchant_quiksilver,
+  category: $cat_clothing,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Clothing spend."
 });
-fn::updateStatementRow($row_row_23.id, { transaction: $tx_stmt_2025_07_19_row_23.id, status: "matched" });
+fn::updateStatementRow($row_row_23.id, { transaction: $tx_stmt_2025_07_19_row_23.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_23.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_23.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_23.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_23.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_23.id, "TransactionMerchant", $merchant_quiksilver_quiksilver_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_23.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_23 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-23",
-  transaction: $tx_stmt_2025_07_19_row_23,
-  status: "open",
-  question: "What is the exact purpose of this Quiksilver       >Quiksilver Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_quiksilver_quiksilver_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_23.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_23.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_23.id, "TransactionMerchant", $merchant_quiksilver.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_23.id, "TransactionCategory", $cat_clothing.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 24
 LET $row_row_24 = fn::createStatementRow({
@@ -2225,13 +2184,13 @@ LET $row_row_31 = fn::createStatementRow({
   rowNumber: 31,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Living The Food 1134634grand Baie Mu",
-  normalizedDescription: "Living The Food 1134634grand Baie Mu",
+  normalizedDescription: "Living The Food",
   amount: 81.84,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2239,15 +2198,15 @@ LET $row_row_31 = fn::createStatementRow({
     rowNo: 31,
     rawRowText: "Living The Food 1134634grand Baie Mu; 81.84",
     transactionType: "expense",
-    normalizedMerchant: "Living The Food 1134634grand Baie Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Living The Food",
+    category: "Fast food / takeout",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 81.84,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food or quick meal spend."
 });
 LET $tx_stmt_2025_07_19_row_31 = fn::createTransaction({
   space: $space,
@@ -2256,40 +2215,26 @@ LET $tx_stmt_2025_07_19_row_31 = fn::createTransaction({
   sourceRow: $row_row_31,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Living The Food 1134634grand Baie Mu",
-  normalizedDescription: "Living The Food 1134634grand Baie Mu",
+  normalizedDescription: "Living The Food",
   amount: 81.84,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Living The Food 1134634grand Baie Mu",
-  merchant: $merchant_living_the_food_1134634grand_baie_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Living The Food",
+  merchant: $merchant_living_the_food,
+  category: $cat_fast_food_takeout,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food or quick meal spend."
 });
-fn::updateStatementRow($row_row_31.id, { transaction: $tx_stmt_2025_07_19_row_31.id, status: "matched" });
+fn::updateStatementRow($row_row_31.id, { transaction: $tx_stmt_2025_07_19_row_31.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_31.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_31.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_31.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_31.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_31.id, "TransactionMerchant", $merchant_living_the_food_1134634grand_baie_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_31.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_31 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-31",
-  transaction: $tx_stmt_2025_07_19_row_31,
-  status: "open",
-  question: "What is the exact purpose of this Living The Food 1134634grand Baie Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_living_the_food_1134634grand_baie_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_31.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_31.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_31.id, "TransactionMerchant", $merchant_living_the_food.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_31.id, "TransactionCategory", $cat_fast_food_takeout.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 32
 LET $row_row_32 = fn::createStatementRow({
@@ -2299,13 +2244,13 @@ LET $row_row_32 = fn::createStatementRow({
   rowNumber: 32,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Living The Food 1134634grand Baie Mu",
-  normalizedDescription: "Living The Food 1134634grand Baie Mu",
+  normalizedDescription: "Living The Food",
   amount: 67.14,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2313,15 +2258,15 @@ LET $row_row_32 = fn::createStatementRow({
     rowNo: 32,
     rawRowText: "Living The Food 1134634grand Baie Mu; 67.14",
     transactionType: "expense",
-    normalizedMerchant: "Living The Food 1134634grand Baie Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Living The Food",
+    category: "Fast food / takeout",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 67.14,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food or quick meal spend."
 });
 LET $tx_stmt_2025_07_19_row_32 = fn::createTransaction({
   space: $space,
@@ -2330,40 +2275,26 @@ LET $tx_stmt_2025_07_19_row_32 = fn::createTransaction({
   sourceRow: $row_row_32,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Living The Food 1134634grand Baie Mu",
-  normalizedDescription: "Living The Food 1134634grand Baie Mu",
+  normalizedDescription: "Living The Food",
   amount: 67.14,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Living The Food 1134634grand Baie Mu",
-  merchant: $merchant_living_the_food_1134634grand_baie_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Living The Food",
+  merchant: $merchant_living_the_food,
+  category: $cat_fast_food_takeout,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Fast-food or quick meal spend."
 });
-fn::updateStatementRow($row_row_32.id, { transaction: $tx_stmt_2025_07_19_row_32.id, status: "matched" });
+fn::updateStatementRow($row_row_32.id, { transaction: $tx_stmt_2025_07_19_row_32.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_32.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_32.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_32.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_32.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_32.id, "TransactionMerchant", $merchant_living_the_food_1134634grand_baie_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_32.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_32 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-32",
-  transaction: $tx_stmt_2025_07_19_row_32,
-  status: "open",
-  question: "What is the exact purpose of this Living The Food 1134634grand Baie Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_living_the_food_1134634grand_baie_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_32.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_32.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_32.id, "TransactionMerchant", $merchant_living_the_food.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_32.id, "TransactionCategory", $cat_fast_food_takeout.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 33
 LET $row_row_33 = fn::createStatementRow({
@@ -2433,13 +2364,13 @@ LET $row_row_34 = fn::createStatementRow({
   rowNumber: 34,
   postedAt: "2025-07-12T00:00:00Z",
   description: "London Supermarket B/R >London Supermmu",
-  normalizedDescription: "London Supermarket B/R >London Supermmu",
+  normalizedDescription: "London Supermarket",
   amount: 111.87,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2447,15 +2378,15 @@ LET $row_row_34 = fn::createStatementRow({
     rowNo: 34,
     rawRowText: "London Supermarket B/R >London Supermmu; 111.87",
     transactionType: "expense",
-    normalizedMerchant: "London Supermarket B/R >London Supermmu",
-    category: "Unclassified",
+    normalizedMerchant: "London Supermarket",
+    category: "Groceries / household",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 111.87,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Grocery spend."
 });
 LET $tx_stmt_2025_07_19_row_34 = fn::createTransaction({
   space: $space,
@@ -2464,40 +2395,26 @@ LET $tx_stmt_2025_07_19_row_34 = fn::createTransaction({
   sourceRow: $row_row_34,
   postedAt: "2025-07-12T00:00:00Z",
   description: "London Supermarket B/R >London Supermmu",
-  normalizedDescription: "London Supermarket B/R >London Supermmu",
+  normalizedDescription: "London Supermarket",
   amount: 111.87,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "London Supermarket B/R >London Supermmu",
-  merchant: $merchant_london_supermarket_b_r_london_supermmu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "London Supermarket",
+  merchant: $merchant_london_supermarket,
+  category: $cat_groceries_household,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Grocery spend."
 });
-fn::updateStatementRow($row_row_34.id, { transaction: $tx_stmt_2025_07_19_row_34.id, status: "matched" });
+fn::updateStatementRow($row_row_34.id, { transaction: $tx_stmt_2025_07_19_row_34.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_34.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_34.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_34.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_34.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_34.id, "TransactionMerchant", $merchant_london_supermarket_b_r_london_supermmu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_34.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_34 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-34",
-  transaction: $tx_stmt_2025_07_19_row_34,
-  status: "open",
-  question: "What is the exact purpose of this London Supermarket B/R >London Supermmu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_london_supermarket_b_r_london_supermmu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_34.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_34.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_34.id, "TransactionMerchant", $merchant_london_supermarket.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_34.id, "TransactionCategory", $cat_groceries_household.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 35
 LET $row_row_35 = fn::createStatementRow({
@@ -2507,7 +2424,7 @@ LET $row_row_35 = fn::createStatementRow({
   rowNumber: 35,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Bakerlux Ltd        >Bakerlux Ltd Mu",
-  normalizedDescription: "Bakerlux Ltd        >Bakerlux Ltd Mu",
+  normalizedDescription: "Bakerlux Ltd",
   amount: 190.32,
   balance: 0,
   currency: "ZAR",
@@ -2521,7 +2438,7 @@ LET $row_row_35 = fn::createStatementRow({
     rowNo: 35,
     rawRowText: "Bakerlux Ltd        >Bakerlux Ltd Mu; 190.32",
     transactionType: "expense",
-    normalizedMerchant: "Bakerlux Ltd        >Bakerlux Ltd Mu",
+    normalizedMerchant: "Bakerlux Ltd",
     category: "Unclassified",
     feeType: "",
     clarificationStatus: "unclarified",
@@ -2529,7 +2446,7 @@ LET $row_row_35 = fn::createStatementRow({
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Holiday merchant still not identified with confidence."
 });
 LET $tx_stmt_2025_07_19_row_35 = fn::createTransaction({
   space: $space,
@@ -2538,35 +2455,35 @@ LET $tx_stmt_2025_07_19_row_35 = fn::createTransaction({
   sourceRow: $row_row_35,
   postedAt: "2025-07-12T00:00:00Z",
   description: "Bakerlux Ltd        >Bakerlux Ltd Mu",
-  normalizedDescription: "Bakerlux Ltd        >Bakerlux Ltd Mu",
+  normalizedDescription: "Bakerlux Ltd",
   amount: 190.32,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
   status: "matched",
   confidence: 0.55,
-  merchantName: "Bakerlux Ltd        >Bakerlux Ltd Mu",
-  merchant: $merchant_bakerlux_ltd_bakerlux_ltd_mu,
+  merchantName: "Bakerlux Ltd",
+  merchant: $merchant_bakerlux_ltd,
   category: $cat_unclassified,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Holiday merchant still not identified with confidence."
 });
 fn::updateStatementRow($row_row_35.id, { transaction: $tx_stmt_2025_07_19_row_35.id, status: "matched" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_35.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_35.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_35.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_35.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_35.id, "TransactionMerchant", $merchant_bakerlux_ltd_bakerlux_ltd_mu.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_35.id, "TransactionMerchant", $merchant_bakerlux_ltd.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($tx_stmt_2025_07_19_row_35.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
 LET $task_stmt_2025_07_19_row_35 = fn::createClarificationTask({
   space: $space,
   key: "stmt-2025-07-19-row-35",
   transaction: $tx_stmt_2025_07_19_row_35,
   status: "open",
-  question: "What is the exact purpose of this Bakerlux Ltd        >Bakerlux Ltd Mu transaction?",
+  question: "What is the exact purpose of this Bakerlux Ltd transaction?",
   reason: "Needs manual confirmation from the statement import.",
   suggestedSpace: $space,
-  suggestedMerchant: $merchant_bakerlux_ltd_bakerlux_ltd_mu,
+  suggestedMerchant: $merchant_bakerlux_ltd,
   suggestedCategory: $cat_unclassified,
   confidence: 0.25,
   notes: "Imported from 2025-07-19.import.md"
@@ -2641,13 +2558,13 @@ LET $row_row_37 = fn::createStatementRow({
   rowNumber: 37,
   postedAt: "2025-07-13T00:00:00Z",
   description: "Msf Leisure Company Ltd >Msf Leisure Cmu",
-  normalizedDescription: "Msf Leisure Company Ltd >Msf Leisure Cmu",
+  normalizedDescription: "Msf Leisure Company Ltd",
   amount: 1091.22,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2655,15 +2572,15 @@ LET $row_row_37 = fn::createStatementRow({
     rowNo: 37,
     rawRowText: "Msf Leisure Company Ltd >Msf Leisure Cmu; 1091.22",
     transactionType: "expense",
-    normalizedMerchant: "Msf Leisure Company Ltd >Msf Leisure Cmu",
-    category: "Unclassified",
+    normalizedMerchant: "Msf Leisure Company Ltd",
+    category: "Holiday / travel",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1091.22,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Presumed holiday expense in Mauritius."
 });
 LET $tx_stmt_2025_07_19_row_37 = fn::createTransaction({
   space: $space,
@@ -2672,40 +2589,26 @@ LET $tx_stmt_2025_07_19_row_37 = fn::createTransaction({
   sourceRow: $row_row_37,
   postedAt: "2025-07-13T00:00:00Z",
   description: "Msf Leisure Company Ltd >Msf Leisure Cmu",
-  normalizedDescription: "Msf Leisure Company Ltd >Msf Leisure Cmu",
+  normalizedDescription: "Msf Leisure Company Ltd",
   amount: 1091.22,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Msf Leisure Company Ltd >Msf Leisure Cmu",
-  merchant: $merchant_msf_leisure_company_ltd_msf_leisure_cmu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Msf Leisure Company Ltd",
+  merchant: $merchant_msf_leisure_company_ltd,
+  category: $cat_holiday_travel,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Presumed holiday expense in Mauritius."
 });
-fn::updateStatementRow($row_row_37.id, { transaction: $tx_stmt_2025_07_19_row_37.id, status: "matched" });
+fn::updateStatementRow($row_row_37.id, { transaction: $tx_stmt_2025_07_19_row_37.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_37.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_37.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_37.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_37.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_37.id, "TransactionMerchant", $merchant_msf_leisure_company_ltd_msf_leisure_cmu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_37.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_37 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-37",
-  transaction: $tx_stmt_2025_07_19_row_37,
-  status: "open",
-  question: "What is the exact purpose of this Msf Leisure Company Ltd >Msf Leisure Cmu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_msf_leisure_company_ltd_msf_leisure_cmu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_37.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_37.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_37.id, "TransactionMerchant", $merchant_msf_leisure_company_ltd.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_37.id, "TransactionCategory", $cat_holiday_travel.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 38
 LET $row_row_38 = fn::createStatementRow({
@@ -2715,13 +2618,13 @@ LET $row_row_38 = fn::createStatementRow({
   rowNumber: 38,
   postedAt: "2025-07-14T00:00:00Z",
   description: "Emeralda Service Station Medine   Mu",
-  normalizedDescription: "Emeralda Service Station Medine   Mu",
+  normalizedDescription: "Emeralda Service Station",
   amount: 761.78,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2729,15 +2632,15 @@ LET $row_row_38 = fn::createStatementRow({
     rowNo: 38,
     rawRowText: "Emeralda Service Station Medine   Mu; 761.78",
     transactionType: "expense",
-    normalizedMerchant: "Emeralda Service Station Medine   Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Emeralda Service Station",
+    category: "Fuel / transport",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 761.78,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Petrol spend."
 });
 LET $tx_stmt_2025_07_19_row_38 = fn::createTransaction({
   space: $space,
@@ -2746,40 +2649,26 @@ LET $tx_stmt_2025_07_19_row_38 = fn::createTransaction({
   sourceRow: $row_row_38,
   postedAt: "2025-07-14T00:00:00Z",
   description: "Emeralda Service Station Medine   Mu",
-  normalizedDescription: "Emeralda Service Station Medine   Mu",
+  normalizedDescription: "Emeralda Service Station",
   amount: 761.78,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Emeralda Service Station Medine   Mu",
-  merchant: $merchant_emeralda_service_station_medine_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Emeralda Service Station",
+  merchant: $merchant_emeralda_service_station,
+  category: $cat_fuel_transport,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Petrol spend."
 });
-fn::updateStatementRow($row_row_38.id, { transaction: $tx_stmt_2025_07_19_row_38.id, status: "matched" });
+fn::updateStatementRow($row_row_38.id, { transaction: $tx_stmt_2025_07_19_row_38.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_38.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_38.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_38.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_38.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_38.id, "TransactionMerchant", $merchant_emeralda_service_station_medine_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_38.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_38 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-38",
-  transaction: $tx_stmt_2025_07_19_row_38,
-  status: "open",
-  question: "What is the exact purpose of this Emeralda Service Station Medine   Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_emeralda_service_station_medine_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_38.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_38.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_38.id, "TransactionMerchant", $merchant_emeralda_service_station.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_38.id, "TransactionCategory", $cat_fuel_transport.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 39
 LET $row_row_39 = fn::createStatementRow({
@@ -2789,13 +2678,13 @@ LET $row_row_39 = fn::createStatementRow({
   rowNumber: 39,
   postedAt: "2025-07-14T00:00:00Z",
   description: "Take Off Bar         Plaisance Mu",
-  normalizedDescription: "Take Off Bar         Plaisance Mu",
+  normalizedDescription: "Take Off Bar",
   amount: 169.17,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/credit/July 2025.pdf",
     statementPeriodStart: "2025-06-20",
@@ -2803,15 +2692,15 @@ LET $row_row_39 = fn::createStatementRow({
     rowNo: 39,
     rawRowText: "Take Off Bar         Plaisance Mu; 169.17",
     transactionType: "expense",
-    normalizedMerchant: "Take Off Bar         Plaisance Mu",
-    category: "Unclassified",
+    normalizedMerchant: "Take Off Bar",
+    category: "Social / holiday",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 169.17,
     bankChargeZar: null,
     balanceZar: 0
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Social holiday spend."
 });
 LET $tx_stmt_2025_07_19_row_39 = fn::createTransaction({
   space: $space,
@@ -2820,46 +2709,32 @@ LET $tx_stmt_2025_07_19_row_39 = fn::createTransaction({
   sourceRow: $row_row_39,
   postedAt: "2025-07-14T00:00:00Z",
   description: "Take Off Bar         Plaisance Mu",
-  normalizedDescription: "Take Off Bar         Plaisance Mu",
+  normalizedDescription: "Take Off Bar",
   amount: 169.17,
   balance: 0,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Take Off Bar         Plaisance Mu",
-  merchant: $merchant_take_off_bar_plaisance_mu,
-  category: $cat_unclassified,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Take Off Bar",
+  merchant: $merchant_take_off_bar,
+  category: $cat_social_holiday,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Social holiday spend."
 });
-fn::updateStatementRow($row_row_39.id, { transaction: $tx_stmt_2025_07_19_row_39.id, status: "matched" });
+fn::updateStatementRow($row_row_39.id, { transaction: $tx_stmt_2025_07_19_row_39.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_39.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_39.id, "StatementRowTransactions", $tx_stmt_2025_07_19_row_39.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_19_row_39.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_39.id, "TransactionMerchant", $merchant_take_off_bar_plaisance_mu.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_19_row_39.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_19_row_39 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-19-row-39",
-  transaction: $tx_stmt_2025_07_19_row_39,
-  status: "open",
-  question: "What is the exact purpose of this Take Off Bar         Plaisance Mu transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_take_off_bar_plaisance_mu,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-19.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_19_row_39.id, "TransactionClarificationTasks", $task_stmt_2025_07_19_row_39.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_39.id, "TransactionMerchant", $merchant_take_off_bar.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_19_row_39.id, "TransactionCategory", $cat_social_holiday.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Final import snapshot
 fn::updateStatementImport($import.id, {
   rowCount: 39,
   normalizedCount: 39,
-  clarificationCount: 14,
+  clarificationCount: 1,
   status: "matched",
   statementDate: "2025-07-19T00:00:00Z",
   notes: "Imported from 2025-07-19.import.md"

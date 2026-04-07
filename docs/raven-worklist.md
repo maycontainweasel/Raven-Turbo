@@ -12,12 +12,18 @@
 - Review the October 2025 FNB fee cluster, including the `R123.80` row on `18 Oct`.
 - Review the September 2025 FNB fee cluster, including the unlabeled rows on `23 Aug`, `2 Sep`, `17 Sep`, and the `18 Sep` month-end fee lines.
 - Review the August 2025 FNB fee cluster, including the unlabeled rows on `22 Jul`, `23 Jul`, `24 Jul`, and the month-end fee lines on `18 Aug`.
+- Review the July 2025 FNB fee cluster, including the unlabeled rows on `20 Jun`, `24 Jun`, `1 Jul`, `15 Jul`, and the month-end fee lines on `18 Jul`.
 - Verify the September 2025 `Takealot` credit-card order for `R2,459.00`.
 - Identify the September 2025 unknown credit-card merchants:
   - `Bex Paarl`
   - `C*Smw 0751 Paarl`
 - Identify the August 2025 unknown credit-card merchant cluster:
   - `Alana Banana Pty Ltd`
+- Decide whether to promote the personal fixed deposit / JustInvest flow into its own first-class account in the personal environment.
+- Identify the July 2025 unknown business PayPal merchant:
+  - `PayPal *Namec`
+- Identify the July 2025 unknown holiday merchant:
+  - `Bakerlux Ltd`
 
 ## Data Backlog
 
@@ -31,6 +37,7 @@
 
 - Build a recurring-payments and subscriptions view in the present dashboard.
 - Track billing cycle, expected due date, last seen date, and amount range for recurring merchants.
+- Seed the recurring-payments view with `Afrihost` as a mobile phone contract that is currently being paid personally.
 - Add a lightweight task or follow-up model in the app so transactions and investigations can create actionable items.
 - Add editable clarification actions in the UI so categories and merchant mappings can be resolved directly from the queue.
 - Add support for modeling business-to-personal transfers explicitly rather than folding them into generic internal transfers.

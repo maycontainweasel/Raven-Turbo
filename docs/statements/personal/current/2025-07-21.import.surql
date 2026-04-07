@@ -53,10 +53,10 @@ LET $cat_income = fn::createCategory({
   active: true,
   notes: "Imported from 2025-07-21.import.md"
 });
-LET $cat_unclassified = fn::createCategory({
+LET $cat_investment_transfer = fn::createCategory({
   space: $space,
-  key: "unclassified",
-  name: "Unclassified",
+  key: "investment-transfer",
+  name: "Investment transfer",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-07-21.import.md"
@@ -73,6 +73,22 @@ LET $cat_fees = fn::createCategory({
   space: $space,
   key: "fees",
   name: "Fees",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-21.import.md"
+});
+LET $cat_investment_interest = fn::createCategory({
+  space: $space,
+  key: "investment-interest",
+  name: "Investment interest",
+  categoryKind: "expense",
+  active: true,
+  notes: "Imported from 2025-07-21.import.md"
+});
+LET $cat_investment_return = fn::createCategory({
+  space: $space,
+  key: "investment-return",
+  name: "Investment return",
   categoryKind: "expense",
   active: true,
   notes: "Imported from 2025-07-21.import.md"
@@ -139,11 +155,11 @@ LET $merchant_mpire_digital_market = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-07-21.import.md"
 });
-LET $merchant_open_investment_deposit = fn::createMerchant({
+LET $merchant_personal_fixed_deposit = fn::createMerchant({
   space: $space,
-  key: "open-investment-deposit",
-  name: "Open Investment deposit",
-  normalizedName: "Open Investment deposit",
+  key: "personal-fixed-deposit",
+  name: "Personal fixed deposit",
+  normalizedName: "Personal fixed deposit",
   active: true,
   notes: "Imported from 2025-07-21.import.md"
 });
@@ -160,22 +176,6 @@ LET $merchant_nedbank = fn::createMerchant({
   key: "nedbank",
   name: "Nedbank",
   normalizedName: "Nedbank",
-  active: true,
-  notes: "Imported from 2025-07-21.import.md"
-});
-LET $merchant_int_justinvest_573895529995 = fn::createMerchant({
-  space: $space,
-  key: "int-justinvest-573895529995",
-  name: "INT JUSTINVEST 573895529995",
-  normalizedName: "INT JUSTINVEST 573895529995",
-  active: true,
-  notes: "Imported from 2025-07-21.import.md"
-});
-LET $merchant_cap_justinvest_573895529995 = fn::createMerchant({
-  space: $space,
-  key: "cap-justinvest-573895529995",
-  name: "CAP JUSTINVEST 573895529995",
-  normalizedName: "CAP JUSTINVEST 573895529995",
   active: true,
   notes: "Imported from 2025-07-21.import.md"
 });
@@ -310,29 +310,29 @@ LET $row_row_03 = fn::createStatementRow({
   rowNumber: 3,
   postedAt: "2025-06-24T00:00:00Z",
   description: "Open Investment deposit",
-  normalizedDescription: "Open Investment deposit",
+  normalizedDescription: "Personal fixed deposit",
   amount: 1000,
   balance: -2999.7,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Jun 2025 - 21 Jul 2025.pdf",
     statementPeriodStart: "2025-06-21",
     statementPeriodEnd: "2025-07-21",
     rowNo: 3,
     rawRowText: "Open Investment deposit; 1000.00; -2999.70",
-    transactionType: "expense",
-    normalizedMerchant: "Open Investment deposit",
-    category: "Unclassified",
+    transactionType: "transfer",
+    normalizedMerchant: "Personal fixed deposit",
+    category: "Investment transfer",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1000,
     bankChargeZar: null,
     balanceZar: -2999.7
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Money moved into a personal fixed deposit / investment account."
 });
 LET $tx_stmt_2025_07_21_row_03 = fn::createTransaction({
   space: $space,
@@ -341,40 +341,26 @@ LET $tx_stmt_2025_07_21_row_03 = fn::createTransaction({
   sourceRow: $row_row_03,
   postedAt: "2025-06-24T00:00:00Z",
   description: "Open Investment deposit",
-  normalizedDescription: "Open Investment deposit",
+  normalizedDescription: "Personal fixed deposit",
   amount: 1000,
   balance: -2999.7,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "Open Investment deposit",
-  merchant: $merchant_open_investment_deposit,
-  category: $cat_unclassified,
-  isTransfer: false,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Personal fixed deposit",
+  merchant: $merchant_personal_fixed_deposit,
+  category: $cat_investment_transfer,
+  isTransfer: true,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Money moved into a personal fixed deposit / investment account."
 });
-fn::updateStatementRow($row_row_03.id, { transaction: $tx_stmt_2025_07_21_row_03.id, status: "matched" });
+fn::updateStatementRow($row_row_03.id, { transaction: $tx_stmt_2025_07_21_row_03.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_03.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_03.id, "StatementRowTransactions", $tx_stmt_2025_07_21_row_03.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_21_row_03.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_03.id, "TransactionMerchant", $merchant_open_investment_deposit.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_03.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_21_row_03 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-21-row-03",
-  transaction: $tx_stmt_2025_07_21_row_03,
-  status: "open",
-  question: "What is the exact purpose of this Open Investment deposit transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_open_investment_deposit,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-21.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_21_row_03.id, "TransactionClarificationTasks", $task_stmt_2025_07_21_row_03.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_03.id, "TransactionMerchant", $merchant_personal_fixed_deposit.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_03.id, "TransactionCategory", $cat_investment_transfer.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 4
 LET $row_row_04 = fn::createStatementRow({
@@ -864,29 +850,29 @@ LET $row_row_12 = fn::createStatementRow({
   rowNumber: 12,
   postedAt: "2025-07-16T00:00:00Z",
   description: "INT JUSTINVEST 573895529995",
-  normalizedDescription: "INT JUSTINVEST 573895529995",
+  normalizedDescription: "Personal fixed deposit",
   amount: 3.48,
   balance: -18995.8,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  direction: "credit",
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Jun 2025 - 21 Jul 2025.pdf",
     statementPeriodStart: "2025-06-21",
     statementPeriodEnd: "2025-07-21",
     rowNo: 12,
     rawRowText: "INT JUSTINVEST 573895529995; 3.48; -18995.80",
-    transactionType: "expense",
-    normalizedMerchant: "INT JUSTINVEST 573895529995",
-    category: "Unclassified",
+    transactionType: "income",
+    normalizedMerchant: "Personal fixed deposit",
+    category: "Investment interest",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 3.48,
     bankChargeZar: null,
     balanceZar: -18995.8
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Inferred interest returned from the personal fixed deposit / JustInvest account."
 });
 LET $tx_stmt_2025_07_21_row_12 = fn::createTransaction({
   space: $space,
@@ -895,40 +881,26 @@ LET $tx_stmt_2025_07_21_row_12 = fn::createTransaction({
   sourceRow: $row_row_12,
   postedAt: "2025-07-16T00:00:00Z",
   description: "INT JUSTINVEST 573895529995",
-  normalizedDescription: "INT JUSTINVEST 573895529995",
+  normalizedDescription: "Personal fixed deposit",
   amount: 3.48,
   balance: -18995.8,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "INT JUSTINVEST 573895529995",
-  merchant: $merchant_int_justinvest_573895529995,
-  category: $cat_unclassified,
+  direction: "credit",
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Personal fixed deposit",
+  merchant: $merchant_personal_fixed_deposit,
+  category: $cat_investment_interest,
   isTransfer: false,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Inferred interest returned from the personal fixed deposit / JustInvest account."
 });
-fn::updateStatementRow($row_row_12.id, { transaction: $tx_stmt_2025_07_21_row_12.id, status: "matched" });
+fn::updateStatementRow($row_row_12.id, { transaction: $tx_stmt_2025_07_21_row_12.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_12.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_12.id, "StatementRowTransactions", $tx_stmt_2025_07_21_row_12.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_21_row_12.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_12.id, "TransactionMerchant", $merchant_int_justinvest_573895529995.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_12.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_21_row_12 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-21-row-12",
-  transaction: $tx_stmt_2025_07_21_row_12,
-  status: "open",
-  question: "What is the exact purpose of this INT JUSTINVEST 573895529995 transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_int_justinvest_573895529995,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-21.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_21_row_12.id, "TransactionClarificationTasks", $task_stmt_2025_07_21_row_12.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_12.id, "TransactionMerchant", $merchant_personal_fixed_deposit.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_12.id, "TransactionCategory", $cat_investment_interest.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 13
 LET $row_row_13 = fn::createStatementRow({
@@ -938,29 +910,29 @@ LET $row_row_13 = fn::createStatementRow({
   rowNumber: 13,
   postedAt: "2025-07-16T00:00:00Z",
   description: "CAP JUSTINVEST 573895529995",
-  normalizedDescription: "CAP JUSTINVEST 573895529995",
+  normalizedDescription: "Personal fixed deposit",
   amount: 1000.17,
   balance: -17995.63,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/personal/current/21 Jun 2025 - 21 Jul 2025.pdf",
     statementPeriodStart: "2025-06-21",
     statementPeriodEnd: "2025-07-21",
     rowNo: 13,
     rawRowText: "CAP JUSTINVEST 573895529995; 1000.17; -17995.63",
-    transactionType: "expense",
-    normalizedMerchant: "CAP JUSTINVEST 573895529995",
-    category: "Unclassified",
+    transactionType: "transfer",
+    normalizedMerchant: "Personal fixed deposit",
+    category: "Investment return",
     feeType: "",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 1000.17,
     bankChargeZar: null,
     balanceZar: -17995.63
 },
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Inferred capital returned from the personal fixed deposit / JustInvest account."
 });
 LET $tx_stmt_2025_07_21_row_13 = fn::createTransaction({
   space: $space,
@@ -969,40 +941,26 @@ LET $tx_stmt_2025_07_21_row_13 = fn::createTransaction({
   sourceRow: $row_row_13,
   postedAt: "2025-07-16T00:00:00Z",
   description: "CAP JUSTINVEST 573895529995",
-  normalizedDescription: "CAP JUSTINVEST 573895529995",
+  normalizedDescription: "Personal fixed deposit",
   amount: 1000.17,
   balance: -17995.63,
   currency: "ZAR",
-  direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "CAP JUSTINVEST 573895529995",
-  merchant: $merchant_cap_justinvest_573895529995,
-  category: $cat_unclassified,
-  isTransfer: false,
+  direction: "transfer",
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Personal fixed deposit",
+  merchant: $merchant_personal_fixed_deposit,
+  category: $cat_investment_return,
+  isTransfer: true,
   manualOverride: false,
-  notes: "Needs manual confirmation from the statement import."
+  notes: "Inferred capital returned from the personal fixed deposit / JustInvest account."
 });
-fn::updateStatementRow($row_row_13.id, { transaction: $tx_stmt_2025_07_21_row_13.id, status: "matched" });
+fn::updateStatementRow($row_row_13.id, { transaction: $tx_stmt_2025_07_21_row_13.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_13.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_13.id, "StatementRowTransactions", $tx_stmt_2025_07_21_row_13.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_07_21_row_13.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_13.id, "TransactionMerchant", $merchant_cap_justinvest_573895529995.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_07_21_row_13.id, "TransactionCategory", $cat_unclassified.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_07_21_row_13 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-07-21-row-13",
-  transaction: $tx_stmt_2025_07_21_row_13,
-  status: "open",
-  question: "What is the exact purpose of this CAP JUSTINVEST 573895529995 transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_cap_justinvest_573895529995,
-  suggestedCategory: $cat_unclassified,
-  confidence: 0.25,
-  notes: "Imported from 2025-07-21.import.md"
-});
-fn::createEdge($tx_stmt_2025_07_21_row_13.id, "TransactionClarificationTasks", $task_stmt_2025_07_21_row_13.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_13.id, "TransactionMerchant", $merchant_personal_fixed_deposit.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_07_21_row_13.id, "TransactionCategory", $cat_investment_return.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 14
 LET $row_row_14 = fn::createStatementRow({
@@ -1188,7 +1146,7 @@ fn::createEdge($tx_stmt_2025_07_21_row_16.id, "TransactionCategory", $cat_debt_p
 fn::updateStatementImport($import.id, {
   rowCount: 16,
   normalizedCount: 16,
-  clarificationCount: 3,
+  clarificationCount: 0,
   status: "matched",
   statementDate: "2025-07-21T00:00:00Z",
   notes: "Imported from 2025-07-21.import.md"
