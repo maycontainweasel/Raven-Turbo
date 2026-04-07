@@ -13,6 +13,7 @@
 - Review the September 2025 FNB fee cluster, including the unlabeled rows on `23 Aug`, `2 Sep`, `17 Sep`, and the `18 Sep` month-end fee lines.
 - Review the August 2025 FNB fee cluster, including the unlabeled rows on `22 Jul`, `23 Jul`, `24 Jul`, and the month-end fee lines on `18 Aug`.
 - Review the July 2025 FNB fee cluster, including the unlabeled rows on `20 Jun`, `24 Jun`, `1 Jul`, `15 Jul`, and the month-end fee lines on `18 Jul`.
+- Review the June 2025 FNB fee cluster, including the unlabeled rows on `19 May`, `20 May`, `27 May`, `12 Jun`, and the month-end fee lines on `18 Jun`.
 - Verify the September 2025 `Takealot` credit-card order for `R2,459.00`.
 - Identify the September 2025 unknown credit-card merchants:
   - `Bex Paarl`
@@ -20,10 +21,14 @@
 - Identify the August 2025 unknown credit-card merchant cluster:
   - `Alana Banana Pty Ltd`
 - Decide whether to promote the personal fixed deposit / JustInvest flow into its own first-class account in the personal environment.
-- Identify the July 2025 unknown business PayPal merchant:
-  - `PayPal *Namec`
 - Identify the July 2025 unknown holiday merchant:
   - `Bakerlux Ltd`
+- Identify the June 2025 client behind `Inv-127566`.
+- Identify the June 2025 underlying service behind the `DPO Wazoho` payment-gateway charges.
+- Identify the June 2025 personal credit merchant:
+  - `Yoco *John Martin Ph`
+- Identify the June 2025 personal credit merchant cluster:
+  - `Bk 3 Arts Dt U`
 
 ## Data Backlog
 
