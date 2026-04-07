@@ -117,14 +117,6 @@ LET $cat_internet_connectivity = fn::createCategory({
   active: true,
   notes: "Imported from 2025-06-18.import.md"
 });
-LET $cat_payment_gateway_unknown_service = fn::createCategory({
-  space: $space,
-  key: "payment-gateway-unknown-service",
-  name: "Payment gateway / unknown service",
-  categoryKind: "expense",
-  active: true,
-  notes: "Imported from 2025-06-18.import.md"
-});
 LET $cat_hosting_income = fn::createCategory({
   space: $space,
   key: "hosting-income",
@@ -313,11 +305,11 @@ LET $merchant_vdv_internet = fn::createMerchant({
   active: true,
   notes: "Imported from 2025-06-18.import.md"
 });
-LET $merchant_dpo_wazoho = fn::createMerchant({
+LET $merchant_wazo_host = fn::createMerchant({
   space: $space,
-  key: "dpo-wazoho",
-  name: "DPO Wazoho",
-  normalizedName: "DPO Wazoho",
+  key: "wazo-host",
+  name: "Wazo Host",
+  normalizedName: "Wazo Host",
   active: true,
   notes: "Imported from 2025-06-18.import.md"
 });
@@ -1982,13 +1974,13 @@ LET $row_row_28 = fn::createStatementRow({
   rowNumber: 28,
   postedAt: "2025-06-10T00:00:00Z",
   description: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 06 Jun",
-  normalizedDescription: "DPO Wazoho",
+  normalizedDescription: "Wazo Host",
   amount: 151.34,
   balance: 3041.24,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_80.pdf",
     statementPeriodStart: "2025-05-17",
@@ -1996,15 +1988,15 @@ LET $row_row_28 = fn::createStatementRow({
     rowNo: 28,
     rawRowText: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 06 Jun; 151.34; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "DPO Wazoho",
-    category: "Payment gateway / unknown service",
+    normalizedMerchant: "Wazo Host",
+    category: "Hosting / internet",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 151.34,
     bankChargeZar: 3.68,
     balanceZar: 3041.24
 },
-  notes: "DPO payment-gateway charge; exact underlying service still needs later review."
+  notes: "Hosting expense paid to Wazo Host via DPO."
 });
 LET $tx_stmt_2025_06_18_row_28 = fn::createTransaction({
   space: $space,
@@ -2013,40 +2005,26 @@ LET $tx_stmt_2025_06_18_row_28 = fn::createTransaction({
   sourceRow: $row_row_28,
   postedAt: "2025-06-10T00:00:00Z",
   description: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 06 Jun",
-  normalizedDescription: "DPO Wazoho",
+  normalizedDescription: "Wazo Host",
   amount: 151.34,
   balance: 3041.24,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "DPO Wazoho",
-  merchant: $merchant_dpo_wazoho,
-  category: $cat_payment_gateway_unknown_service,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Wazo Host",
+  merchant: $merchant_wazo_host,
+  category: $cat_hosting_internet,
   isTransfer: false,
   manualOverride: false,
-  notes: "DPO payment-gateway charge; exact underlying service still needs later review."
+  notes: "Hosting expense paid to Wazo Host via DPO."
 });
-fn::updateStatementRow($row_row_28.id, { transaction: $tx_stmt_2025_06_18_row_28.id, status: "matched" });
+fn::updateStatementRow($row_row_28.id, { transaction: $tx_stmt_2025_06_18_row_28.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_28.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_28.id, "StatementRowTransactions", $tx_stmt_2025_06_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_06_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_06_18_row_28.id, "TransactionMerchant", $merchant_dpo_wazoho.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_06_18_row_28.id, "TransactionCategory", $cat_payment_gateway_unknown_service.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_06_18_row_28 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-06-18-row-28",
-  transaction: $tx_stmt_2025_06_18_row_28,
-  status: "open",
-  question: "What is the exact purpose of this DPO Wazoho transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_dpo_wazoho,
-  suggestedCategory: $cat_payment_gateway_unknown_service,
-  confidence: 0.25,
-  notes: "Imported from 2025-06-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_06_18_row_28.id, "TransactionClarificationTasks", $task_stmt_2025_06_18_row_28.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_06_18_row_28.id, "TransactionMerchant", $merchant_wazo_host.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_06_18_row_28.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 29
 LET $row_row_29 = fn::createStatementRow({
@@ -2356,13 +2334,13 @@ LET $row_row_34 = fn::createStatementRow({
   rowNumber: 34,
   postedAt: "2025-06-13T00:00:00Z",
   description: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 10 Jun",
-  normalizedDescription: "DPO Wazoho",
+  normalizedDescription: "Wazo Host",
   amount: 152.63,
   balance: 3870.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
+  status: "clarified",
+  confidence: 0.95,
   rawData: {
     sourceFileName: "docs/statements/business/GOLD_BUSINESS_ACCOUNT_80.pdf",
     statementPeriodStart: "2025-05-17",
@@ -2370,15 +2348,15 @@ LET $row_row_34 = fn::createStatementRow({
     rowNo: 34,
     rawRowText: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 10 Jun; 152.63; 3,870.34 Cr; 3.68",
     transactionType: "expense",
-    normalizedMerchant: "DPO Wazoho",
-    category: "Payment gateway / unknown service",
+    normalizedMerchant: "Wazo Host",
+    category: "Hosting / internet",
     feeType: "card charge",
-    clarificationStatus: "unclarified",
+    clarificationStatus: "clarified",
     amountZar: 152.63,
     bankChargeZar: 3.68,
     balanceZar: 3870.34
 },
-  notes: "DPO payment-gateway charge; exact underlying service still needs later review."
+  notes: "Hosting expense paid to Wazo Host via DPO."
 });
 LET $tx_stmt_2025_06_18_row_34 = fn::createTransaction({
   space: $space,
@@ -2387,40 +2365,26 @@ LET $tx_stmt_2025_06_18_row_34 = fn::createTransaction({
   sourceRow: $row_row_34,
   postedAt: "2025-06-13T00:00:00Z",
   description: "POS Purchase 22000.00 Dpo*Wazoho                                                485442*7050 10 Jun",
-  normalizedDescription: "DPO Wazoho",
+  normalizedDescription: "Wazo Host",
   amount: 152.63,
   balance: 3870.34,
   currency: "ZAR",
   direction: "debit",
-  status: "matched",
-  confidence: 0.55,
-  merchantName: "DPO Wazoho",
-  merchant: $merchant_dpo_wazoho,
-  category: $cat_payment_gateway_unknown_service,
+  status: "clarified",
+  confidence: 0.95,
+  merchantName: "Wazo Host",
+  merchant: $merchant_wazo_host,
+  category: $cat_hosting_internet,
   isTransfer: false,
   manualOverride: false,
-  notes: "DPO payment-gateway charge; exact underlying service still needs later review."
+  notes: "Hosting expense paid to Wazo Host via DPO."
 });
-fn::updateStatementRow($row_row_34.id, { transaction: $tx_stmt_2025_06_18_row_34.id, status: "matched" });
+fn::updateStatementRow($row_row_34.id, { transaction: $tx_stmt_2025_06_18_row_34.id, status: "clarified" });
 fn::createEdge($import.id, "StatementImportRows", $row_row_34.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($row_row_34.id, "StatementRowTransactions", $tx_stmt_2025_06_18_row_34.id, { boundId: true, overwrite: false, skipExists: true });
 fn::createEdge($account.id, "AccountTransactions", $tx_stmt_2025_06_18_row_34.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_06_18_row_34.id, "TransactionMerchant", $merchant_dpo_wazoho.id, { boundId: true, overwrite: false, skipExists: true });
-fn::createEdge($tx_stmt_2025_06_18_row_34.id, "TransactionCategory", $cat_payment_gateway_unknown_service.id, { boundId: true, overwrite: false, skipExists: true });
-LET $task_stmt_2025_06_18_row_34 = fn::createClarificationTask({
-  space: $space,
-  key: "stmt-2025-06-18-row-34",
-  transaction: $tx_stmt_2025_06_18_row_34,
-  status: "open",
-  question: "What is the exact purpose of this DPO Wazoho transaction?",
-  reason: "Needs manual confirmation from the statement import.",
-  suggestedSpace: $space,
-  suggestedMerchant: $merchant_dpo_wazoho,
-  suggestedCategory: $cat_payment_gateway_unknown_service,
-  confidence: 0.25,
-  notes: "Imported from 2025-06-18.import.md"
-});
-fn::createEdge($tx_stmt_2025_06_18_row_34.id, "TransactionClarificationTasks", $task_stmt_2025_06_18_row_34.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_06_18_row_34.id, "TransactionMerchant", $merchant_wazo_host.id, { boundId: true, overwrite: false, skipExists: true });
+fn::createEdge($tx_stmt_2025_06_18_row_34.id, "TransactionCategory", $cat_hosting_internet.id, { boundId: true, overwrite: false, skipExists: true });
 
 -- Row 35
 LET $row_row_35 = fn::createStatementRow({
@@ -2606,7 +2570,7 @@ fn::createEdge($tx_stmt_2025_06_18_row_37.id, "TransactionCategory", $cat_fees_b
 fn::updateStatementImport($import.id, {
   rowCount: 37,
   normalizedCount: 37,
-  clarificationCount: 3,
+  clarificationCount: 1,
   status: "matched",
   statementDate: "2025-06-18T00:00:00Z",
   notes: "Imported from 2025-06-18.import.md"

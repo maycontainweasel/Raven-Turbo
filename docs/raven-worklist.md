@@ -24,7 +24,6 @@
 - Identify the July 2025 unknown holiday merchant:
   - `Bakerlux Ltd`
 - Identify the June 2025 client behind `Inv-127566`.
-- Identify the June 2025 underlying service behind the `DPO Wazoho` payment-gateway charges.
 - Identify the June 2025 personal credit merchant:
   - `Yoco *John Martin Ph`
 - Identify the June 2025 personal credit merchant cluster:
