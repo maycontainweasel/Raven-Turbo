@@ -28,6 +28,17 @@
   - `Yoco *John Martin Ph`
 - Identify the June 2025 personal credit merchant cluster:
   - `Bk 3 Arts Dt U`
+- Identify the May 2025 business merchant:
+  - `Pp*Fsprg.Com`
+- Identify the May 2025 business merchant:
+  - `Pp*Pad`
+- Confirm the May 2025 personal-current transfer destination for the `R3,650.00` transfer on `2 May`.
+- Identify the May 2025 personal-credit merchant cluster:
+  - `Aegir Project`
+- Identify the May 2025 personal-credit spend behind:
+  - `Valley Motors` `R167.50`
+  - `Squirrel Games` `R250.00`
+  - `Takealot` `R425.00`
 
 ## Data Backlog
 
