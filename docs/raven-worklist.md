@@ -11,10 +11,13 @@
   - `Pbrands Warsaw`
 - Review the October 2025 FNB fee cluster, including the `R123.80` row on `18 Oct`.
 - Review the September 2025 FNB fee cluster, including the unlabeled rows on `23 Aug`, `2 Sep`, `17 Sep`, and the `18 Sep` month-end fee lines.
+- Review the August 2025 FNB fee cluster, including the unlabeled rows on `22 Jul`, `23 Jul`, `24 Jul`, and the month-end fee lines on `18 Aug`.
 - Verify the September 2025 `Takealot` credit-card order for `R2,459.00`.
 - Identify the September 2025 unknown credit-card merchants:
   - `Bex Paarl`
   - `C*Smw 0751 Paarl`
+- Identify the August 2025 unknown credit-card merchant cluster:
+  - `Alana Banana Pty Ltd`
 
 ## Data Backlog
 
