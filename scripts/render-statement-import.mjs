@@ -555,9 +555,16 @@ async function main() {
     }
     lines.push(`fn::createEdge($${txVar}.id, "TransactionCategory", ${categoryExpr.__expr}.id, { boundId: true, overwrite: false, skipExists: true });`);
 
+    const taskKey = `stmt-${statementStamp}-row-${String(row.row_no).padStart(2, '0')}`;
+
+    if (isClarified) {
+      lines.push(
+        `UPDATE clarificationTask SET status = "resolved", resolutionNotes = "Resolved by regenerated statement import after the source row was clarified.", resolvedAt = time::now() WHERE key = ${JSON.stringify(taskKey)} AND transaction = $${txVar}.id AND status = "open";`,
+      );
+    }
+
     if (!isClarified) {
       clarificationCount += 1;
-      const taskKey = `stmt-${statementStamp}-row-${String(row.row_no).padStart(2, '0')}`;
       const taskVar = variableName('task', `stmt-${statementStamp}-${rowKey}`);
       lines.push(
         `LET $${taskVar} = fn::createClarificationTask(${renderObject({

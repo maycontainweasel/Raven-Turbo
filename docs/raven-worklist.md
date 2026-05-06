@@ -39,6 +39,12 @@
   - `Valley Motors` `R167.50`
   - `Squirrel Games` `R250.00`
   - `Takealot` `R425.00`
+- Review the April 2025 FNB fee cluster, including the unlabeled rows on `19 Mar`, `24 Mar`, `27 Mar`, `28 Mar`, `4 Apr`, `5 Apr`, `15 Apr`, and the month-end fee lines on `17 Apr`.
+- Identify the April 2025 personal-credit merchants:
+  - `Yoco *La Concorde So` `R610.00`
+  - `Kalahari Slate Waterfront` `R110.00`
+  - `Paypal *Paddle.Net` `R1,274.31`
+- Verify the April 2025 `Takealot` credit-card order for `R374.00`.
 
 ## Data Backlog
 
