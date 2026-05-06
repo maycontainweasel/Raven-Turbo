@@ -7,6 +7,7 @@ node_modules
 
 # Local env files
 .env
+.envrc
 .env.local
 .env.development.local
 .env.test.local
@@ -36,5 +37,9 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+*.zip
+.zed/
+.handoff/
 
-apps/schema
+# Nested repositories
+/apps/schema/

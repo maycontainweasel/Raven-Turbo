@@ -22,11 +22,11 @@ const DEFAULT_SKIP_DIRS = new Set([
 
 function printHelp() {
   console.log(`Usage:
-  pnpm run share:zip [-- --output <file.zip>]
-  pnpm run share:zip [-- --name <archive-name>]
-  pnpm run share:zip [-- --list]
-  pnpm run share:zip [-- --exclude <path[,path...]>]
-  pnpm run share:zip [-- --max-depth <n>]
+  pnpm run zip [-- --output <file.zip>]
+  pnpm run zip [-- --name <archive-name>]
+  pnpm run zip [-- --list]
+  pnpm run zip [-- --exclude <path[,path...]>]
+  pnpm run zip [-- --max-depth <n>]
 
 What it does:
   - Zips tracked files plus untracked, non-ignored files.
@@ -36,11 +36,11 @@ What it does:
   - Writes the archive to the repo root by default.
 
 Examples:
-  pnpm run share:zip
-  pnpm run share:zip -- --output /tmp/raven-share.zip
-  pnpm run share:zip -- --name raven-ai-share
-  pnpm run share:zip -- --list
-  pnpm run share:zip -- --exclude apps/schema/.nuxt,apps/raven/.output
+  pnpm run zip
+  pnpm run zip -- --output /tmp/raven-share.zip
+  pnpm run zip -- --name raven-ai-share
+  pnpm run zip -- --list
+  pnpm run zip -- --exclude apps/schema/.nuxt,apps/raven/.output
 `)
 }
 
@@ -56,6 +56,10 @@ function parseArgs(argv) {
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index]
+
+    if (arg === '--') {
+      continue
+    }
 
     if (arg === '--help' || arg === '-h') {
       options.help = true
