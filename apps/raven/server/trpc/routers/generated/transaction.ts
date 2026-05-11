@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_Transaction, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_Transaction, RecordID_z } from '@schema/types';
 
 const TransactionCreateInput = Z_Transaction.partial().merge(
   Z_Transaction.pick({

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-03T14:19:20.877Z",
+  "generatedAt": "2026-05-11T16:14:55.123Z",
   "source": "config/specs",
   "instances": {
     "default": "local",
@@ -11,17 +11,1111 @@
     ]
   },
   "tables": {
+    "account": {
+      "key": "account",
+      "name": "Account",
+      "model": "account",
+      "description": "Real-world bank, card, savings, loan, debt, investment, cash, or other account inside a financial space",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "bankName",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "accountType",
+          "type": "enum<\"current\" | \"credit_card\" | \"savings\" | \"loan\" | \"debt\" | \"investment\" | \"cash\" | \"other\">",
+          "required": true,
+          "default": "current"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "accountNumberLast4",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "openingBalance",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/account/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "AccountId",
+        "exportType": true
+      }
+    },
+    "category": {
+      "key": "category",
+      "name": "Category",
+      "model": "category",
+      "description": "Transaction category and category hierarchy node",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "categoryKind",
+          "type": "enum<\"income\" | \"expense\" | \"transfer\" | \"tax\" | \"savings\" | \"other\">",
+          "required": true,
+          "default": "expense"
+        },
+        {
+          "key": "parentCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/category/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "CategoryId",
+        "exportType": true
+      }
+    },
+    "clarificationTask": {
+      "key": "clarificationTask",
+      "name": "ClarificationTask",
+      "model": "clarificationTask",
+      "description": "Review task for uncertain transaction meaning",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "status",
+          "type": "enum<\"open\" | \"suggested\" | \"resolved\" | \"dismissed\">",
+          "required": true,
+          "default": "open"
+        },
+        {
+          "key": "question",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "reason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "suggestedSpace",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "suggestedMerchant",
+          "type": "record",
+          "required": false,
+          "rawType": "record<merchant>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "suggestedCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "resolvedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "resolutionNotes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/clarificationTask/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "ClarificationTaskId",
+        "exportType": true
+      }
+    },
+    "classificationRule": {
+      "key": "classificationRule",
+      "name": "ClassificationRule",
+      "model": "classificationRule",
+      "description": "Rule for automatic transaction matching and future classification suggestions",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "matcher",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "scope",
+          "type": "enum<\"description\" | \"merchant\" | \"reference\" | \"amount\">",
+          "required": true,
+          "default": "description"
+        },
+        {
+          "key": "targetMerchant",
+          "type": "record",
+          "required": false,
+          "rawType": "record<merchant>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "targetCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "priority",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/classificationRule/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "ClassificationRuleId",
+        "exportType": true
+      }
+    },
+    "financialSpace": {
+      "key": "financialSpace",
+      "name": "FinancialSpace",
+      "model": "financialSpace",
+      "description": "Personal, business, trading, family, or other money context",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "spaceType",
+          "type": "enum<\"personal\" | \"business\" | \"trading\" | \"family\" | \"other\">",
+          "required": true,
+          "default": "personal"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "archivedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/financialSpace/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "FinancialSpaceId",
+        "exportType": true
+      }
+    },
+    "merchant": {
+      "key": "merchant",
+      "name": "Merchant",
+      "model": "merchant",
+      "description": "Merchant, customer, vendor, or counterparty memory record",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "normalizedName",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/merchant/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "MerchantId",
+        "exportType": true
+      }
+    },
+    "monthlySnapshot": {
+      "key": "monthlySnapshot",
+      "name": "MonthlySnapshot",
+      "model": "monthlySnapshot",
+      "description": "Month-level financial truth snapshot for a financial space",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "month",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "incomeTotal",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "outflowTotal",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "netTotal",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "transferTotal",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "cashAvailable",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "recurringTotal",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "businessSpendTotal",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "personalSpendTotal",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "generatedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "status",
+          "type": "enum<\"draft\" | \"final\">",
+          "required": true,
+          "default": "draft"
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/monthlySnapshot/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<space, month>",
+        "exportName": "MonthlySnapshotId",
+        "exportType": true
+      }
+    },
+    "statementImport": {
+      "key": "statementImport",
+      "name": "StatementImport",
+      "model": "statementImport",
+      "description": "Source statement import batch for an account cycle",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceFileName",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceFormat",
+          "type": "enum<\"csv\" | \"ofx\" | \"qif\" | \"pdf\" | \"manual\">",
+          "required": true,
+          "default": "pdf"
+        },
+        {
+          "key": "importedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "statementDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "status",
+          "type": "enum<\"raw\" | \"parsed\" | \"matched\" | \"reviewed\" | \"error\">",
+          "required": true,
+          "default": "raw"
+        },
+        {
+          "key": "rowCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "normalizedCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "clarificationCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "sourceChecksum",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementImport/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "StatementImportId",
+        "exportType": true
+      }
+    },
+    "statementRow": {
+      "key": "statementRow",
+      "name": "StatementRow",
+      "model": "statementRow",
+      "description": "Raw statement row preserved from imported source material",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "rowNumber",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "postedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "normalizedDescription",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "amount",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "balance",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "direction",
+          "type": "enum<\"debit\" | \"credit\" | \"transfer\">",
+          "required": true,
+          "default": "debit"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"raw\" | \"normalized\" | \"matched\" | \"clarified\" | \"ignored\">",
+          "required": true,
+          "default": "raw"
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "rawData",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementRow/types.md"
+      },
+      "id": {
+        "type": "string",
+        "exportName": "StatementRowId",
+        "exportType": true
+      }
+    },
+    "transaction": {
+      "key": "transaction",
+      "name": "Transaction",
+      "model": "transaction",
+      "description": "Normalized money movement derived from a statement row or manual entry",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceRow",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementRow>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "postedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "effectiveAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "normalizedDescription",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "amount",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "balance",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "direction",
+          "type": "enum<\"debit\" | \"credit\" | \"transfer\">",
+          "required": true,
+          "default": "debit"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"imported\" | \"normalized\" | \"matched\" | \"classified\" | \"clarified\" | \"ignored\">",
+          "required": true,
+          "default": "imported"
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "merchantName",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "merchant",
+          "type": "record",
+          "required": false,
+          "rawType": "record<merchant>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "category",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "isTransfer",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        {
+          "key": "manualOverride",
+          "type": "boolean",
+          "required": false,
+          "default": false
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/transaction/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "TransactionId",
+        "exportType": true
+      }
+    },
     "user": {
       "key": "user",
       "name": "User",
       "model": "u",
-      "description": "Minimal user profile",
+      "description": "Minimal Raven user profile",
       "data": "source",
       "fields": [
         {
           "key": "email",
           "type": "string",
           "required": true,
+          "rawType": "email",
+          "format": "email",
           "default": ""
         },
         {
@@ -146,93 +1240,6 @@
         "type": "string",
         "structure": "email",
         "exportName": "UserId",
-        "exportType": true
-      }
-    },
-    "post": {
-      "key": "post",
-      "name": "Post",
-      "model": "p",
-      "description": "A Post is the content connected to a record for use in content management systems.",
-      "data": "source",
-      "fields": [
-        {
-          "key": "contentTable",
-          "type": "string",
-          "required": false,
-          "default": "record::tb($id)"
-        },
-        {
-          "key": "contentId",
-          "type": "string",
-          "required": false,
-          "default": "record::id($id)"
-        },
-        {
-          "key": "createdAt",
-          "type": "string",
-          "required": false,
-          "rawType": "datetime",
-          "format": "datetime",
-          "default": "time::now()"
-        },
-        {
-          "key": "updatedAt",
-          "type": "string",
-          "required": false,
-          "rawType": "datetime",
-          "format": "datetime",
-          "default": "time::now()"
-        },
-        {
-          "key": "publishedAt",
-          "type": "datetimee",
-          "required": false,
-          "default": null
-        },
-        {
-          "key": "title",
-          "type": "string",
-          "required": false,
-          "default": "{\n  $title ?? record::id($id)\n}"
-        },
-        {
-          "key": "permalink",
-          "type": "string",
-          "required": false,
-          "default": "{\n  if($title) {\n      string::slug(<string> $title)\n  } else {\n      string::slug(<string> record::id($id))\n  }\n}"
-        },
-        {
-          "key": "status",
-          "type": "enum<\"draft\" | \"publish\">",
-          "required": false,
-          "default": "draft"
-        }
-      ],
-      "capabilities": {
-        "router": false,
-        "crud": {
-          "create": true,
-          "update": true,
-          "delete": true
-        },
-        "typesense": false,
-        "taxonomies": [],
-        "edges": true,
-        "relations": false,
-        "subtables": false
-      },
-      "subTables": [],
-      "typesense": {
-        "enabled": false
-      },
-      "docs": {
-        "types": "docs/api/models/post/types.md"
-      },
-      "id": {
-        "type": "string",
-        "structure": "fn::PID($id)",
-        "exportName": "__NAME__ID",
         "exportType": true
       }
     }

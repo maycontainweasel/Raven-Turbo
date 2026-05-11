@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_StatementImport, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_StatementImport, RecordID_z } from '@schema/types';
 
 const StatementImportCreateInput = Z_StatementImport.partial().merge(
   Z_StatementImport.pick({

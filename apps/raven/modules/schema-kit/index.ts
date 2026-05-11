@@ -33,7 +33,11 @@ type SchemaKitConfig = {
       sourceMaps?: boolean
     } | boolean
     redis?: { enabled?: boolean } | boolean
-    surrealdb?: { enabled?: boolean } | boolean
+    surrealdb?: {
+      enabled?: boolean
+      reconnectOnAuthLoss?: boolean
+      retryFailedRequestsAfterReconnect?: boolean
+    } | boolean
     notify?: boolean
   }
 }
@@ -531,9 +535,6 @@ export default defineNuxtModule<SchemaKitModuleOptions>({
       addComponentsDir({ path: overrideComponents, pathPrefix: false })
     }
     addComponentsDir({ path: resolver.resolve('runtime/components'), pathPrefix: false })
-    nuxt.hook('modules:done', () => {
-      addPlugin(resolver.resolve('runtime/plugins/00.payload-normalize'))
-    })
     const features = config?.features ?? {}
     const sentryEnabled =
       typeof features.sentry === 'boolean'

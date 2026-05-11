@@ -1,10 +1,10 @@
 # User — Types
-_Minimal user profile_
+_Minimal Raven user profile_
 **Table:** `u`
 ## Fields
 | Field | Type | Required | Default |
 | --- | --- | --- | --- |
-| `email` | `string` | yes | `""` |
+| `email` | `email` | yes | `""` |
 | `uniqueId` | `md5<$email>` | no |  |
 | `firstName` | `string` | yes | `""` |
 | `surname` | `string` | yes | `""` |

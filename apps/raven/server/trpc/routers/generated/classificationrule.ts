@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_ClassificationRule, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_ClassificationRule, RecordID_z } from '@schema/types';
 
 const ClassificationRuleCreateInput = Z_ClassificationRule.partial().merge(
   Z_ClassificationRule.pick({
