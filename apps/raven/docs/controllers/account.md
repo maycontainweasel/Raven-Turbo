@@ -81,12 +81,17 @@ Required fields:
 - name (required)
 - bankName (required)
 - accountType (required)
+- facilityKind (required)
 - currency (required)
+- normalNature (required)
+- liquidityClass (required)
+- freshnessWindowHours (required)
 - active (required)
 
 Optional fields:
 - accountNumberLast4
 - openingBalance
+- openingBalanceMinor
 - notes
 
 ---

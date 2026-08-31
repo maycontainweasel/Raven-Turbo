@@ -19,6 +19,7 @@ export const Z_ClassificationRule = z.object({
   scope: z.enum(["description", "merchant", "reference", "amount"]),
   targetMerchant: z.union([z.string(), z.number(), RecordID_z]).optional(),
   targetCategory: z.union([z.string(), z.number(), RecordID_z]).optional(),
+  targetPurpose: z.union([z.string(), z.number(), RecordID_z]).optional(),
   priority: z.number().optional(),
   active: z.boolean(),
   notes: z.string().optional(),

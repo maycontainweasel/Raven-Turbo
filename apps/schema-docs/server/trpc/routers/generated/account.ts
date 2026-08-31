@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_Account, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_Account, RecordID_z } from '@schema/types';
 
 const AccountCreateInput = Z_Account.partial().merge(
   Z_Account.pick({
@@ -11,7 +11,11 @@ const AccountCreateInput = Z_Account.partial().merge(
   name: true,
   bankName: true,
   accountType: true,
+  facilityKind: true,
   currency: true,
+  normalNature: true,
+  liquidityClass: true,
+  freshnessWindowHours: true,
   active: true,
   })
 );

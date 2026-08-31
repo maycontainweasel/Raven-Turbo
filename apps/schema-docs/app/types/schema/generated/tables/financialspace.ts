@@ -16,6 +16,7 @@ export const Z_FinancialSpace = z.object({
   name: z.string(),
   spaceType: z.enum(["personal", "business", "trading", "family", "other"]),
   currency: z.string(),
+  timezone: z.string(),
   description: z.string().optional(),
   active: z.boolean(),
   archivedAt: z.string().optional(),

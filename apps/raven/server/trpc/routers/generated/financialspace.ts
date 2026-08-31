@@ -10,6 +10,7 @@ const FinancialSpaceCreateInput = Z_FinancialSpace.partial().merge(
   name: true,
   spaceType: true,
   currency: true,
+  timezone: true,
   active: true,
   })
 );

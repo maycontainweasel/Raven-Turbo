@@ -1,159 +1,75 @@
-# Turborepo starter
+# Raven
 
-This Turborepo starter is maintained by the Turborepo core team.
+Raven is a private, local-first financial operating system for financial truth, present-day control, and future planning. The codebase is managed through the Orbit project **Financial Mastery**.
 
-## Using this example
+## Product Surfaces
 
-Run the following command:
+- `apps/raven-studio` - primary clean UX rebuild.
+- `apps/raven` - original behavioral and query reference implementation.
+- `apps/schema` - schema authoring and generated runtime authority; this is a nested repository.
+- `brain` - portable project identity, decisions, open loops, and handoff memory.
+- `docs` - canonical, working, reference, and private project documentation.
 
-```sh
-npx create-turbo@latest
+Raven Studio and the planned Raven domain MCP will share one semantic application/domain layer. Generic SurrealDB MCP access is for diagnostics and controlled maintenance rather than ordinary product operation.
+
+## Local Services
+
+The root service manifests define:
+
+- SurrealDB on port `2993`.
+- Raven V1 on port `9274`.
+- Raven Studio on port `9275`.
+- Typesense on port `8109`.
+
+Inspect and start local services from the repo root:
+
+```bash
+pnpm install
+pnpm services:plan
+pnpm services:doctor
+pnpm services:up
 ```
 
-## What's inside?
+Raven Studio can be run separately:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```bash
+pnpm -C apps/raven-studio dev
 ```
 
-Without global `turbo`, use your package manager:
+Its local nginx URL is `https://raven.studio:4443`.
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+## Database And MCP
+
+Use the existing root commands rather than copying credentials into commands or documentation:
+
+```bash
+pnpm db:doctor
+pnpm db:start
+pnpm mcp:db:static
+pnpm mcp:db
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+`surreal.md`, `sr.toml`, `dev.toml`, and `surreal-mcp.toml` define the local service contract. Environment and credential values remain local and must not enter documentation, Brain, logs, or AI-share archives.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Privacy Boundary
 
-```sh
-turbo build --filter=docs
+Raven contains private financial source material. Do not expose, summarize, commit, or package statements, mediation exports, mailbox exports, dossiers, account records, environment files, or credentials unless the user explicitly authorizes that exact handling.
+
+Use the fail-closed AI-safe archive command for external review packages:
+
+```bash
+pnpm zip:ai-safe -- --list
+pnpm zip:ai-safe -- --output /tmp/raven-ai-safe.zip
 ```
 
-Without global `turbo`:
+The general developer archive command is explicit and is not safe for external sharing.
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## Project Authority
 
-### Develop
+- Orbit / Financial Mastery: planning, sequencing, and execution control.
+- Repository code: implementation truth.
+- `apps/schema`: generated schema/runtime canon.
+- `brain`: portable narrative memory.
+- `docs/raven_vision_v1.md`: canonical product charter until deliberately superseded.
 
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+See [`docs/README.md`](docs/README.md) for documentation status and authority.

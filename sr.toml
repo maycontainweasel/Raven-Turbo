@@ -1,0 +1,22 @@
+app = "raven-turbo"
+repo = "/Users/michaelpeters/Dev/mpd/projects/raven/raven-turbo"
+
+[services.raven]
+kind = "app"
+port = 9274
+comment = "Raven Nuxt dev server"
+
+[services.raven-studio]
+kind = "app"
+port = 9275
+comment = "Raven Studio Nuxt dev server"
+
+[services.surrealdb]
+kind = "db"
+port = 2993
+comment = "Local SurrealDB managed by sdb (migrated from database.md)"
+
+[services.typesense]
+kind = "search"
+port = 8109
+comment = "Typesense Docker host port for Schema Kit"

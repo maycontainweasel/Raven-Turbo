@@ -1,0 +1,5 @@
+import type { StatementComponentResolutionClaimController, StatementComponentResolutionClaimControllerOverride } from '../generated/statementComponentResolutionClaim'
+
+export const extendStatementComponentResolutionClaimController: StatementComponentResolutionClaimControllerOverride | undefined = undefined
+
+export type { StatementComponentResolutionClaimController }

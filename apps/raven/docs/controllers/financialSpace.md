@@ -80,6 +80,7 @@ Required fields:
 - name (required)
 - spaceType (required)
 - currency (required)
+- timezone (required)
 - active (required)
 
 Optional fields:

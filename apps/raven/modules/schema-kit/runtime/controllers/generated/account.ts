@@ -4,7 +4,7 @@ type AccountDocument = any;
 type TypesenseCollectionSchema = any;
 import type { ControllerIdInput, ControllerOverride } from '../_shared'
 
-export type AccountCreateInput = Pick<Account, 'space' | 'key' | 'name' | 'bankName' | 'accountType' | 'currency' | 'active'> & Partial<Omit<Account, 'id'>>
+export type AccountCreateInput = Pick<Account, 'space' | 'key' | 'name' | 'bankName' | 'accountType' | 'facilityKind' | 'currency' | 'normalNature' | 'liquidityClass' | 'freshnessWindowHours' | 'active'> & Partial<Omit<Account, 'id'>>
 
 export type AccountUpdateInput = Partial<Omit<Account, 'id'>>
 export type AccountRecordId = NonNullable<Account['id']> | AccountId

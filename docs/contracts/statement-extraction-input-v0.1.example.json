@@ -1,0 +1,63 @@
+{
+  "contractVersion": "statement-extraction-input-v0.1",
+  "profileHint": "fnb-business",
+  "sourceKind": "pdf",
+  "currency": "ZAR",
+  "periodStart": "2026-07-01",
+  "periodEnd": "2026-07-31",
+  "balanceConvention": "positive_is_asset",
+  "openingBalanceMinor": 100000,
+  "closingBalanceMinor": 125000,
+  "accountHints": {
+    "maskedAccount": "**** 4242",
+    "sourceAccountType": "fictional business current"
+  },
+  "coverage": {
+    "status": "complete",
+    "sourcePageCount": 2,
+    "processedPages": [1, 2],
+    "sourceSections": ["transactions"],
+    "processedSections": ["transactions"],
+    "printedRowCount": 1
+  },
+  "rows": [
+    {
+      "rowKey": "row-0001",
+      "rowNumber": 1,
+      "rowKind": "movement",
+      "transactionDate": "2026-07-03",
+      "postingDate": "2026-07-04",
+      "valueDate": null,
+      "rawText": "FICTIONAL CLIENT PAYMENT",
+      "sourceReference": "FIC-001",
+      "reportedBalanceMinor": 125000,
+      "locator": {
+        "page": 1,
+        "line": 7
+      },
+      "confidence": 1,
+      "components": [
+        {
+          "componentKey": "principal",
+          "componentKind": "principal",
+          "componentRole": "movement",
+          "transactionDate": "2026-07-03",
+          "postingDate": "2026-07-04",
+          "valueDate": null,
+          "description": "Fictional client payment",
+          "sourceReference": "FIC-001",
+          "amountMinor": 25000,
+          "currency": "ZAR",
+          "sourceDirection": "credit",
+          "sourceFlow": "inflow",
+          "balanceEffectMinor": 25000,
+          "locator": {
+            "page": 1,
+            "line": 7
+          },
+          "confidence": 1
+        }
+      ]
+    }
+  ]
+}

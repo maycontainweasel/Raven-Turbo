@@ -1,0 +1,458 @@
+# Theme Index
+
+- Past truth / present control / future planning
+  - Source: RAVEN-INGEST-0001
+  - See: `../distillations/RAVEN-INGEST-0001-elgiz-buckets-lab.md`
+- Cent-level financial visibility before optimization
+  - Source: RAVEN-INGEST-0001
+  - See: `../TENETS.md`
+- Buckets as configurable money-flow containers
+  - Source: RAVEN-INGEST-0001
+  - See: `../VISION.md`
+- Visual canvas plus nested table for financial planning
+  - Source: RAVEN-INGEST-0001
+  - See: `../OPEN_LOOPS.md`
+- Explainable allocation rules, gates, targets, overflow, and projections
+  - Source: RAVEN-INGEST-0001
+  - See: `../OPPORTUNITIES.md`
+- Raven Studio as primary clean rebuild
+  - Source: RAVEN-INGEST-0002
+  - See: `../DECISIONS.md`
+- One domain layer shared by UI and MCP
+  - Source: RAVEN-INGEST-0002
+  - See: `../TENETS.md`
+- Present control before expanded buckets
+  - Source: RAVEN-INGEST-0002
+  - See: `../ROADMAP.md`
+- Data-first minimal interface
+  - Source: RAVEN-INGEST-0002
+  - See: `../DECISIONS.md`
+- Raven owns financial meaning; Orbit owns execution
+  - Source: RAVEN-INGEST-0002
+  - See: `../DECISIONS.md`
+- Account Control Foundation as one complete daily loop
+  - Source: RAVEN-INGEST-0003
+  - See: `../distillations/RAVEN-INGEST-0003-account-control-foundation.md`
+- Observed, accepted, inferred, and possible money remain distinct
+  - Source: RAVEN-INGEST-0003
+  - See: `../TENETS.md`
+- Inspectable coverage and earning requirements
+  - Source: RAVEN-INGEST-0003
+  - See: `../VISION.md`
+- Full orchestrator outputs trigger Brainkeeper sidecars
+  - Source: RAVEN-INGEST-0003
+  - See: `../AGENT_PROTOCOL.md`
+- Brainkeeper sidecars do not replace main-workline execution
+  - Source: RAVEN-INGEST-0004
+  - See: `../distillations/RAVEN-INGEST-0004-account-control-status-clarification.md`
+- External validation does not silently become user approval
+  - Source: RAVEN-INGEST-0005
+  - See: `../distillations/RAVEN-INGEST-0005-account-control-approval-gate.md`
+- Fresh credible balance evidence outranks stale kind preference
+  - Source: RAVEN-INGEST-0005
+  - See: `../distillations/RAVEN-INGEST-0005-account-control-approval-gate.md`
+- Occurrence-level cashflow exceptions require audited commands
+  - Source: RAVEN-INGEST-0005
+  - See: `../OPEN_LOOPS.md`
+- Command identity belongs to user intent, not a transport attempt
+  - Source: RAVEN-INGEST-0006
+  - See: `../distillations/RAVEN-INGEST-0006-workline-01-acceptance-hardening.md`
+- Evidence metadata must persist without silent loss
+  - Source: RAVEN-INGEST-0006
+  - See: `../RISK_REGISTER.md`
+- Domain uniqueness must match persistence identity
+  - Source: RAVEN-INGEST-0006
+  - See: `../OPEN_LOOPS.md`
+- Invalid evidence must remain distinct from missing evidence
+  - Source: RAVEN-INGEST-0007
+  - See: `../distillations/RAVEN-INGEST-0007-workline-01-invalid-future-closeout.md`
+- Evidence diagnostics and monetary eligibility are separate concerns
+  - Source: RAVEN-INGEST-0007
+  - See: `../RISK_REGISTER.md`
+- Observed movement and balance evidence are separate truths
+  - Source: RAVEN-INGEST-0008
+  - See: `../distillations/RAVEN-INGEST-0008-workline-02-observed-transactions-transfers.md`
+- Tracked-account transfers are linked movement, not income or spending
+  - Source: RAVEN-INGEST-0008
+  - See: `../distillations/RAVEN-INGEST-0008-workline-02-observed-transactions-transfers.md`
+- Financial calendar dates must not shift through timezone conversion
+  - Source: RAVEN-INGEST-0008
+  - See: `../distillations/RAVEN-INGEST-0008-workline-02-observed-transactions-transfers.md`
+- Legacy transaction uncertainty remains visible and excluded from totals
+  - Source: RAVEN-INGEST-0008
+  - See: `../distillations/RAVEN-INGEST-0008-workline-02-observed-transactions-transfers.md`
+- Workline implementation authorization and acceptance are distinct gates
+  - Source: RAVEN-INGEST-0008
+  - See: `../distillations/RAVEN-INGEST-0008-workline-02-observed-transactions-transfers.md`
+- Canonical transaction authority requires a complete coherent evidence tuple
+  - Source: RAVEN-INGEST-0009
+  - See: `../distillations/RAVEN-INGEST-0009-workline-02-financial-truth-hardening.md`
+- Empty explicit account scope fails closed rather than broadening
+  - Source: RAVEN-INGEST-0009
+  - See: `../distillations/RAVEN-INGEST-0009-workline-02-financial-truth-hardening.md`
+- Month-to-date truth uses an explicit financial timezone and status eligibility
+  - Source: RAVEN-INGEST-0009
+  - See: `../distillations/RAVEN-INGEST-0009-workline-02-financial-truth-hardening.md`
+- Idempotency includes concurrent first-write resolution
+  - Source: RAVEN-INGEST-0009
+  - See: `../distillations/RAVEN-INGEST-0009-workline-02-financial-truth-hardening.md`
+- External acceptance findings remain distinct from verified correction evidence
+  - Source: RAVEN-INGEST-0009
+  - See: `../distillations/RAVEN-INGEST-0009-workline-02-financial-truth-hardening.md`
+- Persistence identity must express domain ownership scope
+  - Source: RAVEN-INGEST-0010
+  - See: `../distillations/RAVEN-INGEST-0010-workline-02-import-identity-closeout.md`
+- Imported source facts are immutable and corrections require explicit lineage
+  - Source: RAVEN-INGEST-0010
+  - See: `../distillations/RAVEN-INGEST-0010-workline-02-import-identity-closeout.md`
+- Exact import replay ensures equality while changed immutable facts fail atomically
+  - Source: RAVEN-INGEST-0010
+  - See: `../distillations/RAVEN-INGEST-0010-workline-02-import-identity-closeout.md`
+- Local semantic keys may repeat safely across Financial Spaces
+  - Source: RAVEN-INGEST-0010
+  - See: `../distillations/RAVEN-INGEST-0010-workline-02-import-identity-closeout.md`
+- Financial quality disclosure follows calculation scope, not page scope
+  - Source: RAVEN-INGEST-0010
+  - See: `../distillations/RAVEN-INGEST-0010-workline-02-import-identity-closeout.md`
+- Accepted future cashflow remains separate from observed transaction truth
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Schedule rules and concrete due occurrences have separate identity and history
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Immutable nominal due date anchors occurrence identity across effective overrides
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Date-only recurrence is deterministic local-calendar truth
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Unlinked settlement remains visible and does not invent observed evidence
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Terminal cashflow history is frozen while future changes are explicit and audited
+  - Source: RAVEN-INGEST-0011
+  - See: `../distillations/RAVEN-INGEST-0011-workline-03-upcoming-cashflow.md`
+- Command identity survives retries and concurrent first writes
+  - Source: RAVEN-INGEST-0012
+  - See: `../distillations/RAVEN-INGEST-0012-workline-03-integrity-hardening.md`
+- Effective-date materialization is monotonic and race-safe
+  - Source: RAVEN-INGEST-0012
+  - See: `../distillations/RAVEN-INGEST-0012-workline-03-integrity-hardening.md`
+- Settlement evidence is canonical, same-space, account-safe, and uniquely linked
+  - Source: RAVEN-INGEST-0012
+  - See: `../distillations/RAVEN-INGEST-0012-workline-03-integrity-hardening.md`
+- Certainty-separated arithmetic and schedule-timezone grouping belong in the domain
+  - Source: RAVEN-INGEST-0012
+  - See: `../distillations/RAVEN-INGEST-0012-workline-03-integrity-hardening.md`
+- Implementation foundations and final acceptance remain separate gates
+  - Source: RAVEN-INGEST-0012
+  - See: `../distillations/RAVEN-INGEST-0012-workline-03-integrity-hardening.md`
+- One shared financial graph supports coordinated Past, Present, Future, and Earn lanes
+  - Source: RAVEN-INGEST-0013
+  - See: `../distillations/RAVEN-INGEST-0013-july-project-reinstatement-alignment.md`
+- Relationship representation must match identity, graph, evidence, derivation, or promotion semantics
+  - Source: RAVEN-INGEST-0013
+  - See: `../TENETS.md`
+- Historical reinstatement begins with privacy-safe aggregate evidence and semantic import boundaries
+  - Source: RAVEN-INGEST-0013
+  - See: `../OPEN_LOOPS.md`
+- Category, counterparty, client, tax, recurrence, cashflow, and bucket meaning remain distinct
+  - Source: RAVEN-INGEST-0013
+  - See: `../distillations/RAVEN-INGEST-0013-july-project-reinstatement-alignment.md`
+- Virtual bucket allocation is never proof of observed real money
+  - Source: RAVEN-INGEST-0013
+  - See: `../TENETS.md`
+- Parallel code lanes require isolated root and nested-schema worktrees
+  - Source: RAVEN-INGEST-0013
+  - See: `../RISK_REGISTER.md`
+- Generated architecture documentation follows schema authority and fails stale
+  - Source: RAVEN-INGEST-0014
+  - See: `../distillations/RAVEN-INGEST-0014-generated-data-atlas-authorization.md`
+- Direct record references, runtime relation edges, and proposed bridges remain distinct
+  - Source: RAVEN-INGEST-0014
+  - See: `../distillations/RAVEN-INGEST-0014-generated-data-atlas-authorization.md`
+- Workline execution authorization and final artifact acceptance remain separate gates
+  - Source: RAVEN-INGEST-0014
+  - See: `../distillations/RAVEN-INGEST-0014-generated-data-atlas-authorization.md`
+- Paused schedules cannot revive obligations through later terminal lifecycle commands
+  - Source: RAVEN-INGEST-0014
+  - See: `../RISK_REGISTER.md`
+- Artifact acceptance and repository integration are separate gates
+  - Source: RAVEN-INGEST-0015
+  - See: `../distillations/RAVEN-INGEST-0015-generated-data-atlas-acceptance-and-integration.md`
+- Canonical generated documentation remains subordinate to schema authority
+  - Source: RAVEN-INGEST-0015
+  - See: `../distillations/RAVEN-INGEST-0015-generated-data-atlas-acceptance-and-integration.md`
+- Stale isolated work must be integrated surgically against current shared files
+  - Source: RAVEN-INGEST-0015
+  - See: `../RISK_REGISTER.md`
+- Paused-to-terminal commands cannot create or revive paused-gap obligations
+  - Source: RAVEN-INGEST-0016
+  - See: `../distillations/RAVEN-INGEST-0016-workline-03-post-atlas-final-closeout.md`
+- Configured, effective, and pending lifecycle truth must be explicit and timezone-aware
+  - Source: RAVEN-INGEST-0016
+  - See: `../distillations/RAVEN-INGEST-0016-workline-03-post-atlas-final-closeout.md`
+- Lifecycle eligibility must be shared across lists, counts, summaries, and next due
+  - Source: RAVEN-INGEST-0016
+  - See: `../RISK_REGISTER.md`
+- Retry identity belongs to one stable user action intent
+  - Source: RAVEN-INGEST-0016
+  - See: `../distillations/RAVEN-INGEST-0016-workline-03-post-atlas-final-closeout.md`
+- Meaning layers above observed transaction truth and never rewrites it
+  - Source: RAVEN-INGEST-0017
+  - See: `../TENETS.md`
+- Exact allocations reconcile before economic meaning is confirmed
+  - Source: RAVEN-INGEST-0017
+  - See: `../distillations/RAVEN-INGEST-0017-tax-transaction-meaning.md`
+- Management, accounting, tax, evidence, and review authority remain distinct dimensions
+  - Source: RAVEN-INGEST-0017
+  - See: `../distillations/RAVEN-INGEST-0017-tax-transaction-meaning.md`
+- Professional review and filed truth require explicit authorized actions
+  - Source: RAVEN-INGEST-0017
+  - See: `../TENETS.md`
+- Privacy boundaries are system boundaries, not Git branches
+  - Source: RAVEN-INGEST-0017
+  - See: `../RISK_REGISTER.md`
+- Architecture and vocabulary approval precede Tax lane implementation
+  - Source: RAVEN-INGEST-0017
+  - See: `../OPEN_LOOPS.md`
+- The Account Ledger is the operational centre of Past truth
+  - Source: RAVEN-INGEST-0018
+  - See: `../distillations/RAVEN-INGEST-0018-account-ledger-tax-mcp-direction.md`
+- Statement evidence proves movement, not meaning
+  - Source: RAVEN-INGEST-0018
+  - See: `../TENETS.md`
+- Provisional and statement-backed observations reconcile without double counting
+  - Source: RAVEN-INGEST-0018
+  - See: `../RISK_REGISTER.md`
+- Management and Tax are independent lenses over one permanent ledger
+  - Source: RAVEN-INGEST-0018
+  - See: `../distillations/RAVEN-INGEST-0018-account-ledger-tax-mcp-direction.md`
+- Semantic MCP should support explainable review rather than bypassing domain truth
+  - Source: RAVEN-INGEST-0018
+  - See: `../OPEN_LOOPS.md`
+- Operational wiring should preserve the Penpot-derived account design
+  - Source: RAVEN-INGEST-0018
+  - See: `../HANDOFF.md`
+- Original statement bytes, extraction identity, and normalized transactions are distinct truth layers
+  - Source: RAVEN-INGEST-0019
+  - See: `../distillations/RAVEN-INGEST-0019-statement-truth-contract-foundation.md`
+- One printed statement row may create zero, one, or several exact movement components
+  - Source: RAVEN-INGEST-0019
+  - See: `../distillations/RAVEN-INGEST-0019-statement-truth-contract-foundation.md`
+- Source-only `ST-01` creates no Transaction or component disposition and remains separate from gated matching/reconciliation `ST-02`
+  - Source: RAVEN-INGEST-0019 post-ingest repository-grounded correction
+  - See: `../OPEN_LOOPS.md`
+- ZAR is operational for proposed `ST-01`; GBP needs future registry and adapter approval before UK ingestion; no FX
+  - Source: RAVEN-INGEST-0019 post-ingest repository-grounded correction
+  - See: `../QUESTIONS.md`
+- Statement reconciliation is independent of management and tax completion
+  - Source: RAVEN-INGEST-0019
+  - See: `../OPEN_LOOPS.md`
+- A future Historian operates only through implemented and accepted semantic commands
+  - Source: RAVEN-INGEST-0019
+  - See: `../RISK_REGISTER.md`
+- The primary Raven developer executes master-orchestrator prompts while Brainkeeper ingests in parallel
+  - Source: RAVEN-INGEST-0019
+  - See: `../AGENT_PROTOCOL.md`
+- Original evidence, optional extraction assistance, and canonical extraction are separate identities
+  - Source: RAVEN-INGEST-0020
+  - See: `../DECISIONS.md`
+- Private path ingress is contained, permissioned, validated, atomic, and path-redacted
+  - Source: RAVEN-INGEST-0020
+  - See: `../RISK_REGISTER.md`
+- Informational monetary breakdowns have zero balance effect and cannot double count
+  - Source: RAVEN-INGEST-0020
+  - See: `../DECISIONS.md`
+- Blocking statement preview uncertainty produces no financial write
+  - Source: RAVEN-INGEST-0020
+  - See: `../OPEN_LOOPS.md`
+- Closing statement balances create snapshots only under exact sign and economic-nature mapping
+  - Source: RAVEN-INGEST-0020
+  - See: `../DECISIONS.md`
+- Statement Truth contract acceptance authorizes ST-01 but not ST-02 or private Historian operation
+  - Source: RAVEN-INGEST-0020
+  - See: `../ROADMAP.md`
+- Source authority for one Account/period must be enforced atomically inside the database transaction
+  - Source: RAVEN-INGEST-0021
+  - See: `../OPEN_LOOPS.md`
+- Immutable extraction requires strict structure, checked exact arithmetic, running-balance validation, and explicit coverage
+  - Source: RAVEN-INGEST-0021
+  - See: `../distillations/RAVEN-INGEST-0021-st01-external-review-integrity-closeout.md`
+- Legacy evidence must never masquerade as verified ST-01 source authority
+  - Source: RAVEN-INGEST-0021
+  - See: `../RISK_REGISTER.md`
+- Applied-operation replay precedes vault reopening; new commits still revalidate source bytes
+  - Source: RAVEN-INGEST-0021
+  - See: `../distillations/RAVEN-INGEST-0021-st01-external-review-integrity-closeout.md`
+- Private statement use waits for isolated fictional upload and live-persistence proof
+  - Source: RAVEN-INGEST-0021
+  - See: `../HANDOFF.md`
+- Profile-specific source semantics outrank extraction-assistance claims
+  - Source: RAVEN-INGEST-0022
+  - See: `../distillations/RAVEN-INGEST-0022-st01-final-source-authority-closeout.md`
+- Complete statement coverage is source-kind specific and requires one canonical row sequence
+  - Source: RAVEN-INGEST-0022
+  - See: `../RISK_REGISTER.md`
+- Legacy source ambiguity fails closed before new period authority is created
+  - Source: RAVEN-INGEST-0022
+  - See: `../OPEN_LOOPS.md`
+- Commit-relevant Account context belongs to reviewed preview identity and atomic revalidation
+  - Source: RAVEN-INGEST-0022
+  - See: `../distillations/RAVEN-INGEST-0022-st01-final-source-authority-closeout.md`
+- Revalidation preserves precise semantic conflict outcomes across Studio and MCP
+  - Source: RAVEN-INGEST-0022
+  - See: `../HANDOFF.md`
+- One provisional Transaction and its later statement evidence resolve into one economic movement
+  - Source: RAVEN-INGEST-0023
+  - See: `../DECISIONS.md`
+- Candidate confidence explains matching but never confers confirmation authority
+  - Source: RAVEN-INGEST-0023
+  - See: `../distillations/RAVEN-INGEST-0023-st02-authorization.md`
+- Exact statement reconciliation remains independent of management and tax completion
+  - Source: RAVEN-INGEST-0023
+  - See: `../RISK_REGISTER.md`
+- Private statement operation waits for ST-02 implementation and external acceptance
+  - Source: RAVEN-INGEST-0023
+  - See: `../OPEN_LOOPS.md`
+- Match evidence is server-derived; operator intent cannot forge system evidence
+  - Source: RAVEN-INGEST-0024
+  - See: `../distillations/RAVEN-INGEST-0024-st02-financial-integrity-closeout.md`
+- Immutable history and current active financial authority are separate projections
+  - Source: RAVEN-INGEST-0024
+  - See: `../RISK_REGISTER.md`
+- Cross-space transfer candidates block ordinary materialization but never create transfers automatically
+  - Source: RAVEN-INGEST-0024
+  - See: `../OPEN_LOOPS.md`
+- Exact attestation proves referential set coherence rather than count coincidence
+  - Source: RAVEN-INGEST-0024
+  - See: `../DECISIONS.md`
+- ST-02 is externally accepted; private operation now depends on bounded HP-00 readiness
+  - Source: RAVEN-INGEST-0025
+  - See: `../DECISIONS.md`
+- A private compatibility audit exposes only aggregate counts and compatibility classes
+  - Source: RAVEN-INGEST-0025
+  - See: `../RISK_REGISTER.md`
+- The first pilot period includes all interacting Accounts needed to explain transfers
+  - Source: RAVEN-INGEST-0025
+  - See: `../OPEN_LOOPS.md`
+- A Statement Historian uses semantic Raven MCP and explicit approval gates, not raw Surreal writes or tax inference
+  - Source: RAVEN-INGEST-0025
+  - See: `../distillations/RAVEN-INGEST-0025-st02-acceptance-and-hp00-authorization.md`
+- Application readiness and configured-database readiness are separate facts
+  - Source: RAVEN-INGEST-0026
+  - See: `../DECISIONS.md`
+- Canonical schema deployment is not legacy financial-record migration
+  - Source: RAVEN-INGEST-0026
+  - See: `../RISK_REGISTER.md`
+- Schema completeness does not establish selected-period compatibility or authorize a private source
+  - Source: RAVEN-INGEST-0026
+  - See: `../OPEN_LOOPS.md`
+- Resolve one selected pilot period before considering bulk legacy migration
+  - Source: RAVEN-INGEST-0026
+  - See: `../distillations/RAVEN-INGEST-0026-hp00-review-and-hp01-authorization.md`
+- Acceptance evidence and governing execution authorization are distinct source roles
+  - Source: RAVEN-INGEST-0027
+  - See: `../distillations/RAVEN-INGEST-0027-hp01-acceptance-and-hp02-authorization.md`
+- HP-02 workline authorization does not authorize source staging, preview, or financial writes
+  - Source: RAVEN-INGEST-0027
+  - See: `../DECISIONS.md`
+- Selected-period compatibility requires one explicitly approved complete interacting-Account set
+  - Source: RAVEN-INGEST-0027
+  - See: `../OPEN_LOOPS.md`
+- Private operational handoff exposes aggregate status and blocker classes only
+  - Source: RAVEN-INGEST-0027
+  - See: `../RISK_REGISTER.md`
+- A fail-closed stop on confirmed overlap is a successful workline outcome
+  - Source: RAVEN-INGEST-0028
+  - See: `../distillations/RAVEN-INGEST-0028-hp02-acceptance-and-hp03-next-gate.md`
+- Canonical source authority must adopt exact legacy movements without duplicating them
+  - Source: RAVEN-INGEST-0028
+  - See: `../DECISIONS.md`
+- Private exact crosswalks and public aggregate contracts are separate artifacts
+  - Source: RAVEN-INGEST-0028
+  - See: `../RISK_REGISTER.md`
+- Crosswalk analysis grants no compatibility-apply or financial-write authority
+  - Source: RAVEN-INGEST-0028
+  - See: `../OPEN_LOOPS.md`
+- HP-03 governing authorization does not itself grant source-comparison approval
+  - Source: RAVEN-INGEST-0029
+  - See: `../distillations/RAVEN-INGEST-0029-hp03-governing-contract.md`
+- Exact deterministic evidence, not existing meaning or fuzzy similarity, proves legacy adoption
+  - Source: RAVEN-INGEST-0029
+  - See: `../distillations/RAVEN-INGEST-0029-hp03-governing-contract.md`
+- Private exact crosswalk and aggregate shared contract are separate artifacts
+  - Source: RAVEN-INGEST-0029
+  - See: `../RISK_REGISTER.md`
+- Selected-period authority resolution must not become a force flag or bulk migration
+  - Source: RAVEN-INGEST-0029
+  - See: `../DECISIONS.md`
+- Overlapping acceptance sources preserve separate provenance but create one decision record
+  - Source: RAVEN-INGEST-0030
+  - See: `../distillations/RAVEN-INGEST-0030-hp03-acceptance-and-hp04-authorization.md`
+- Preview, apply, and reversal are distinct authority-bearing semantic operations
+  - Source: RAVEN-INGEST-0030
+  - See: `../DECISIONS.md`
+- Blocking evidence cannot be waived by operator acknowledgement or client flags
+  - Source: RAVEN-INGEST-0030
+  - See: `../DECISIONS.md`
+- Fictional compatibility implementation grants no private source or database authority
+  - Source: RAVEN-INGEST-0030
+  - See: `../RISK_REGISTER.md`
+- HP-04 fictional-foundation acceptance does not establish selected-source readiness
+  - Source: RAVEN-INGEST-0031
+  - See: `../DECISIONS.md`
+- HP-04A and RA-00 are separate authorized worklines with no inherited private authority
+  - Source: RAVEN-INGEST-0031
+  - See: `../distillations/RAVEN-INGEST-0031-hp04-review-hp04a-ra00-authorization.md`
+- Exact financial summaries preserve currency, transfer exclusion, and authority separation
+  - Source: RAVEN-INGEST-0031
+  - See: `../RISK_REGISTER.md`
+- Parallel work remains valid only while actual edited file sets remain disjoint
+  - Source: RAVEN-INGEST-0031
+  - See: `../OPEN_LOOPS.md`
+- Read-only financial summaries require the same authority discipline as writes
+  - Source: RAVEN-INGEST-0032
+  - See: `../distillations/RAVEN-INGEST-0032-ra00-read-integrity-closeout-review.md`
+- Category hierarchy identity remains Financial-Space scoped
+  - Source: RAVEN-INGEST-0032
+  - See: `../RISK_REGISTER.md`
+- Explicit empty scope must never broaden to all financial data
+  - Source: RAVEN-INGEST-0032
+  - See: `../OPEN_LOOPS.md`
+- Current-month financial reads use an Africa/Johannesburg as-of cutoff
+  - Source: RAVEN-INGEST-0032
+  - See: `../distillations/RAVEN-INGEST-0032-ra00-read-integrity-closeout-review.md`
+- Isolated analytics integration must be surgical and concurrency-aware
+  - Source: RAVEN-INGEST-0032
+  - See: `../RISK_REGISTER.md`
+- Immutable reverse match history participates in analytics authority after active-pointer clearing
+  - Source: RAVEN-INGEST-0033
+  - See: `../distillations/RAVEN-INGEST-0033-ra00b-canonical-history-authority-closeout.md`
+- Default active-ledger analytics can be accepted while optional legacy-inclusive review remains narrowly gated
+  - Source: RAVEN-INGEST-0033
+  - See: `../OPEN_LOOPS.md`
+- Manual evidence returns to provisional observation-date authority after a superseded match is cleared
+  - Source: RAVEN-INGEST-0033
+  - See: `../RISK_REGISTER.md`
+- Urgent source reconstruction can provide immediate visibility without becoming canonical ledger authority
+  - Source: RAVEN-INGEST-0034
+  - See: `../distillations/RAVEN-INGEST-0034-emergency-statement-intake.md`
+- A rebuildable private source index must remain visibly provisional and write-isolated from active Raven truth
+  - Source: RAVEN-INGEST-0034
+  - See: `../RISK_REGISTER.md`
+- Source coverage, provenance, uncertainty, and deterministic deduplication are first-class outputs
+  - Source: RAVEN-INGEST-0034
+  - See: `../OPEN_LOOPS.md`
+- Bank evidence, owner explanation, and unresolved interpretation remain separate evidentiary views
+  - Source: RAVEN-INGEST-0034
+  - See: `../distillations/RAVEN-INGEST-0034-emergency-statement-intake.md`
+- Explicit user addenda outrank byte-identical replacement packets at the stated conflict boundary
+  - Source: RAVEN-INGEST-0035
+  - See: `../distillations/RAVEN-INGEST-0035-emergency-statement-intake-filesystem-index.md`
+- Emergency source intake uses deterministic filesystem-native JSON/NDJSON rather than a second embedded database
+  - Source: RAVEN-INGEST-0035
+  - See: `../DECISIONS.md`
+- Reducing intake infrastructure does not relax owner-only containment, provenance, or zero-write authority
+  - Source: RAVEN-INGEST-0035
+  - See: `../RISK_REGISTER.md`

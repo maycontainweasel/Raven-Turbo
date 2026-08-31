@@ -1,0 +1,142 @@
+[
+  {
+    "key": "account",
+    "typeName": "AccountController"
+  },
+  {
+    "key": "accountBalanceSnapshot",
+    "typeName": "AccountBalanceSnapshotController"
+  },
+  {
+    "key": "accountFacilitySnapshot",
+    "typeName": "AccountFacilitySnapshotController"
+  },
+  {
+    "key": "accountTransfer",
+    "typeName": "AccountTransferController"
+  },
+  {
+    "key": "cashflowOccurrence",
+    "typeName": "CashflowOccurrenceController"
+  },
+  {
+    "key": "cashflowSchedule",
+    "typeName": "CashflowScheduleController"
+  },
+  {
+    "key": "category",
+    "typeName": "CategoryController"
+  },
+  {
+    "key": "clarificationTask",
+    "typeName": "ClarificationTaskController"
+  },
+  {
+    "key": "classificationRule",
+    "typeName": "ClassificationRuleController"
+  },
+  {
+    "key": "client",
+    "typeName": "ClientController"
+  },
+  {
+    "key": "financialOperation",
+    "typeName": "FinancialOperationController"
+  },
+  {
+    "key": "financialSpace",
+    "typeName": "FinancialSpaceController"
+  },
+  {
+    "key": "hostingProvider",
+    "typeName": "HostingProviderController"
+  },
+  {
+    "key": "merchant",
+    "typeName": "MerchantController"
+  },
+  {
+    "key": "monthlySnapshot",
+    "typeName": "MonthlySnapshotController"
+  },
+  {
+    "key": "retainer",
+    "typeName": "RetainerController"
+  },
+  {
+    "key": "statementComponentResolutionClaim",
+    "typeName": "StatementComponentResolutionClaimController"
+  },
+  {
+    "key": "statementImport",
+    "typeName": "StatementImportController"
+  },
+  {
+    "key": "statementIssue",
+    "typeName": "StatementIssueController"
+  },
+  {
+    "key": "statementLegacyResolution",
+    "typeName": "StatementLegacyResolutionController"
+  },
+  {
+    "key": "statementLegacyResolutionItem",
+    "typeName": "StatementLegacyResolutionItemController"
+  },
+  {
+    "key": "statementPeriodClaim",
+    "typeName": "StatementPeriodClaimController"
+  },
+  {
+    "key": "statementReconciliation",
+    "typeName": "StatementReconciliationController"
+  },
+  {
+    "key": "statementReconciliationEvent",
+    "typeName": "StatementReconciliationEventController"
+  },
+  {
+    "key": "statementRow",
+    "typeName": "StatementRowController"
+  },
+  {
+    "key": "statementRowComponent",
+    "typeName": "StatementRowComponentController"
+  },
+  {
+    "key": "statementSourceClaim",
+    "typeName": "StatementSourceClaimController"
+  },
+  {
+    "key": "statementTransactionMatch",
+    "typeName": "StatementTransactionMatchController"
+  },
+  {
+    "key": "statementTransactionResolutionClaim",
+    "typeName": "StatementTransactionResolutionClaimController"
+  },
+  {
+    "key": "taxCategory",
+    "typeName": "TaxCategoryController"
+  },
+  {
+    "key": "transaction",
+    "typeName": "TransactionController"
+  },
+  {
+    "key": "transactionPurpose",
+    "typeName": "TransactionPurposeController"
+  },
+  {
+    "key": "transactionPurposeAssignment",
+    "typeName": "TransactionPurposeAssignmentController"
+  },
+  {
+    "key": "transactionTaxDeclaration",
+    "typeName": "TransactionTaxDeclarationController"
+  },
+  {
+    "key": "user",
+    "typeName": "UserController"
+  }
+]

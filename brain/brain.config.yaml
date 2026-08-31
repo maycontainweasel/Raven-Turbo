@@ -1,0 +1,33 @@
+brain:
+  version: 0.2.0
+  project: raven
+  mode: foundation
+
+modules:
+  core: enabled
+  ingest: enabled
+  brainAssist: enabled
+  liveCapture: enabled
+  backfill: enabled
+  healthCheck: enabled
+  orbitSync: enabled
+  financialPrivacy: enabled
+  productStrategy: enabled
+  technicalArchitecture: enabled
+  projectManagement: orbit
+
+sync:
+  markdown: canonical_narrative_memory
+  orbit: canonical_planning_control
+  database: deferred
+
+rules:
+  rawSourceIsSacred: true
+  decisionsMustBeExplicit: true
+  openLoopsAreFirstClass: true
+  repetitionIsSignal: true
+  extensionProposalRequired: true
+  deploymentPreservesExistingMemory: true
+  brainAssistIgnoresRoutineNoise: true
+  noSecretsInBrain: true
+  privateFinancialSourceRequiresExplicitInstruction: true

@@ -83,10 +83,39 @@ Required fields:
 - sourceFormat (required)
 - importedAt (required)
 - status (required)
+- revision (required)
 
 Optional fields:
+- privateSourceRef
+- extractionAssistRef
+- originalFileSha256
+- extractionInputSha256
+- canonicalExtractionSha256
+- previewHash
+- sourceMimeType
+- sourceByteSize
+- profileId
+- profileVersion
+- extractorVersion
+- validationRulesetVersion
+- periodStart
+- periodEnd
+- currency
+- balanceConvention
+- balanceConventionAuthority
+- accountContextFingerprint
+- openingBalanceMinor
+- closingBalanceMinor
+- closingBalanceEconomicNature
+- coverage
+- sourceState
+- commitOperation
+- committedAt
+- replacementOf
 - statementDate
 - rowCount
+- componentCount
+- issueCount
 - normalizedCount
 - clarificationCount
 - sourceChecksum

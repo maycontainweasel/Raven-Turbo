@@ -1,0 +1,39 @@
+# Open Loop Index
+
+- OL-0001 - Choose First Raven Backfill Source -> ../OPEN_LOOPS.md (closed)
+- OL-0002 - Define Safe Financial Source Handling -> ../OPEN_LOOPS.md
+- OL-0003 - Identify Stable Raven Operations -> ../OPEN_LOOPS.md (closed)
+- OL-0004 - Review And Integrate Buckets Lab Prototype -> ../OPEN_LOOPS.md
+- OL-0005 - Define Bucket Flow Persistence Model -> ../OPEN_LOOPS.md
+- OL-0006 - Keep Observed Ledger Separate From Planning Flows -> ../OPEN_LOOPS.md
+- OL-0007 - Define Bucket Rule Semantics -> ../OPEN_LOOPS.md
+- OL-0008 - Synchronize Canvas And Table Views -> ../OPEN_LOOPS.md
+- OL-0009 - Define Raven Domain Operation Contract -> ../OPEN_LOOPS.md
+- OL-0010 - Define Exact Money Representation -> ../OPEN_LOOPS.md
+- OL-0011 - Define Balance Truth And Freshness -> ../OPEN_LOOPS.md
+- OL-0012 - Define Recurring Pattern Versus Obligation Promotion -> ../OPEN_LOOPS.md
+- OL-0013 - Define Orbit Integration Contract -> ../OPEN_LOOPS.md
+- OL-0014 - Establish Safe Repository Sharing -> ../OPEN_LOOPS.md
+- OL-0015 - Classify Legacy UX Documents -> ../OPEN_LOOPS.md
+- OL-0016 - Define The First Present Dashboard Contract -> ../OPEN_LOOPS.md
+- OL-0017 - Define Transaction And Transfer Semantics -> ../OPEN_LOOPS.md
+- OL-0018 - Define Audited Occurrence-Level Cashflow Operations -> ../OPEN_LOOPS.md (closed)
+- OL-0019 - Review Account Balance Truth Vertical -> ../OPEN_LOOPS.md (closed)
+- OL-0020 - Restore Clean Whole-App Typecheck -> ../OPEN_LOOPS.md
+- OL-0021 - Review Observed Transactions And Transfers Vertical -> ../OPEN_LOOPS.md (closed)
+- OL-0022 - Plan Existing Import Identity Migration -> ../OPEN_LOOPS.md (deferred)
+- OL-0023 - Review Upcoming Cashflow Vertical -> ../OPEN_LOOPS.md (closed)
+- OL-0024 - Integrate Accepted Generated Data Atlas -> ../OPEN_LOOPS.md (closed)
+- OL-0025 - Approve Past Truth Reinstatement Audit And Historian Contract -> ../OPEN_LOOPS.md (proposed)
+- OL-0026 - Approve Elgiz Bucket Foundation And Pure Engine -> ../OPEN_LOOPS.md (proposed)
+- OL-0027 - Approve Tax And Transaction Meaning Contract And Vocabulary -> ../OPEN_LOOPS.md (working lens baseline accepted; full Tax Treatment open)
+- OL-0028 - Approve And Execute The Statement Truth Sequence -> ../OPEN_LOOPS.md (closed for ST-01 and ST-02; later worklines separate)
+- OL-0029 - Execute HP-00 Controlled Private Statement Pilot Readiness -> ../OPEN_LOOPS.md (closed; externally accepted)
+- OL-0030 - Execute HP-01 Accepted Schema Deployment And Readiness Recheck -> ../OPEN_LOOPS.md (closed; externally accepted)
+- OL-0031 - Execute HP-02 Private Selection And Compatibility Gate -> ../OPEN_LOOPS.md (closed; externally accepted)
+- OL-0032 - Execute HP-03 Selected-Period Legacy Authority Crosswalk -> ../OPEN_LOOPS.md (closed; externally accepted)
+- OL-0033 - Approve HP-03 Bridge And Authorize HP-04 -> ../OPEN_LOOPS.md (closed)
+- OL-0034 - Execute HP-04 Fictional Compatibility Bridge -> ../OPEN_LOOPS.md (closed; fictional foundation externally accepted)
+- OL-0035 - Execute HP-04A Selected-Source Activation Closeout -> ../OPEN_LOOPS.md (authorized; separate workline)
+- OL-0036 - Implement Financial Read Analytics RA-00 -> ../OPEN_LOOPS.md (RA-00B implemented; final artifact in external review)
+- OL-0037 - Execute Emergency Source-Only Statement Reconstruction -> ../OPEN_LOOPS.md (implemented and privately run; review and canonical activation gates remain)

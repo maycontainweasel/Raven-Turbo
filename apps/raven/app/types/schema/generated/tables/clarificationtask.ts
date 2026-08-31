@@ -21,6 +21,7 @@ export const Z_ClarificationTask = z.object({
   suggestedSpace: z.union([z.string(), z.number(), RecordID_z]).optional(),
   suggestedMerchant: z.union([z.string(), z.number(), RecordID_z]).optional(),
   suggestedCategory: z.union([z.string(), z.number(), RecordID_z]).optional(),
+  suggestedPurpose: z.union([z.string(), z.number(), RecordID_z]).optional(),
   resolvedAt: z.string().optional(),
   resolutionNotes: z.string().optional(),
   confidence: z.number().optional(),

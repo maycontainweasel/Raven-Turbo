@@ -1,0 +1,38 @@
+{
+  "name": "raven-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "raven-mcp": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "check-types": "tsc --noEmit",
+    "start": "tsx src/index.ts",
+    "start:local": "tsx src/local.ts",
+    "check:historian-readiness": "tsx src/historian-readiness.ts",
+    "historian:emergency-intake": "tsx src/emergency-statement-intake.ts",
+    "historian:schema": "tsx src/historian-schema-deployment.ts",
+    "test": "tsx --test src/*.test.ts",
+    "test:financial-analytics": "tsx --test src/financial-analytics-tools.test.ts",
+    "smoke:workline03": "tsx src/live-smoke-workline-03.ts",
+    "smoke:statement": "tsx src/statement-live-smoke.ts",
+    "smoke:statement-resolution": "tsx src/statement-resolution-live-smoke.ts",
+    "smoke:legacy-resolution": "tsx src/statement-legacy-resolution-live-smoke.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@raven/domain": "workspace:*",
+    "@raven/surreal": "workspace:*",
+    "superjson": "^2.2.2",
+    "surrealdb": "^2.0.0-alpha.16",
+    "zod": "4.1.12"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.2",
+    "yaml": "^2.8.2"
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raven.local/contracts/statement-extraction-input-v0.1.schema.json",
+  "title": "Raven neutral statement extraction assistance v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contractVersion",
+    "sourceKind",
+    "currency",
+    "periodStart",
+    "periodEnd",
+    "balanceConvention",
+    "openingBalanceMinor",
+    "closingBalanceMinor",
+    "accountHints",
+    "coverage",
+    "rows"
+  ],
+  "properties": {
+    "contractVersion": {
+      "const": "statement-extraction-input-v0.1"
+    },
+    "profileHint": {
+      "enum": [
+        "nedbank-current",
+        "nedbank-savings",
+        "nedbank-credit",
+        "fnb-business",
+        "normalized-json-v1"
+      ]
+    },
+    "sourceKind": {
+      "enum": ["pdf", "csv", "ofx", "qif", "image"]
+    },
+    "currency": {
+      "const": "ZAR"
+    },
+    "periodStart": {
+      "$ref": "#/$defs/dateOnly"
+    },
+    "periodEnd": {
+      "$ref": "#/$defs/dateOnly"
+    },
+    "balanceConvention": {
+      "enum": ["positive_is_asset", "positive_is_liability"]
+    },
+    "openingBalanceMinor": {
+      "$ref": "#/$defs/nullableSafeInteger"
+    },
+    "closingBalanceMinor": {
+      "$ref": "#/$defs/nullableSafeInteger"
+    },
+    "accountHints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maskedAccount", "sourceAccountType"],
+      "properties": {
+        "maskedAccount": {
+          "type": ["string", "null"]
+        },
+        "sourceAccountType": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "coverage": {
+      "$ref": "#/$defs/coverage"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/row"
+      }
+    }
+  },
+  "$defs": {
+    "dateOnly": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "nullableDateOnly": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/dateOnly"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "safeInteger": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "nullableSafeInteger": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/safeInteger"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "sourcePageCount",
+        "processedPages",
+        "sourceSections",
+        "processedSections",
+        "printedRowCount"
+      ],
+      "properties": {
+        "status": {
+          "enum": ["complete", "incomplete", "indeterminate"]
+        },
+        "sourcePageCount": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "processedPages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "sourceSections": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "processedSections": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "printedRowCount": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "locator": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sourceToken": {
+          "type": "string",
+          "minLength": 1
+        },
+        "region": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "x": {
+              "type": "number",
+              "minimum": 0
+            },
+            "y": {
+              "type": "number",
+              "minimum": 0
+            },
+            "width": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "height": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "componentKey",
+        "componentKind",
+        "componentRole",
+        "transactionDate",
+        "postingDate",
+        "valueDate",
+        "description",
+        "sourceReference",
+        "amountMinor",
+        "currency",
+        "sourceDirection",
+        "sourceFlow",
+        "balanceEffectMinor",
+        "locator",
+        "confidence"
+      ],
+      "properties": {
+        "componentKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "componentKind": {
+          "enum": [
+            "principal",
+            "bank_fee",
+            "vat",
+            "interest",
+            "adjustment",
+            "unknown"
+          ]
+        },
+        "componentRole": {
+          "enum": ["movement", "informational_breakdown"]
+        },
+        "transactionDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "postingDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "valueDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceReference": {
+          "type": ["string", "null"]
+        },
+        "amountMinor": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "currency": {
+          "const": "ZAR"
+        },
+        "sourceDirection": {
+          "enum": ["debit", "credit", "unknown"]
+        },
+        "sourceFlow": {
+          "enum": ["inflow", "outflow", "unknown"]
+        },
+        "balanceEffectMinor": {
+          "$ref": "#/$defs/safeInteger"
+        },
+        "locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rowKey",
+        "rowNumber",
+        "rowKind",
+        "transactionDate",
+        "postingDate",
+        "valueDate",
+        "rawText",
+        "sourceReference",
+        "reportedBalanceMinor",
+        "locator",
+        "confidence",
+        "components"
+      ],
+      "properties": {
+        "rowKey": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rowNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rowKind": {
+          "enum": ["movement", "informational", "composite", "unresolved"]
+        },
+        "transactionDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "postingDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "valueDate": {
+          "$ref": "#/$defs/nullableDateOnly"
+        },
+        "rawText": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceReference": {
+          "type": ["string", "null"]
+        },
+        "reportedBalanceMinor": {
+          "$ref": "#/$defs/nullableSafeInteger"
+        },
+        "locator": {
+          "$ref": "#/$defs/locator"
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/component"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "sourceKind": { "enum": ["pdf", "image"] }
+        },
+        "required": ["sourceKind"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "sourcePageCount": { "type": "integer", "minimum": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "sourceKind": { "enum": ["csv", "ofx", "qif"] }
+        },
+        "required": ["sourceKind"]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "coverage": {
+            "type": "object",
+            "properties": {
+              "sourcePageCount": { "type": "null" },
+              "processedPages": { "type": "array", "maxItems": 0 }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

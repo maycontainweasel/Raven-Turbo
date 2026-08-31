@@ -9,6 +9,7 @@ const StatementRowCreateInput = Z_StatementRow.partial().merge(
   space: true,
   account: true,
   statementImport: true,
+  key: true,
   rowNumber: true,
   description: true,
   amount: true,

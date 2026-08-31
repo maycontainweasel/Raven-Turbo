@@ -40,6 +40,33 @@ yarn-error.log*
 *.zip
 .zed/
 .handoff/
+.raven-private/
+
+# Raven private financial source material and local analysis outputs
+docs/statements/**/*.pdf
+docs/raven-buckets-lab-prototype-2026-05-31/
+mediation-financial-export-*/
+outputs/
+tmp/
+history.txt
+surreal.md
+
+# Preserve the Brain intake structure without versioning raw source captures
+brain/source-material/**
+!brain/source-material/**/
+!brain/source-material/**/.gitkeep
+brain/backfill/**
+!brain/backfill/**/
+!brain/backfill/**/.gitkeep
+brain/sessions/**
+!brain/sessions/**/
+!brain/sessions/**/.gitkeep
+
+# Generated local application runtime configuration
+apps/raven-studio/nuxt.config.runtime.ts
 
 # Nested repositories
 /apps/schema/
+
+# Local SurrealDB MCP env files
+.env.surreal*.local

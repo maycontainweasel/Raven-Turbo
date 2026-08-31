@@ -13,6 +13,7 @@ _Review task for uncertain transaction meaning_
 | `suggestedSpace` | `record<financialSpace>` | no | `""` |
 | `suggestedMerchant` | `record<merchant>` | no | `""` |
 | `suggestedCategory` | `record<category>` | no | `""` |
+| `suggestedPurpose` | `record<transactionPurpose>` | no | `""` |
 | `resolvedAt` | `string` | no | `""` |
 | `resolutionNotes` | `string` | no | `""` |
 | `confidence` | `number` | no | `0` |
@@ -20,7 +21,7 @@ _Review task for uncertain transaction meaning_
 ## ID
 - Export name: `ClarificationTaskId`
 - Exported: yes
-- Structure: `"key"`
+- Structure: `"stringID<transaction, key>"`
 ## Notes
 - Types are inferred from the graph + generated specs.
 - Record ids returned by SurrealDB are objects; pass the record sub-id (`record.id`) to routers.

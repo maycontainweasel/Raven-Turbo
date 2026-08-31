@@ -1,0 +1,14 @@
+name: atomic
+version: 0.2.0
+description: Atomic design-system and UnoCSS backbone for Helios-built Nuxt apps.
+tags:
+  - design-system
+  - unocss
+  - tokens
+  - typography
+modules:
+  - "@unocss/nuxt"
+nuxtConfig:
+  unocss:
+    nuxtLayers: true
+    preflight: true

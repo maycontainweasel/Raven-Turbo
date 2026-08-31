@@ -1,0 +1,29 @@
+# Decision Index
+
+- DEC-0001 - Install Project Brain In Orbit-Connected Mode -> ../DECISIONS.md
+- DEC-0002 - Raven Studio Is The Primary UX Rebuild -> ../DECISIONS.md
+- DEC-0003 - Raven Is Headless-First -> ../DECISIONS.md
+- DEC-0004 - Initial Raven Studio UI Is Data-First And Minimal -> ../DECISIONS.md
+- DEC-0005 - Present Control Is The Next Product Slice -> ../DECISIONS.md
+- DEC-0006 - Orbit Executes Work; Raven Owns Financial Meaning -> ../DECISIONS.md
+- DEC-0007 - Product Terminology (proposed) -> ../DECISIONS.md
+- DEC-0008 - AI-Safe Is The Default Share Archive -> ../DECISIONS.md
+- DEC-0009 - Full Orchestrator Outputs Trigger A Brainkeeper Sidecar -> ../DECISIONS.md
+- DEC-0010 - Account Control Foundation Scope -> ../DECISIONS.md
+- DEC-0011 - Exact Money And Transaction Truth -> ../DECISIONS.md
+- DEC-0012 - Account Balance Snapshot Truth -> ../DECISIONS.md
+- DEC-0013 - Neutral Upcoming Cashflow Model -> ../DECISIONS.md
+- DEC-0014 - Account Control Calculation Contract -> ../DECISIONS.md
+- DEC-0015 - Scoped Import Identity And Immutable Replay -> ../DECISIONS.md
+- DEC-0016 - Statement Truth Source Authority And Ordered Worklines -> ../DECISIONS.md
+- DEC-0017 - Authorize ST-02 Provisional Matching And Exact Reconciliation -> ../DECISIONS.md
+- DEC-0018 - Accept ST-02 And Authorize HP-00 Controlled Pilot Readiness -> ../DECISIONS.md
+- DEC-0019 - Accept HP-00 And Establish HP-01 Schema Deployment Gate -> ../DECISIONS.md
+- DEC-0020 - Accept HP-01 And Authorize HP-02 Private Selection -> ../DECISIONS.md
+- DEC-0021 - Accept HP-02 And Establish HP-03 Legacy Authority Crosswalk -> ../DECISIONS.md
+- DEC-0022 - HP-03 Compatibility Bridge -> ../DECISIONS.md
+- DEC-0023 - Authorize HP-04 Fictional Compatibility Bridge -> ../DECISIONS.md
+- DEC-0024 - Accept HP-04 Foundation And Authorize Separate HP-04A Closeout -> ../DECISIONS.md
+- DEC-0025 - Authorize Financial Read Analytics RA-00 -> ../DECISIONS.md
+- DEC-0026 - Emergency Intake Uses A Filesystem-Native Source Index -> ../DECISIONS.md
+- DEC-0027 - Normal/Tax Lens Uses Sparse Live Inheritance -> ../DECISIONS.md

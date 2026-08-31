@@ -1,10 +1,21 @@
+---
+status: reference
+owner: Raven
+last_reviewed: 2026-07-11
+supersedes: []
+superseded_by:
+  - ../brain/ROADMAP.md
+---
+
 # Raven — Build Plan v1
 
 ## What I’d do first
+
 Do **not** start with the full Buckets engine.
 Start with the data spine that everything else will rely on.
 
 The right order is:
+
 1. truth,
 2. clarity,
 3. control,
@@ -12,6 +23,7 @@ The right order is:
 5. assistance.
 
 That means:
+
 - import and understand statements first,
 - then present-day dashboard,
 - then buckets,
@@ -21,7 +33,9 @@ That means:
 ## Technical shape for this repo
 
 ### Current fit
+
 You already have a good starting shape for this:
+
 - `apps/raven` for the Nuxt 4 app
 - `apps/schema` for model authoring / generation
 - SurrealDB as the backend
@@ -29,10 +43,13 @@ You already have a good starting shape for this:
 - UnoCSS for the design system
 
 ### Recommended addition
+
 Add one shared package for pure business logic:
+
 - `packages/raven-core`
 
 Use it for:
+
 - money math
 - transaction normalization helpers
 - rule evaluation
@@ -43,6 +60,7 @@ Use it for:
 That package becomes the portable brain you can later reuse in desktop/mobile surfaces.
 
 ## Core engineering principles
+
 - Keep raw financial facts immutable.
 - Keep planning separate from observation.
 - Keep all AI decisions explainable.
@@ -53,15 +71,18 @@ That package becomes the portable brain you can later reuse in desktop/mobile su
 ## Suggested repo plan
 
 ### PR 1 — Vision, IA, and route skeleton
+
 Goal: lock the product shape before deeper code.
 
 Deliver:
+
 - docs for product vision
 - app shell nav for Past / Present / Future / Review / Settings
 - placeholder pages with clean layout
 - design tokens / UI rhythm decisions
 
 Suggested routes:
+
 - `/past/imports`
 - `/past/transactions`
 - `/past/clarify`
@@ -75,9 +96,11 @@ Suggested routes:
 - `/settings/spaces`
 
 ### PR 2 — Schema for truth layer
+
 Goal: establish the minimum data spine.
 
 Models to define first:
+
 - `financialSpace`
 - `account`
 - `statementImport`
@@ -90,6 +113,7 @@ Models to define first:
 - `monthlySnapshot`
 
 Critical fields to include early:
+
 - source identifiers
 - imported timestamps
 - original description text
@@ -102,9 +126,11 @@ Critical fields to include early:
 - manual override metadata
 
 ### PR 3 — Import pipeline and clarification queue
+
 Goal: make Raven useful with real statement data.
 
 Deliver:
+
 - statement upload/import record
 - parser for CSV first
 - manual paste input for copied statement lines
@@ -115,9 +141,11 @@ Deliver:
 - “apply rule to similar items” action
 
 ### PR 4 — Monthly truth dashboard
+
 Goal: understand the current month and recent history.
 
 Deliver:
+
 - income vs outflow totals
 - category breakdown
 - recurring costs section
@@ -127,9 +155,11 @@ Deliver:
 - business vs personal split visibility
 
 ### PR 5 — Present-day command center
+
 Goal: give daily grounding and decision support.
 
 Deliver:
+
 - cash available
 - upcoming obligations
 - debt minimums
@@ -140,9 +170,11 @@ Deliver:
 - daily worth / trajectory card
 
 ### PR 6 — Buckets engine v1
+
 Goal: build the intentional money-routing system.
 
 Deliver:
+
 - bucket tree CRUD
 - bucket types
 - target, priority, withdrawal rules
@@ -152,9 +184,11 @@ Deliver:
 - explanation ledger for allocations
 
 ### PR 7 — Projections studio
+
 Goal: show realistic futures.
 
 Deliver:
+
 - scenario CRUD
 - monthly simulation engine
 - debt payoff ETA
@@ -164,9 +198,11 @@ Deliver:
 - “R200 less here = X sooner there” insights
 
 ### PR 8 — AI assistant surface
+
 Goal: make Raven feel like a careful junior accountant.
 
 Deliver:
+
 - import assistant commands
 - classification suggestions
 - similar transaction suggestions
@@ -177,6 +213,7 @@ Deliver:
 ## The most important domain workflow
 
 ### Statement-to-truth pipeline
+
 1. Create import batch
 2. Store raw file metadata
 3. Parse rows into `statementRow`
@@ -191,7 +228,9 @@ Deliver:
 That workflow is the backbone of Raven.
 
 ## Suggested status model
+
 For transactions, use explicit lifecycle states:
+
 - `imported`
 - `normalized`
 - `matched`
@@ -200,12 +239,14 @@ For transactions, use explicit lifecycle states:
 - `ignored`
 
 For clarifications:
+
 - `open`
 - `suggested`
 - `resolved`
 - `dismissed`
 
 ## Suggested first metrics to compute
+
 - total income this month
 - total spend this month
 - fixed vs variable spend
@@ -220,23 +261,27 @@ For clarifications:
 ## A good first dashboard layout
 
 ### Top row
+
 - Cash today
 - Runway
 - Month remaining
 - Debt pressure
 
 ### Middle row
+
 - Income vs outflow this month
 - Category spend
 - Upcoming obligations
 
 ### Bottom row
+
 - Clarifications waiting
 - Recurring costs to review
 - One next move
 - Opportunities
 
 ## Codex prompt 1 — lock the shell and IA
+
 ```text
 You are working in the Raven monorepo.
 
@@ -276,6 +321,7 @@ Deliverables:
 ```
 
 ## Codex prompt 2 — define the truth-layer schema
+
 ```text
 You are working in the Raven monorepo.
 
@@ -319,6 +365,7 @@ Output:
 ```
 
 ## Codex prompt 3 — build import + clarification workflow
+
 ```text
 You are working in the Raven monorepo.
 
@@ -357,6 +404,7 @@ Deliverables:
 ```
 
 ## Codex prompt 4 — build present dashboard
+
 ```text
 You are working in the Raven monorepo.
 
@@ -386,6 +434,7 @@ Requirements:
 ```
 
 ## Codex prompt 5 — scaffold buckets engine
+
 ```text
 You are working in the Raven monorepo.
 
@@ -414,7 +463,9 @@ Requirements:
 ```
 
 ## A simple product rule for deciding what to build next
+
 Only build the next feature if it does one of these:
+
 - increases truth,
 - reduces ambiguity,
 - improves decision quality,
@@ -424,7 +475,9 @@ Only build the next feature if it does one of these:
 If it does not do one of those, it is probably not core yet.
 
 ## Immediate recommendation
+
 This week, I would do only these three things:
+
 1. lock the shell and route structure,
 2. define the truth-layer schema,
 3. build CSV import + clarification queue.

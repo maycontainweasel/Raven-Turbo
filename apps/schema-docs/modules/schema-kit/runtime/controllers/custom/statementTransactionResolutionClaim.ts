@@ -1,0 +1,5 @@
+import type { StatementTransactionResolutionClaimController, StatementTransactionResolutionClaimControllerOverride } from '../generated/statementTransactionResolutionClaim'
+
+export const extendStatementTransactionResolutionClaimController: StatementTransactionResolutionClaimControllerOverride | undefined = undefined
+
+export type { StatementTransactionResolutionClaimController }

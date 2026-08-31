@@ -88,14 +88,23 @@ Required fields:
 
 Optional fields:
 - sourceRow
+- sourceChecksum
 - effectiveAt
 - normalizedDescription
+- amountMinor
 - balance
+- transactionKind
+- flowDirection
+- entrySource
+- recordedAt
 - confidence
 - merchantName
 - merchant
 - category
 - isTransfer
+- operation
+- statementMatch
+- transfer
 - manualOverride
 - notes
 

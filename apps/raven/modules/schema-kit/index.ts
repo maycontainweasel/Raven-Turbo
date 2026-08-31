@@ -750,14 +750,14 @@ type TrpcClient = ReturnType<typeof createTRPCProxyClient<AppRouter>>
 declare module '#app' {
   interface NuxtApp {
     $api: TrpcClient;
-    $client: TrpcClient;
+    $trpc: TrpcClient;
   }
 }
 
 declare module 'vue' {
   interface ComponentCustomProperties {
     $api: TrpcClient;
-    $client: TrpcClient;
+    $trpc: TrpcClient;
   }
 }
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 function parseArgs(argv) {
   const args = {
@@ -48,6 +49,10 @@ function titleize(value) {
     .filter(Boolean)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
     .join(' ');
+}
+
+function checksum(value) {
+  return createHash('sha256').update(JSON.stringify(value)).digest('hex');
 }
 
 function parseMarkdownTable(content) {
@@ -148,6 +153,39 @@ function parseNumber(value) {
   return Number.isFinite(parsed) ? parsed : null;
 }
 
+function parseMinorUnits(value, currency) {
+  if (String(currency).toUpperCase() !== 'ZAR') {
+    throw new Error(`Unsupported statement currency for exact import: ${currency}`);
+  }
+  const normalized = String(value ?? '').replace(/,/g, '').trim();
+  const match = /^([+-]?)(\d+)(?:\.(\d{1,2}))?$/.exec(normalized);
+  if (!match) {
+    throw new Error(`Could not parse exact statement amount: ${value}`);
+  }
+  const fraction = (match[3] || '').padEnd(2, '0');
+  const magnitude = (BigInt(match[2]) * 100n) + BigInt(fraction || '0');
+  if (magnitude <= 0n || magnitude > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new Error('Statement amount is outside the supported exact-money range');
+  }
+  return Number(magnitude);
+}
+
+function parseSignedMinorUnits(value, currency) {
+  if (String(currency).toUpperCase() !== 'ZAR') {
+    throw new Error(`Unsupported statement currency for exact import: ${currency}`);
+  }
+  const normalized = String(value ?? '0').replace(/,/g, '').trim() || '0';
+  const match = /^([+-]?)(\d+)(?:\.(\d{1,2}))?$/.exec(normalized);
+  if (!match) throw new Error(`Could not parse exact statement balance: ${value}`);
+  const fraction = (match[3] || '').padEnd(2, '0');
+  const magnitude = (BigInt(match[2]) * 100n) + BigInt(fraction || '0');
+  const signed = match[1] === '-' ? -magnitude : magnitude;
+  if (signed < BigInt(Number.MIN_SAFE_INTEGER) || signed > BigInt(Number.MAX_SAFE_INTEGER)) {
+    throw new Error('Statement balance is outside the supported exact-money range');
+  }
+  return Number(signed);
+}
+
 function parseDateLabel(dateLabel, statementStart, statementEnd) {
   const match = String(dateLabel).trim().match(/^(\d{1,2})\s+([A-Za-z]{3})$/);
   if (!match) {
@@ -189,7 +227,7 @@ function parseDateLabel(dateLabel, statementStart, statementEnd) {
     resolvedYear = endYear;
   }
 
-  return `${resolvedYear}-${month}-${String(day).padStart(2, '0')}T00:00:00Z`;
+  return `${resolvedYear}-${month}-${String(day).padStart(2, '0')}`;
 }
 
 function extractBalance(rawRowText) {
@@ -262,7 +300,17 @@ function rowDirection(transactionType) {
   if (transactionType === 'income' || transactionType === 'reversal') {
     return 'credit';
   }
-  return 'debit';
+  if (transactionType === 'expense' || transactionType === 'fee') {
+    return 'debit';
+  }
+  return 'unknown';
+}
+
+function canonicalSemantics(direction) {
+  if (direction === 'credit') return { transactionKind: 'income', flowDirection: 'inflow' };
+  if (direction === 'debit') return { transactionKind: 'expense', flowDirection: 'outflow' };
+  if (direction === 'transfer') return { transactionKind: 'transfer' };
+  return { transactionKind: 'unresolved' };
 }
 
 function clarificationQuestion(row) {
@@ -308,22 +356,54 @@ async function main() {
   const statementPeriodStart = meta.statementStart || '2026-02-18';
   const statementPeriodEnd = meta.statementEnd || '2026-03-18';
   const statementStamp = statementPeriodEnd.slice(0, 10);
+  const importKey = meta.importKey || `${statementStamp}-${meta.accountKey}`;
   const rows = parseMarkdownTable(content).map((row) => {
     const amount = parseNumber(row.amount_zar);
     const bankCharge = parseNumber(row.bank_charge_zar);
-    return {
+    const parsed = {
       ...row,
       row_no: Number.parseInt(row.row_no, 10),
       amount_zar: amount,
+      amount_minor: parseMinorUnits(row.amount_zar, meta.accountCurrency || 'ZAR'),
       bank_charge_zar: bankCharge,
       balance_zar: row.balance_zar ? parseNumber(row.balance_zar) : extractBalance(row.raw_row_text),
       posted_at: parseDateLabel(row.date, statementPeriodStart, statementPeriodEnd),
       description_label: extractLeadingLabel(row.raw_row_text),
     };
+    const immutableSource = {
+      sourceFileName: meta.sourceFileName || path.basename(inputPath).replace(/\.import\.md$/i, '.pdf'),
+      statementPeriodStart,
+      statementPeriodEnd,
+      rowNumber: parsed.row_no,
+      postedAt: parsed.posted_at,
+      rawRowText: row.raw_row_text,
+      amountMinor: parsed.amount_minor,
+      bankCharge: parsed.bank_charge_zar,
+      balance: parsed.balance_zar,
+      currency: meta.accountCurrency || 'ZAR',
+    };
+    return {
+      ...parsed,
+      immutable_source: immutableSource,
+      source_checksum: checksum(immutableSource),
+    };
   });
+  const importChecksum = checksum({
+    spaceKey: meta.spaceKey,
+    accountKey: meta.accountKey,
+    importKey,
+    sourceFileName: meta.sourceFileName || path.basename(inputPath).replace(/\.import\.md$/i, '.pdf'),
+    sourceFormat: 'pdf',
+    statementPeriodStart,
+    statementPeriodEnd,
+    rowChecksums: rows.map((row) => row.source_checksum),
+  });
+  const clarificationCount = rows.filter((row) => row.clarification_status !== 'clarified').length;
 
   const openingBalance = parseNumber(meta.openingBalance);
   const closingBalance = parseNumber(meta.closingBalance);
+  const liabilityAccountTypes = new Set(['credit_card', 'loan', 'debt']);
+  const nonLiquidAccountTypes = new Set(['credit_card', 'loan', 'debt', 'investment']);
 
   const merchants = new Map();
   const categories = new Map();
@@ -378,9 +458,11 @@ async function main() {
   lines.push('');
   lines.push('USE NS raven DB raven1;');
   lines.push('');
+  lines.push('BEGIN TRANSACTION;');
+  lines.push('');
   lines.push('-- Base environment and account');
   lines.push(
-    `LET $space = fn::createFinancialSpace(${renderObject({
+    `LET $space = fn::ensureImportFinancialSpace(${renderObject({
       key: meta.spaceKey,
       name: meta.spaceName,
       spaceType: meta.spaceType,
@@ -390,8 +472,8 @@ async function main() {
     })});`,
   );
   lines.push(
-    `LET $account = fn::createAccount(${renderObject({
-      space: expr('$space'),
+    `LET $account = fn::ensureImportAccount(${renderObject({
+      space: expr('$space.id'),
       key: meta.accountKey,
       name: meta.accountName,
       bankName: meta.accountBank,
@@ -399,31 +481,35 @@ async function main() {
       currency: meta.accountCurrency,
       accountNumberLast4: meta.accountLast4,
       openingBalance: openingBalance ?? 0,
+      openingBalanceMinor: parseSignedMinorUnits(meta.openingBalance, meta.accountCurrency),
+      normalNature: liabilityAccountTypes.has(meta.accountType) ? 'liability' : 'asset',
+      liquidityClass: nonLiquidAccountTypes.has(meta.accountType) ? 'non_liquid' : 'liquid',
+      freshnessWindowHours: 72,
       active: true,
       notes: `Imported from ${path.basename(meta.sourceFileName || 'statement.pdf')}`,
     })});`,
   );
-  lines.push(`fn::createEdge($space.id, "FinancialSpaceAccounts", $account.id, { boundId: true, overwrite: false, skipExists: true });`);
+  lines.push('fn::ensureImportEdge($space.id, "FinancialSpaceAccounts", $account.id);');
   lines.push('');
   lines.push('-- Statement import batch');
   lines.push(
-    `LET $import = fn::createStatementImport(${renderObject({
-      space: expr('$space'),
-      account: expr('$account'),
-      key: meta.importKey || `${statementStamp}-${meta.accountKey}`,
+    `LET $import = fn::ensureStatementImport(${renderObject({
+      space: expr('$space.id'),
+      account: expr('$account.id'),
+      key: importKey,
       sourceFileName: meta.sourceFileName || path.basename(inputPath).replace(/\.import\.md$/i, '.pdf'),
       sourceFormat: 'pdf',
       importedAt: expr('time::now()'),
       statementDate: `${statementPeriodEnd}T00:00:00Z`,
       status: 'matched',
-      rowCount: 0,
-      normalizedCount: 0,
-      clarificationCount: 0,
-      sourceChecksum: '',
+      rowCount: rows.length,
+      normalizedCount: rows.length,
+      clarificationCount,
+      sourceChecksum: importChecksum,
       notes: `Imported from ${path.basename(inputPath)}`,
     })});`,
   );
-  lines.push(`fn::createEdge($account.id, "AccountStatementImports", $import.id, { boundId: true, overwrite: false, skipExists: true });`);
+  lines.push('fn::ensureImportEdge($account.id, "AccountStatementImports", $import.id);');
   lines.push('');
 
   lines.push('-- Category records');
@@ -436,7 +522,7 @@ async function main() {
       active: true,
       notes: `Imported from ${path.basename(inputPath)}`,
     };
-    lines.push(`LET $${info.varName} = fn::createCategory(${renderObject(payload)});`);
+    lines.push(`LET $${info.varName} = fn::ensureImportCategory(${renderObject({ ...payload, space: expr('$space.id') })});`);
   }
   for (const [label, info] of feeTypes.entries()) {
     const payload = {
@@ -448,15 +534,15 @@ async function main() {
       active: true,
       notes: `Imported from ${path.basename(inputPath)}`,
     };
-    lines.push(`LET $${info.varName} = fn::createCategory(${renderObject(payload)});`);
+    lines.push(`LET $${info.varName} = fn::ensureImportCategory(${renderObject({ ...payload, space: expr('$space.id'), parentCategory: expr(`$${categories.get('Fees').varName}.id`) })});`);
   }
 
   lines.push('');
   lines.push('-- Merchant records');
   for (const [label, info] of merchants.entries()) {
     lines.push(
-      `LET $${info.varName} = fn::createMerchant(${renderObject({
-        space: expr('$space'),
+      `LET $${info.varName} = fn::ensureImportMerchant(${renderObject({
+        space: expr('$space.id'),
         key: info.key,
         name: label,
         normalizedName: label,
@@ -468,12 +554,11 @@ async function main() {
 
   lines.push('');
   lines.push('-- Rows, transactions, and clarification tasks');
-  let clarificationCount = 0;
   for (const row of rows) {
     const rowKey = `row-${String(row.row_no).padStart(2, '0')}`;
     const rowVar = variableName('row', rowKey);
-    const txVar = variableName('tx', `stmt-${statementStamp}-${rowKey}`);
-    const txKey = `stmt-${statementStamp}-${rowKey}`;
+    const txKey = `import-${importKey}-${rowKey}`;
+    const txVar = variableName('tx', txKey);
     const isClarified = row.clarification_status === 'clarified';
     const rowStatus = isClarified ? 'clarified' : 'matched';
     const txStatus = isClarified ? 'clarified' : 'matched';
@@ -482,33 +567,22 @@ async function main() {
     const categoryInfo = row.transaction_type === 'fee' && row.fee_type ? feeTypes.get(row.fee_type) : categories.get(row.category);
     const categoryExpr = expr(`$${categoryInfo.varName}`);
     const amount = row.amount_zar ?? 0;
+    const direction = rowDirection(row.transaction_type);
+    const canonical = canonicalSemantics(direction);
     const bankCharge = row.bank_charge_zar ?? null;
     const balance = row.balance_zar ?? 0;
     const description = row.description_label || row.raw_row_text;
     const normalizedDescription = row.transaction_type === 'fee' && row.fee_type ? titleize(row.fee_type) : row.normalized_merchant || row.category;
-    const rawData = {
-      sourceFileName: meta.sourceFileName,
-      statementPeriodStart,
-      statementPeriodEnd,
-      rowNo: row.row_no,
-      rawRowText: row.raw_row_text,
-      transactionType: row.transaction_type,
-      normalizedMerchant: row.normalized_merchant,
-      category: row.category,
-      feeType: row.fee_type,
-      clarificationStatus: row.clarification_status,
-      amountZar: amount,
-      bankChargeZar: bankCharge,
-      balanceZar: balance,
-    };
+    const rawData = row.immutable_source;
 
     lines.push(``);
     lines.push(`-- Row ${row.row_no}`);
     lines.push(
-      `LET $${rowVar} = fn::createStatementRow(${renderObject({
-        space: expr('$space'),
-        account: expr('$account'),
-        statementImport: expr('$import'),
+      `LET $${rowVar} = fn::ensureStatementRow(${renderObject({
+        space: expr('$space.id'),
+        account: expr('$account.id'),
+        statementImport: expr('$import.id'),
+        key: rowKey,
         rowNumber: row.row_no,
         postedAt: row.posted_at,
         description,
@@ -516,46 +590,70 @@ async function main() {
         amount,
         balance,
         currency: meta.accountCurrency || 'ZAR',
-        direction: rowDirection(row.transaction_type),
+        direction,
         status: rowStatus,
         confidence: isClarified ? 0.95 : 0.55,
         rawData: expr(renderObject(rawData, 4)),
+        sourceChecksum: row.source_checksum,
         notes: row.notes || '',
       })});`,
     );
     lines.push(
-      `LET $${txVar} = fn::createTransaction(${renderObject({
-        space: expr('$space'),
-        account: expr('$account'),
+      `LET $${txVar} = fn::ensureImportedTransaction(${renderObject({
+        space: expr('$space.id'),
+        account: expr('$account.id'),
         key: txKey,
-        sourceRow: expr(`$${rowVar}`),
+        sourceRow: expr(`$${rowVar}.id`),
+        sourceChecksum: row.source_checksum,
         postedAt: row.posted_at,
         description,
         normalizedDescription,
         amount,
         balance,
         currency: meta.accountCurrency || 'ZAR',
-        direction: rowDirection(row.transaction_type),
+        direction,
+        amountMinor: row.amount_minor,
+        ...canonical,
+        entrySource: 'imported',
+        recordedAt: expr('type::string($import.importedAt)'),
         status: txStatus,
         confidence: isClarified ? 0.95 : 0.55,
         merchantName: row.normalized_merchant || '',
-        merchant: merchantExpr || '',
-        category: categoryExpr,
+        merchant: merchantExpr ? expr(`${merchantExpr.__expr}.id`) : '',
+        category: expr(`${categoryExpr.__expr}.id`),
         isTransfer: row.transaction_type === 'transfer',
         manualOverride: false,
         notes: row.notes || '',
       })});`,
     );
-    lines.push(`fn::updateStatementRow($${rowVar}.id, { transaction: $${txVar}.id, status: ${JSON.stringify(rowStatus)} });`);
-    lines.push(`fn::createEdge($import.id, "StatementImportRows", $${rowVar}.id, { boundId: true, overwrite: false, skipExists: true });`);
-    lines.push(`fn::createEdge($${rowVar}.id, "StatementRowTransactions", $${txVar}.id, { boundId: true, overwrite: false, skipExists: true });`);
-    lines.push(`fn::createEdge($account.id, "AccountTransactions", $${txVar}.id, { boundId: true, overwrite: false, skipExists: true });`);
-    if (merchantExpr) {
-      lines.push(`fn::createEdge($${txVar}.id, "TransactionMerchant", $${merchantInfo.varName}.id, { boundId: true, overwrite: false, skipExists: true });`);
+    if (isClarified) {
+      lines.push(
+        `LET $${txVar} = fn::reviewImportedTransaction(${renderObject({
+          transaction: expr(`$${txVar}.id`),
+          sourceChecksum: row.source_checksum,
+          normalizedDescription,
+          direction,
+          ...canonical,
+          flowDirection: canonical.flowDirection || '',
+          status: txStatus,
+          confidence: 0.95,
+          merchantName: row.normalized_merchant || '',
+          merchant: merchantExpr ? expr(`${merchantExpr.__expr}.id`) : '',
+          category: expr(`${categoryExpr.__expr}.id`),
+          isTransfer: row.transaction_type === 'transfer',
+          notes: row.notes || '',
+        })});`,
+      );
     }
-    lines.push(`fn::createEdge($${txVar}.id, "TransactionCategory", ${categoryExpr.__expr}.id, { boundId: true, overwrite: false, skipExists: true });`);
-
-    const taskKey = `stmt-${statementStamp}-row-${String(row.row_no).padStart(2, '0')}`;
+    lines.push(`fn::updateStatementRow($${rowVar}.id, { normalizedDescription: ${JSON.stringify(normalizedDescription)}, status: ${JSON.stringify(rowStatus)}, confidence: ${isClarified ? '0.95' : '0.55'}, transaction: $${txVar}.id, notes: ${JSON.stringify(row.notes || '')} });`);
+    lines.push(`fn::ensureImportEdge($import.id, "StatementImportRows", $${rowVar}.id);`);
+    lines.push(`fn::ensureImportEdge($${rowVar}.id, "StatementRowTransactions", $${txVar}.id);`);
+    lines.push(`fn::ensureImportEdge($account.id, "AccountTransactions", $${txVar}.id);`);
+    if (merchantExpr) {
+      lines.push(`fn::${isClarified ? 'replace' : 'ensure'}ImportEdge($${txVar}.id, "TransactionMerchant", $${merchantInfo.varName}.id);`);
+    }
+    lines.push(`fn::${isClarified ? 'replace' : 'ensure'}ImportEdge($${txVar}.id, "TransactionCategory", ${categoryExpr.__expr}.id);`);
+    const taskKey = rowKey;
 
     if (isClarified) {
       lines.push(
@@ -564,24 +662,23 @@ async function main() {
     }
 
     if (!isClarified) {
-      clarificationCount += 1;
-      const taskVar = variableName('task', `stmt-${statementStamp}-${rowKey}`);
+      const taskVar = variableName('task', `${importKey}-${rowKey}`);
       lines.push(
-        `LET $${taskVar} = fn::createClarificationTask(${renderObject({
-          space: expr('$space'),
+        `LET $${taskVar} = fn::ensureImportClarificationTask(${renderObject({
+          space: expr('$space.id'),
           key: taskKey,
-          transaction: expr(`$${txVar}`),
+          transaction: expr(`$${txVar}.id`),
           status: 'open',
           question: clarificationQuestion(row),
           reason: clarificationReason(row),
-          suggestedSpace: expr('$space'),
-          suggestedMerchant: merchantExpr || '',
-          suggestedCategory: categoryExpr,
+          suggestedSpace: expr('$space.id'),
+          suggestedMerchant: merchantExpr ? expr(`${merchantExpr.__expr}.id`) : '',
+          suggestedCategory: expr(`${categoryExpr.__expr}.id`),
           confidence: 0.25,
           notes: `Imported from ${path.basename(inputPath)}`,
         })});`,
       );
-      lines.push(`fn::createEdge($${txVar}.id, "TransactionClarificationTasks", $${taskVar}.id, { boundId: true, overwrite: false, skipExists: true });`);
+      lines.push(`fn::ensureImportEdge($${txVar}.id, "TransactionClarificationTasks", $${taskVar}.id);`);
     }
   }
 
@@ -597,6 +694,8 @@ async function main() {
       notes: `Imported from ${path.basename(inputPath)}`,
     })});`,
   );
+  lines.push('');
+  lines.push('COMMIT TRANSACTION;');
   lines.push('');
   lines.push('-- End of generated import');
 

@@ -11,7 +11,11 @@ const AccountCreateInput = Z_Account.partial().merge(
   name: true,
   bankName: true,
   accountType: true,
+  facilityKind: true,
   currency: true,
+  normalNature: true,
+  liquidityClass: true,
+  freshnessWindowHours: true,
   active: true,
   })
 );

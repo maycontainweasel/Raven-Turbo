@@ -1,0 +1,12 @@
+h1 { font-size: var(--fs-6); line-height: var(--lh-1); }
+h2 { font-size: var(--fs-5); line-height: var(--lh-1); }
+h3 { font-size: var(--fs-4); line-height: var(--lh-1); }
+h4 { font-size: var(--fs-3); line-height: var(--lh-0); }
+h5 { font-size: var(--fs-2); line-height: var(--lh-0); }
+h6 { font-size: var(--fs-1); line-height: var(--lh-0); }
+p, li { font-size: var(--fs-0); line-height: var(--lh-0); }
+small { font-size: var(--fs--1); line-height: var(--lh-0); }
+
+.type-default :is(p, li, h1, h2, h3, h4, h5, h6) {
+  margin: 0;
+}

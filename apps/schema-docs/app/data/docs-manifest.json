@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-11T16:14:55.123Z",
+  "generatedAt": "2026-08-26T20:21:52.160Z",
   "source": "config/specs",
   "instances": {
     "default": "local",
@@ -51,6 +51,12 @@
           "default": "current"
         },
         {
+          "key": "facilityKind",
+          "type": "enum<\"none\" | \"credit_card\" | \"overdraft\" | \"revolving_credit\" | \"loan\" | \"other\">",
+          "required": true,
+          "default": "none"
+        },
+        {
           "key": "currency",
           "type": "string",
           "required": true,
@@ -67,6 +73,30 @@
           "type": "number",
           "required": false,
           "default": 0
+        },
+        {
+          "key": "openingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "normalNature",
+          "type": "enum<\"asset\" | \"liability\">",
+          "required": true,
+          "default": "asset"
+        },
+        {
+          "key": "liquidityClass",
+          "type": "enum<\"liquid\" | \"non_liquid\">",
+          "required": true,
+          "default": "liquid"
+        },
+        {
+          "key": "freshnessWindowHours",
+          "type": "int",
+          "required": true,
+          "default": 72
         },
         {
           "key": "active",
@@ -103,8 +133,866 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<space, key>",
         "exportName": "AccountId",
+        "exportType": true
+      }
+    },
+    "accountBalanceSnapshot": {
+      "key": "accountBalanceSnapshot",
+      "name": "AccountBalanceSnapshot",
+      "model": "accountBalanceSnapshot",
+      "description": "Immutable as-of account balance evidence with explicit freshness provenance",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "balanceKind",
+          "type": "enum<\"available\" | \"ledger\" | \"statement\" | \"market_value\" | \"outstanding\">",
+          "required": true,
+          "default": "ledger"
+        },
+        {
+          "key": "amountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "economicNature",
+          "type": "enum<\"asset\" | \"liability\" | \"informational\">",
+          "required": true,
+          "default": "asset"
+        },
+        {
+          "key": "asOf",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "evidenceLevel",
+          "type": "enum<\"confirmed\" | \"observed\">",
+          "required": true,
+          "default": "confirmed"
+        },
+        {
+          "key": "sourceKind",
+          "type": "enum<\"manual_confirmation\" | \"statement_closing\" | \"transaction_observation\" | \"provider_sync\" | \"market_quote\">",
+          "required": true,
+          "default": "manual_confirmation"
+        },
+        {
+          "key": "sourceRef",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/accountBalanceSnapshot/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "AccountBalanceSnapshotId",
+        "exportType": true
+      }
+    },
+    "accountFacilitySnapshot": {
+      "key": "accountFacilitySnapshot",
+      "name": "AccountFacilitySnapshot",
+      "model": "accountFacilitySnapshot",
+      "description": "Immutable dated evidence of a credit, overdraft, loan, or revolving facility and its exact observed or contractual terms",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "facilityKind",
+          "type": "enum<\"credit_card\" | \"overdraft\" | \"revolving_credit\" | \"loan\" | \"other\">",
+          "required": true,
+          "default": "credit_card"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "asOf",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "effectiveFrom",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "evidenceLevel",
+          "type": "enum<\"confirmed\" | \"observed\">",
+          "required": true,
+          "default": "confirmed"
+        },
+        {
+          "key": "sourceKind",
+          "type": "enum<\"statement\" | \"contract\" | \"manual_confirmation\" | \"provider_sync\">",
+          "required": true,
+          "default": "statement"
+        },
+        {
+          "key": "sourceRef",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "hasFacilityLimit",
+          "type": "boolean",
+          "required": true,
+          "default": false
+        },
+        {
+          "key": "facilityLimitMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "hasAvailableCredit",
+          "type": "boolean",
+          "required": true,
+          "default": false
+        },
+        {
+          "key": "availableCreditMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "hasMinimumPayment",
+          "type": "boolean",
+          "required": true,
+          "default": false
+        },
+        {
+          "key": "minimumPaymentMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "paymentDueOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "interestRates",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "feeTerms",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "terms",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/accountFacilitySnapshot/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<account, key>",
+        "exportName": "AccountFacilitySnapshotId",
+        "exportType": true
+      }
+    },
+    "accountTransfer": {
+      "key": "accountTransfer",
+      "name": "AccountTransfer",
+      "model": "accountTransfer",
+      "description": "Source-authority aggregate linking two exact observed transfer legs between tracked accounts",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceSpace",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "sourceAccount",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "targetSpace",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "targetAccount",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "amountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "postedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "sourceTransaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "targetTransaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/accountTransfer/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "AccountTransferId",
+        "exportType": true
+      }
+    },
+    "cashflowOccurrence": {
+      "key": "cashflowOccurrence",
+      "name": "CashflowOccurrence",
+      "model": "cashflowOccurrence",
+      "description": "Concrete accepted due item materialized from a cashflow schedule",
+      "data": "source",
+      "fields": [
+        {
+          "key": "schedule",
+          "type": "record",
+          "required": true,
+          "rawType": "record<cashflowSchedule>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": false,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "category",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "scheduledDueOn",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "dueOn",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "scheduleRevision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "direction",
+          "type": "enum<\"outflow\" | \"inflow\">",
+          "required": true,
+          "default": "outflow"
+        },
+        {
+          "key": "certainty",
+          "type": "enum<\"committed\" | \"confirmed\" | \"expected\" | \"possible\">",
+          "required": true,
+          "default": "committed"
+        },
+        {
+          "key": "cadence",
+          "type": "enum<\"once\" | \"weekly\" | \"monthly\" | \"quarterly\" | \"yearly\">",
+          "required": true,
+          "default": "once"
+        },
+        {
+          "key": "scheduledAmountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "amountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"due\" | \"settled\" | \"skipped\" | \"waived\" | \"cancelled\">",
+          "required": true,
+          "default": "due"
+        },
+        {
+          "key": "settledAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "overrideReason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "statusReason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "lastOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "updatedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/cashflowOccurrence/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<schedule, scheduledDueOn>",
+        "exportName": "CashflowOccurrenceId",
+        "exportType": true
+      }
+    },
+    "cashflowSchedule": {
+      "key": "cashflowSchedule",
+      "name": "CashflowSchedule",
+      "model": "cashflowSchedule",
+      "description": "Accepted one-off or recurring future money rule",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": false,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "category",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "direction",
+          "type": "enum<\"outflow\" | \"inflow\">",
+          "required": true,
+          "default": "outflow"
+        },
+        {
+          "key": "certainty",
+          "type": "enum<\"committed\" | \"confirmed\" | \"expected\" | \"possible\">",
+          "required": true,
+          "default": "committed"
+        },
+        {
+          "key": "amountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "timezone",
+          "type": "string",
+          "required": true,
+          "default": "Africa/Johannesburg"
+        },
+        {
+          "key": "cadence",
+          "type": "enum<\"once\" | \"weekly\" | \"monthly\" | \"quarterly\" | \"yearly\">",
+          "required": true,
+          "default": "once"
+        },
+        {
+          "key": "interval",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "startDate",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "endDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "onceDueOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "dayOfWeek",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "dayOfMonth",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "monthOfYear",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "status",
+          "type": "enum<\"active\" | \"paused\" | \"ended\" | \"cancelled\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "materializedThrough",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "termsEffectiveFrom",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "pausedOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "resumedOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "endedOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "cancelledOn",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "createdOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "lastOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "updatedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/cashflowSchedule/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<space, key>",
+        "exportName": "CashflowScheduleId",
         "exportType": true
       }
     },
@@ -184,7 +1072,7 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<space, key>",
         "exportName": "CategoryId",
         "exportType": true
       }
@@ -261,6 +1149,14 @@
           "default": ""
         },
         {
+          "key": "suggestedPurpose",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transactionPurpose>",
+          "format": "record",
+          "default": ""
+        },
+        {
           "key": "resolvedAt",
           "type": "string",
           "required": false,
@@ -307,7 +1203,7 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<transaction, key>",
         "exportName": "ClarificationTaskId",
         "exportType": true
       }
@@ -368,6 +1264,14 @@
           "default": ""
         },
         {
+          "key": "targetPurpose",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transactionPurpose>",
+          "format": "record",
+          "default": ""
+        },
+        {
           "key": "priority",
           "type": "number",
           "required": false,
@@ -408,8 +1312,223 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<space, key>",
         "exportName": "ClassificationRuleId",
+        "exportType": true
+      }
+    },
+    "client": {
+      "key": "client",
+      "name": "Client",
+      "model": "client",
+      "description": "Global Raven client record for retainers, hosting, maintenance, and future billing relationships",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "businessName",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "contactPerson",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "email",
+          "type": "string",
+          "required": false,
+          "rawType": "email",
+          "format": "email",
+          "default": ""
+        },
+        {
+          "key": "phoneWhatsapp",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "websiteDomain",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "status",
+          "type": "enum<\"active\" | \"paused\" | \"inactive\" | \"closed\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "relatedProjects",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "orbitClientId",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/client/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "ClientId",
+        "exportType": true
+      }
+    },
+    "financialOperation": {
+      "key": "financialOperation",
+      "name": "FinancialOperation",
+      "model": "financialOperation",
+      "description": "Immutable receipt for an idempotent semantic Raven command",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "command",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "idempotencyKey",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "requestHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "channel",
+          "type": "enum<\"ui\" | \"mcp\" | \"system\">",
+          "required": true,
+          "default": "ui"
+        },
+        {
+          "key": "actorId",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "status",
+          "type": "enum<\"applied\" | \"replayed\" | \"failed\">",
+          "required": true,
+          "default": "applied"
+        },
+        {
+          "key": "resultRefs",
+          "type": "array<string>",
+          "required": false,
+          "default": []
+        },
+        {
+          "key": "warningCodes",
+          "type": "array<string>",
+          "required": false,
+          "default": []
+        },
+        {
+          "key": "auditMeta",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "completedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "failureCode",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/financialOperation/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "FinancialOperationId",
         "exportType": true
       }
     },
@@ -443,6 +1562,12 @@
           "type": "string",
           "required": true,
           "default": "ZAR"
+        },
+        {
+          "key": "timezone",
+          "type": "string",
+          "required": true,
+          "default": "Africa/Johannesburg"
         },
         {
           "key": "description",
@@ -487,6 +1612,107 @@
         "type": "string",
         "structure": "key",
         "exportName": "FinancialSpaceId",
+        "exportType": true
+      }
+    },
+    "hostingProvider": {
+      "key": "hostingProvider",
+      "name": "HostingProvider",
+      "model": "hostingProvider",
+      "description": "Hosting, reseller, domain, email, VPS, or infrastructure provider account used to deliver retainers",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "providerType",
+          "type": "enum<\"reseller\" | \"shared_hosting\" | \"vps\" | \"domain\" | \"email\" | \"cloud\" | \"other\">",
+          "required": true,
+          "default": "reseller"
+        },
+        {
+          "key": "accountName",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "accountReference",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "websiteUrl",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "billingCadence",
+          "type": "enum<\"monthly\" | \"quarterly\" | \"annual\" | \"ad_hoc\">",
+          "required": true,
+          "default": "monthly"
+        },
+        {
+          "key": "monthlyCost",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"active\" | \"paused\" | \"inactive\" | \"closed\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/hostingProvider/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "HostingProviderId",
         "exportType": true
       }
     },
@@ -558,7 +1784,7 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<space, key>",
         "exportName": "MerchantId",
         "exportType": true
       }
@@ -684,6 +1910,346 @@
         "exportType": true
       }
     },
+    "retainer": {
+      "key": "retainer",
+      "name": "Retainer",
+      "model": "retainer",
+      "description": "Client retainer, hosting agreement, support arrangement, or recurring maintenance commitment",
+      "data": "source",
+      "fields": [
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "client",
+          "type": "record",
+          "required": true,
+          "rawType": "record<client>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "title",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "type",
+          "type": "enum<\"hosting\" | \"email_hosting\" | \"maintenance\" | \"support\" | \"seo\" | \"mixed\" | \"other\">",
+          "required": true,
+          "default": "hosting"
+        },
+        {
+          "key": "status",
+          "type": "enum<\"active\" | \"paused\" | \"overdue\" | \"cancelled\" | \"closed\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "startDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "billingCadence",
+          "type": "enum<\"monthly\" | \"quarterly\" | \"annual\" | \"ad_hoc\">",
+          "required": true,
+          "default": "monthly"
+        },
+        {
+          "key": "amountCharged",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "quotedAmount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "quotedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "quoteReference",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "nextBillingDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "lastBilledDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "invoiceCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "amountCollectedToDate",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "agreementSourceNotes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "termsConditions",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "includedServices",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "excludedServices",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "supportLevel",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "hostingProvider",
+          "type": "record",
+          "required": false,
+          "rawType": "record<hostingProvider>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "providerAccountName",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "coveredAssets",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "costToMe",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "costCadence",
+          "type": "enum<\"monthly\" | \"quarterly\" | \"annual\" | \"ad_hoc\">",
+          "required": true,
+          "default": "monthly"
+        },
+        {
+          "key": "renewalReviewDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "recommendedAction",
+          "type": "enum<\"none\" | \"review\" | \"increase\" | \"pause\" | \"cancel\" | \"new_quote\" | \"confirm_terms\" | \"bill_client\">",
+          "required": true,
+          "default": "none"
+        },
+        {
+          "key": "risksIssues",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "nextAction",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/retainer/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "key",
+        "exportName": "RetainerId",
+        "exportType": true
+      }
+    },
+    "statementComponentResolutionClaim": {
+      "key": "statementComponentResolutionClaim",
+      "name": "StatementComponentResolutionClaim",
+      "model": "statementComponentResolutionClaim",
+      "description": "Deterministic active claim allowing one confirmed resolution per movement component",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementRowComponent",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementRowComponent>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementTransactionMatch",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementTransactionMatch>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "state",
+          "type": "enum<\"active\" | \"released\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "claimedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "releasedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementComponentResolutionClaim/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementRowComponent, key>",
+        "exportName": "StatementComponentResolutionClaimId",
+        "exportType": true
+      }
+    },
     "statementImport": {
       "key": "statementImport",
       "name": "StatementImport",
@@ -721,9 +2287,168 @@
         },
         {
           "key": "sourceFormat",
-          "type": "enum<\"csv\" | \"ofx\" | \"qif\" | \"pdf\" | \"manual\">",
+          "type": "enum<\"csv\" | \"ofx\" | \"qif\" | \"pdf\" | \"image\" | \"normalized_json\" | \"manual\">",
           "required": true,
           "default": "pdf"
+        },
+        {
+          "key": "privateSourceRef",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "extractionAssistRef",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "originalFileSha256",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "extractionInputSha256",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "canonicalExtractionSha256",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "previewHash",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "sourceMimeType",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "sourceByteSize",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "profileId",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "profileVersion",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "extractorVersion",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "validationRulesetVersion",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "periodStart",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "periodEnd",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": false,
+          "default": "ZAR"
+        },
+        {
+          "key": "balanceConvention",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "balanceConventionAuthority",
+          "type": "enum<\"profile\" | \"operator_unverified\">",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "accountContextFingerprint",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "openingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "closingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "closingBalanceEconomicNature",
+          "type": "enum<\"asset\" | \"liability\">",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "coverage",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "sourceState",
+          "type": "enum<\"legacy\" | \"committed\" | \"superseded\">",
+          "required": false,
+          "default": "legacy"
+        },
+        {
+          "key": "commitOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "committedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "replacementOf",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
         },
         {
           "key": "importedAt",
@@ -748,6 +2473,24 @@
           "type": "number",
           "required": false,
           "default": 0
+        },
+        {
+          "key": "componentCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "issueCount",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
         },
         {
           "key": "normalizedCount",
@@ -796,8 +2539,1043 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<account, key>",
         "exportName": "StatementImportId",
+        "exportType": true
+      }
+    },
+    "statementIssue": {
+      "key": "statementIssue",
+      "name": "StatementIssue",
+      "model": "statementIssue",
+      "description": "Source extraction or validation issue kept separate from management clarification",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementRow",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementRow>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementRowComponent",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementRowComponent>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "code",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "severity",
+          "type": "enum<\"info\" | \"warning\" | \"blocking\">",
+          "required": true,
+          "default": "warning"
+        },
+        {
+          "key": "blocking",
+          "type": "boolean",
+          "required": true,
+          "default": false
+        },
+        {
+          "key": "state",
+          "type": "enum<\"open\" | \"acknowledged\" | \"resolved\" | \"superseded\">",
+          "required": true,
+          "default": "open"
+        },
+        {
+          "key": "message",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "detectedOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "dispositionOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "detectedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "acknowledgedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "resolvedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "reviewedBy",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementIssue/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementImport, key>",
+        "exportName": "StatementIssueId",
+        "exportType": true
+      }
+    },
+    "statementLegacyResolution": {
+      "key": "statementLegacyResolution",
+      "name": "StatementLegacyResolution",
+      "model": "statementLegacyResolution",
+      "description": "Append-only selected-source compatibility authority event for one legacy and canonical statement pair",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "legacyStatementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "canonicalStatementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "resolutionType",
+          "type": "enum<\"apply\" | \"reversal\">",
+          "required": true,
+          "default": "apply"
+        },
+        {
+          "key": "strategy",
+          "type": "enum<\"A\" | \"B\" | \"C\">",
+          "required": true,
+          "default": "A"
+        },
+        {
+          "key": "authorityEffect",
+          "type": "enum<\"activate_canonical\" | \"restore_previous\">",
+          "required": true,
+          "default": "activate_canonical"
+        },
+        {
+          "key": "previousLegacySourceState",
+          "type": "enum<\"legacy\" | \"committed\">",
+          "required": true,
+          "default": "legacy"
+        },
+        {
+          "key": "previousSourceClaimState",
+          "type": "enum<\"absent\" | \"active\" | \"released\">",
+          "required": true,
+          "default": "absent"
+        },
+        {
+          "key": "previousPeriodClaimState",
+          "type": "enum<\"absent\" | \"active\" | \"released\">",
+          "required": true,
+          "default": "absent"
+        },
+        {
+          "key": "targetResolution",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementLegacyResolution>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "predecessorResolution",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementLegacyResolution>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "databaseFingerprint",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceIdentityHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "canonicalPreviewHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "legacyEvidenceHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "accountContextFingerprint",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "crosswalkHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "expectedRevisionClaimHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "resultAuthorityHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "aggregateCounts",
+          "type": "object",
+          "required": true
+        },
+        {
+          "key": "idempotencyKey",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "requestHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "channel",
+          "type": "enum<\"ui\" | \"mcp\" | \"system\">",
+          "required": true,
+          "default": "ui"
+        },
+        {
+          "key": "actorId",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": false,
+        "crud": {
+          "create": false,
+          "update": false,
+          "delete": false
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementLegacyResolution/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<canonicalStatementImport, key>",
+        "exportName": "StatementLegacyResolutionId",
+        "exportType": true
+      }
+    },
+    "statementLegacyResolutionItem": {
+      "key": "statementLegacyResolutionItem",
+      "name": "StatementLegacyResolutionItem",
+      "model": "statementLegacyResolutionItem",
+      "description": "Immutable compatibility disposition item belonging to one selected-source resolution event",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementLegacyResolution",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementLegacyResolution>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "canonicalStatementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "legacyStatementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "compatibilityClass",
+          "type": "enum<\"exact_existing_transaction_adoption\" | \"exact_grouped_component_adoption\" | \"canonical_component_requires_materialization\" | \"legacy_transaction_historical_only\" | \"transfer_review_required\" | \"informational_non_movement\" | \"ambiguous_or_conflicting\">",
+          "required": true,
+          "default": "exact_existing_transaction_adoption"
+        },
+        {
+          "key": "activeLedgerOutcome",
+          "type": "enum<\"adopted_existing\" | \"adopted_grouped\" | \"materialized\" | \"historical_only\" | \"confirmed_transfer\" | \"informational_only\" | \"authority_released\">",
+          "required": true,
+          "default": "adopted_existing"
+        },
+        {
+          "key": "canonicalComponent",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementRowComponent>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "canonicalComponentIds",
+          "type": "array<string>",
+          "required": true,
+          "default": []
+        },
+        {
+          "key": "legacyStatementRow",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementRow>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "legacyTransaction",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "legacyTransactionIds",
+          "type": "array<string>",
+          "required": true,
+          "default": []
+        },
+        {
+          "key": "accountTransfer",
+          "type": "record",
+          "required": false,
+          "rawType": "record<accountTransfer>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "itemEvidenceHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "expectedClaimHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": false,
+        "crud": {
+          "create": false,
+          "update": false,
+          "delete": false
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementLegacyResolutionItem/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementLegacyResolution, key>",
+        "exportName": "StatementLegacyResolutionItemId",
+        "exportType": true
+      }
+    },
+    "statementPeriodClaim": {
+      "key": "statementPeriodClaim",
+      "name": "StatementPeriodClaim",
+      "model": "statementPeriodClaim",
+      "description": "Deterministic active claim allowing one committed statement source for an exact account period",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodStart",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodEnd",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "originalFileSha256",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "state",
+          "type": "enum<\"active\" | \"released\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "claimedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementPeriodClaim/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<account, key>",
+        "exportName": "StatementPeriodClaimId",
+        "exportType": true
+      }
+    },
+    "statementReconciliation": {
+      "key": "statementReconciliation",
+      "name": "StatementReconciliation",
+      "model": "statementReconciliation",
+      "description": "Current exact reconciliation state for one Account and committed statement import",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": "current"
+        },
+        {
+          "key": "periodStart",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodEnd",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "openingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "signedMovementEffectMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "expectedClosingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "reportedClosingBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "differenceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "printedRowCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "extractedRowCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "movementComponentCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "informationalComponentCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "pendingCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "proposedCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "confirmedExistingCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "newlyMaterializedCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "unresolvedCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "transferCandidateCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "activeIssueCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "blockingIssueCount",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "calculationState",
+          "type": "enum<\"unavailable\" | \"difference\" | \"balanced\">",
+          "required": true,
+          "default": "unavailable"
+        },
+        {
+          "key": "coverageState",
+          "type": "enum<\"incomplete\" | \"complete\">",
+          "required": true,
+          "default": "incomplete"
+        },
+        {
+          "key": "attestationState",
+          "type": "enum<\"open\" | \"ready\" | \"reconciled\" | \"reopened\">",
+          "required": true,
+          "default": "open"
+        },
+        {
+          "key": "calculationHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "calculatedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "calculationOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "latestAttestationOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "latestReopeningOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "attestedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "reopenedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "provenance",
+          "type": "object",
+          "required": false
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementReconciliation/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementImport, key>",
+        "exportName": "StatementReconciliationId",
+        "exportType": true
+      }
+    },
+    "statementReconciliationEvent": {
+      "key": "statementReconciliationEvent",
+      "name": "StatementReconciliationEvent",
+      "model": "statementReconciliationEvent",
+      "description": "Append-only attestation or reopening history for an exact statement reconciliation",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementReconciliation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementReconciliation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "eventType",
+          "type": "enum<\"attested\" | \"reopened\">",
+          "required": true,
+          "default": "attested"
+        },
+        {
+          "key": "reconciliationRevision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "calculationHash",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "calculationSnapshot",
+          "type": "object",
+          "required": true
+        },
+        {
+          "key": "reason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "actorId",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "channel",
+          "type": "enum<\"ui\" | \"mcp\" | \"system\">",
+          "required": true,
+          "default": "ui"
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementReconciliationEvent/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementReconciliation, key>",
+        "exportName": "StatementReconciliationEventId",
         "exportType": true
       }
     },
@@ -833,10 +3611,83 @@
           "default": ""
         },
         {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
           "key": "rowNumber",
           "type": "number",
           "required": true,
           "default": 0
+        },
+        {
+          "key": "rowKind",
+          "type": "enum<\"movement\" | \"informational\" | \"composite\" | \"unresolved\">",
+          "required": false,
+          "default": "unresolved"
+        },
+        {
+          "key": "transactionDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "postingDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "valueDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "sourceReference",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "sourceLocator",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "reportedBalanceMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "componentCount",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "extractionConfidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "rowHash",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "commitOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
         },
         {
           "key": "postedAt",
@@ -876,9 +3727,9 @@
         },
         {
           "key": "direction",
-          "type": "enum<\"debit\" | \"credit\" | \"transfer\">",
+          "type": "enum<\"debit\" | \"credit\" | \"transfer\" | \"unknown\">",
           "required": true,
-          "default": "debit"
+          "default": "unknown"
         },
         {
           "key": "status",
@@ -896,6 +3747,12 @@
           "key": "rawData",
           "type": "object",
           "required": false
+        },
+        {
+          "key": "sourceChecksum",
+          "type": "string",
+          "required": false,
+          "default": ""
         },
         {
           "key": "transaction",
@@ -934,7 +3791,724 @@
       },
       "id": {
         "type": "string",
+        "structure": "stringID<statementImport, key>",
         "exportName": "StatementRowId",
+        "exportType": true
+      }
+    },
+    "statementRowComponent": {
+      "key": "statementRowComponent",
+      "name": "StatementRowComponent",
+      "model": "statementRowComponent",
+      "description": "Exact neutral source component extracted from one printed statement row",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementRow",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementRow>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "componentKind",
+          "type": "enum<\"principal\" | \"bank_fee\" | \"vat\" | \"interest\" | \"adjustment\" | \"unknown\">",
+          "required": true,
+          "default": "unknown"
+        },
+        {
+          "key": "componentRole",
+          "type": "enum<\"movement\" | \"informational_breakdown\">",
+          "required": true,
+          "default": "movement"
+        },
+        {
+          "key": "transactionDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "postingDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "valueDate",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceReference",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "amountMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "sourceDirection",
+          "type": "enum<\"debit\" | \"credit\" | \"unknown\">",
+          "required": true,
+          "default": "unknown"
+        },
+        {
+          "key": "sourceFlow",
+          "type": "enum<\"inflow\" | \"outflow\" | \"unknown\">",
+          "required": true,
+          "default": "unknown"
+        },
+        {
+          "key": "balanceEffectMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "sourceLocator",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "sourceChecksum",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "sourceState",
+          "type": "enum<\"committed\" | \"superseded\">",
+          "required": true,
+          "default": "committed"
+        },
+        {
+          "key": "commitOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementRowComponent/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementRow, key>",
+        "exportName": "StatementRowComponentId",
+        "exportType": true
+      }
+    },
+    "statementSourceClaim": {
+      "key": "statementSourceClaim",
+      "name": "StatementSourceClaim",
+      "model": "statementSourceClaim",
+      "description": "Deterministic active claim preventing one exact statement source from being committed twice for an account",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "originalFileSha256",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodStart",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodEnd",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "state",
+          "type": "enum<\"active\" | \"released\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "claimedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementSourceClaim/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<account, key>",
+        "exportName": "StatementSourceClaimId",
+        "exportType": true
+      }
+    },
+    "statementTransactionMatch": {
+      "key": "statementTransactionMatch",
+      "name": "StatementTransactionMatch",
+      "model": "statementTransactionMatch",
+      "description": "Audited interpretation linking exact statement movement components to one observed transaction",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "primaryComponent",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementRowComponent>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "componentIds",
+          "type": "array<string>",
+          "required": true,
+          "default": []
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "state",
+          "type": "enum<\"proposed\" | \"confirmed\" | \"rejected\" | \"superseded\">",
+          "required": true,
+          "default": "proposed"
+        },
+        {
+          "key": "method",
+          "type": "enum<\"explicit\" | \"exact_reference\" | \"exact_description\" | \"exact_date\" | \"bounded_date\" | \"grouped_exact\" | \"created_from_component\" | \"transfer_candidate\" | \"other\">",
+          "required": true,
+          "default": "explicit"
+        },
+        {
+          "key": "reasonCodes",
+          "type": "array<string>",
+          "required": true,
+          "default": []
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "signedComponentTotalMinor",
+          "type": "int",
+          "required": true,
+          "default": 0
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "required": true,
+          "default": "ZAR"
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "proposedOperation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "confirmedOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "rejectedOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "supersededOperation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "proposedBy",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "reviewedBy",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "proposedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "confirmedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "rejectedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "supersededAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "rejectionReason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "supersessionReason",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "supersedes",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementTransactionMatch>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "supersededBy",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementTransactionMatch>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "sourceState",
+          "type": "enum<\"committed\" | \"superseded\">",
+          "required": true,
+          "default": "committed"
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementTransactionMatch/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<statementImport, key>",
+        "exportName": "StatementTransactionMatchId",
+        "exportType": true
+      }
+    },
+    "statementTransactionResolutionClaim": {
+      "key": "statementTransactionResolutionClaim",
+      "name": "StatementTransactionResolutionClaim",
+      "model": "statementTransactionResolutionClaim",
+      "description": "Deterministic active claim preventing one transaction from being claimed by multiple statement imports",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "account",
+          "type": "record",
+          "required": true,
+          "rawType": "record<account>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementImport",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementImport>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementTransactionMatch",
+          "type": "record",
+          "required": true,
+          "rawType": "record<statementTransactionMatch>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "periodStart",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "periodEnd",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "state",
+          "type": "enum<\"active\" | \"released\">",
+          "required": true,
+          "default": "active"
+        },
+        {
+          "key": "claimedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "releasedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/statementTransactionResolutionClaim/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<transaction, key>",
+        "exportName": "StatementTransactionResolutionClaimId",
+        "exportType": true
+      }
+    },
+    "taxCategory": {
+      "key": "taxCategory",
+      "name": "TaxCategory",
+      "model": "taxCategory",
+      "description": "Separate hierarchical vocabulary for tax-facing transaction presentation without asserting deductibility or filing treatment",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "parentTaxCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<taxCategory>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/taxCategory/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<space, key>",
+        "exportName": "TaxCategoryId",
         "exportType": true
       }
     },
@@ -976,6 +4550,12 @@
           "default": ""
         },
         {
+          "key": "sourceChecksum",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
           "key": "postedAt",
           "type": "string",
           "required": true,
@@ -1006,6 +4586,12 @@
           "default": 0
         },
         {
+          "key": "amountMinor",
+          "type": "int",
+          "required": false,
+          "default": 0
+        },
+        {
           "key": "balance",
           "type": "number",
           "required": false,
@@ -1019,9 +4605,33 @@
         },
         {
           "key": "direction",
-          "type": "enum<\"debit\" | \"credit\" | \"transfer\">",
+          "type": "enum<\"debit\" | \"credit\" | \"transfer\" | \"unknown\">",
           "required": true,
-          "default": "debit"
+          "default": "unknown"
+        },
+        {
+          "key": "transactionKind",
+          "type": "enum<\"income\" | \"expense\" | \"transfer\" | \"adjustment\" | \"unresolved\">",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "flowDirection",
+          "type": "enum<\"inflow\" | \"outflow\">",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "entrySource",
+          "type": "enum<\"imported\" | \"manual\" | \"generated\">",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
         },
         {
           "key": "status",
@@ -1064,6 +4674,30 @@
           "default": false
         },
         {
+          "key": "operation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "statementMatch",
+          "type": "record",
+          "required": false,
+          "rawType": "record<statementTransactionMatch>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "transfer",
+          "type": "record",
+          "required": false,
+          "rawType": "record<accountTransfer>",
+          "format": "record",
+          "default": ""
+        },
+        {
           "key": "manualOverride",
           "type": "boolean",
           "required": false,
@@ -1098,8 +4732,391 @@
       },
       "id": {
         "type": "string",
-        "structure": "key",
+        "structure": "stringID<account, key>",
         "exportName": "TransactionId",
+        "exportType": true
+      }
+    },
+    "transactionPurpose": {
+      "key": "transactionPurpose",
+      "name": "TransactionPurpose",
+      "model": "transactionPurpose",
+      "description": "Reusable reviewed management meaning for what an observed transaction represents",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "key",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "purposeKind",
+          "type": "enum<\"subscription\" | \"service\" | \"bank_fee\" | \"family_support\" | \"housing\" | \"education\" | \"trading_funding\" | \"transfer_purpose\" | \"income_source\" | \"purchase\" | \"other\">",
+          "required": true,
+          "default": "other"
+        },
+        {
+          "key": "occurrencePattern",
+          "type": "enum<\"one_off\" | \"recurring\" | \"irregular\" | \"unknown\">",
+          "required": true,
+          "default": "unknown"
+        },
+        {
+          "key": "defaultMerchant",
+          "type": "record",
+          "required": false,
+          "rawType": "record<merchant>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "defaultCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<category>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "aliases",
+          "type": "array<string>",
+          "required": false,
+          "default": []
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/transactionPurpose/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<space, key>",
+        "exportName": "TransactionPurposeId",
+        "exportType": true
+      }
+    },
+    "transactionPurposeAssignment": {
+      "key": "transactionPurposeAssignment",
+      "name": "TransactionPurposeAssignment",
+      "model": "transactionPurposeAssignment",
+      "description": "Append-only reviewed assignment of one reusable management purpose to one observed transaction",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "purpose",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transactionPurpose>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "state",
+          "type": "enum<\"proposed\" | \"confirmed\" | \"superseded\" | \"rejected\">",
+          "required": true,
+          "default": "proposed"
+        },
+        {
+          "key": "isCurrent",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "assignmentSource",
+          "type": "enum<\"manual\" | \"agent\" | \"rule\" | \"import\">",
+          "required": true,
+          "default": "manual"
+        },
+        {
+          "key": "confidence",
+          "type": "number",
+          "required": false,
+          "default": 0
+        },
+        {
+          "key": "occurrenceLabel",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "context",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "rule",
+          "type": "record",
+          "required": false,
+          "rawType": "record<classificationRule>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "supersedes",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transactionPurposeAssignment>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "reviewedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/transactionPurposeAssignment/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<transaction, revision>",
+        "exportName": "TransactionPurposeAssignmentId",
+        "exportType": true
+      }
+    },
+    "transactionTaxDeclaration": {
+      "key": "transactionTaxDeclaration",
+      "name": "TransactionTaxDeclaration",
+      "model": "transactionTaxDeclaration",
+      "description": "Append-only sparse tax-lens category and description override for one observed transaction",
+      "data": "source",
+      "fields": [
+        {
+          "key": "space",
+          "type": "record",
+          "required": true,
+          "rawType": "record<financialSpace>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "transaction",
+          "type": "record",
+          "required": true,
+          "rawType": "record<transaction>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "taxCategory",
+          "type": "record",
+          "required": false,
+          "rawType": "record<taxCategory>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "revision",
+          "type": "int",
+          "required": true,
+          "default": 1
+        },
+        {
+          "key": "state",
+          "type": "enum<\"proposed\" | \"user_confirmed\" | \"superseded\" | \"rejected\">",
+          "required": true,
+          "default": "proposed"
+        },
+        {
+          "key": "isCurrent",
+          "type": "boolean",
+          "required": true,
+          "default": true
+        },
+        {
+          "key": "declarationSource",
+          "type": "enum<\"manual\" | \"agent\" | \"rule\" | \"import\">",
+          "required": true,
+          "default": "manual"
+        },
+        {
+          "key": "taxDescription",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "evidenceStatus",
+          "type": "enum<\"not_assessed\" | \"missing\" | \"partial\" | \"available\" | \"not_required\">",
+          "required": true,
+          "default": "not_assessed"
+        },
+        {
+          "key": "context",
+          "type": "object",
+          "required": false
+        },
+        {
+          "key": "supersedes",
+          "type": "record",
+          "required": false,
+          "rawType": "record<transactionTaxDeclaration>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "operation",
+          "type": "record",
+          "required": false,
+          "rawType": "record<financialOperation>",
+          "format": "record",
+          "default": ""
+        },
+        {
+          "key": "recordedAt",
+          "type": "string",
+          "required": true,
+          "default": ""
+        },
+        {
+          "key": "reviewedAt",
+          "type": "string",
+          "required": false,
+          "default": ""
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "default": ""
+        }
+      ],
+      "capabilities": {
+        "router": true,
+        "crud": {
+          "create": true,
+          "update": true,
+          "delete": true
+        },
+        "typesense": false,
+        "taxonomies": [],
+        "edges": false,
+        "relations": false,
+        "subtables": false
+      },
+      "subTables": [],
+      "typesense": {
+        "enabled": false
+      },
+      "docs": {
+        "types": "docs/api/models/transactionTaxDeclaration/types.md"
+      },
+      "id": {
+        "type": "string",
+        "structure": "stringID<transaction, revision>",
+        "exportName": "TransactionTaxDeclarationId",
         "exportType": true
       }
     },

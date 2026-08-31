@@ -1,7 +1,7 @@
 // AUTO-GENERATED — rich admin model manifest for Helios model manager
 export const adminManifest = {
   "version": 1,
-  "generatedAt": "2026-05-11T16:14:54.858Z",
+  "generatedAt": "2026-08-25T08:51:58.562Z",
   "source": "schema.modelsManifest",
   "models": {
     "account": {
@@ -19,9 +19,14 @@ export const adminManifest = {
         "name",
         "bankname",
         "accounttype",
+        "facilitykind",
         "currency",
         "accountnumberlast4",
         "openingbalance",
+        "openingbalanceminor",
+        "normalnature",
+        "liquidityclass",
+        "freshnesswindowhours",
         "active",
         "notes"
       ],
@@ -31,7 +36,11 @@ export const adminManifest = {
         "name",
         "bankname",
         "accounttype",
+        "facilitykind",
         "currency",
+        "normalnature",
+        "liquidityclass",
+        "freshnesswindowhours",
         "active"
       ],
       "typesense": {
@@ -67,6 +76,477 @@ export const adminManifest = {
         "ensureTable": true,
         "tableDefinition": {
           "model": "account",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "accountBalanceSnapshot": {
+      "key": "accountBalanceSnapshot",
+      "table": "accountbalancesnapshot",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "key",
+        "balancekind",
+        "amountminor",
+        "currency",
+        "economicnature",
+        "asof",
+        "recordedat",
+        "evidencelevel",
+        "sourcekind",
+        "sourceref",
+        "operation",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "key",
+        "balancekind",
+        "amountminor",
+        "currency",
+        "economicnature",
+        "asof",
+        "recordedat",
+        "evidencelevel",
+        "sourcekind"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "accountBalanceSnapshot.create__NAME__",
+        "update": "accountBalanceSnapshot.update__NAME__",
+        "delete": "accountBalanceSnapshot.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "accountBalanceSnapshot",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "accountBalanceSnapshot.create__NAME__",
+          "accountBalanceSnapshot.delete__NAME__",
+          "accountBalanceSnapshot.update__NAME__",
+          "accountBalanceSnapshot.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "accountbalancesnapshot",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "accountFacilitySnapshot": {
+      "key": "accountFacilitySnapshot",
+      "table": "accountfacilitysnapshot",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "key",
+        "facilitykind",
+        "currency",
+        "asof",
+        "effectivefrom",
+        "recordedat",
+        "evidencelevel",
+        "sourcekind",
+        "sourceref",
+        "statementimport",
+        "hasfacilitylimit",
+        "facilitylimitminor",
+        "hasavailablecredit",
+        "availablecreditminor",
+        "hasminimumpayment",
+        "minimumpaymentminor",
+        "paymentdueon",
+        "interestrates",
+        "feeterms",
+        "terms",
+        "operation",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "key",
+        "facilitykind",
+        "currency",
+        "asof",
+        "recordedat",
+        "evidencelevel",
+        "sourcekind",
+        "hasfacilitylimit",
+        "hasavailablecredit",
+        "hasminimumpayment"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "accountFacilitySnapshot.create__NAME__",
+        "update": "accountFacilitySnapshot.update__NAME__",
+        "delete": "accountFacilitySnapshot.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "accountFacilitySnapshot",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "accountFacilitySnapshot.create__NAME__",
+          "accountFacilitySnapshot.delete__NAME__",
+          "accountFacilitySnapshot.update__NAME__",
+          "accountFacilitySnapshot.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "accountfacilitysnapshot",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "accountTransfer": {
+      "key": "accountTransfer",
+      "table": "accounttransfer",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "key",
+        "sourcespace",
+        "sourceaccount",
+        "targetspace",
+        "targetaccount",
+        "amountminor",
+        "currency",
+        "postedat",
+        "description",
+        "sourcetransaction",
+        "targettransaction",
+        "operation",
+        "recordedat"
+      ],
+      "requiredFields": [
+        "key",
+        "sourcespace",
+        "sourceaccount",
+        "targetspace",
+        "targetaccount",
+        "amountminor",
+        "currency",
+        "postedat",
+        "sourcetransaction",
+        "targettransaction",
+        "operation",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "accountTransfer.create__NAME__",
+        "update": "accountTransfer.update__NAME__",
+        "delete": "accountTransfer.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "accountTransfer",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "accountTransfer.create__NAME__",
+          "accountTransfer.delete__NAME__",
+          "accountTransfer.update__NAME__",
+          "accountTransfer.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "accounttransfer",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "cashflowOccurrence": {
+      "key": "cashflowOccurrence",
+      "table": "cashflowoccurrence",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "schedule",
+        "space",
+        "account",
+        "category",
+        "scheduleddueon",
+        "dueon",
+        "schedulerevision",
+        "revision",
+        "title",
+        "direction",
+        "certainty",
+        "cadence",
+        "scheduledamountminor",
+        "amountminor",
+        "currency",
+        "status",
+        "settledat",
+        "transaction",
+        "overridereason",
+        "statusreason",
+        "notes",
+        "lastoperation",
+        "recordedat",
+        "updatedat"
+      ],
+      "requiredFields": [
+        "schedule",
+        "space",
+        "scheduleddueon",
+        "dueon",
+        "schedulerevision",
+        "revision",
+        "title",
+        "direction",
+        "certainty",
+        "cadence",
+        "scheduledamountminor",
+        "amountminor",
+        "currency",
+        "status",
+        "lastoperation",
+        "recordedat",
+        "updatedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "cashflowOccurrence.create__NAME__",
+        "update": "cashflowOccurrence.update__NAME__",
+        "delete": "cashflowOccurrence.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "cashflowOccurrence",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "cashflowOccurrence.create__NAME__",
+          "cashflowOccurrence.delete__NAME__",
+          "cashflowOccurrence.update__NAME__",
+          "cashflowOccurrence.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "cashflowoccurrence",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "cashflowSchedule": {
+      "key": "cashflowSchedule",
+      "table": "cashflowschedule",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "category",
+        "key",
+        "title",
+        "direction",
+        "certainty",
+        "amountminor",
+        "currency",
+        "timezone",
+        "cadence",
+        "interval",
+        "startdate",
+        "enddate",
+        "oncedueon",
+        "dayofweek",
+        "dayofmonth",
+        "monthofyear",
+        "status",
+        "revision",
+        "materializedthrough",
+        "termseffectivefrom",
+        "pausedon",
+        "resumedon",
+        "endedon",
+        "cancelledon",
+        "createdoperation",
+        "lastoperation",
+        "recordedat",
+        "updatedat",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "key",
+        "title",
+        "direction",
+        "certainty",
+        "amountminor",
+        "currency",
+        "timezone",
+        "cadence",
+        "interval",
+        "startdate",
+        "status",
+        "revision",
+        "termseffectivefrom",
+        "createdoperation",
+        "lastoperation",
+        "recordedat",
+        "updatedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "cashflowSchedule.create__NAME__",
+        "update": "cashflowSchedule.update__NAME__",
+        "delete": "cashflowSchedule.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "cashflowSchedule",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "cashflowSchedule.create__NAME__",
+          "cashflowSchedule.delete__NAME__",
+          "cashflowSchedule.update__NAME__",
+          "cashflowSchedule.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "cashflowschedule",
           "type": "NORMAL",
           "schemaType": "schemaless",
           "permissions": "full"
@@ -170,6 +650,7 @@ export const adminManifest = {
         "suggestedspace",
         "suggestedmerchant",
         "suggestedcategory",
+        "suggestedpurpose",
         "resolvedat",
         "resolutionnotes",
         "confidence",
@@ -245,6 +726,7 @@ export const adminManifest = {
         "scope",
         "targetmerchant",
         "targetcategory",
+        "targetpurpose",
         "priority",
         "active",
         "notes"
@@ -303,6 +785,158 @@ export const adminManifest = {
       },
       "warnings": []
     },
+    "client": {
+      "key": "client",
+      "table": "client",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "key",
+        "name",
+        "businessname",
+        "contactperson",
+        "email",
+        "phonewhatsapp",
+        "websitedomain",
+        "status",
+        "relatedprojects",
+        "orbitclientid",
+        "notes"
+      ],
+      "requiredFields": [
+        "key",
+        "name",
+        "status"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "client.create__NAME__",
+        "update": "client.update__NAME__",
+        "delete": "client.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "client",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "client.create__NAME__",
+          "client.delete__NAME__",
+          "client.update__NAME__",
+          "client.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "client",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "financialOperation": {
+      "key": "financialOperation",
+      "table": "financialoperation",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "key",
+        "command",
+        "idempotencykey",
+        "requesthash",
+        "channel",
+        "actorid",
+        "status",
+        "resultrefs",
+        "warningcodes",
+        "auditmeta",
+        "recordedat",
+        "completedat",
+        "failurecode"
+      ],
+      "requiredFields": [
+        "key",
+        "command",
+        "idempotencykey",
+        "requesthash",
+        "channel",
+        "status",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "financialOperation.create__NAME__",
+        "update": "financialOperation.update__NAME__",
+        "delete": "financialOperation.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "financialOperation",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "financialOperation.create__NAME__",
+          "financialOperation.delete__NAME__",
+          "financialOperation.update__NAME__",
+          "financialOperation.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "financialoperation",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
     "financialSpace": {
       "key": "financialSpace",
       "table": "financialspace",
@@ -317,6 +951,7 @@ export const adminManifest = {
         "name",
         "spacetype",
         "currency",
+        "timezone",
         "description",
         "active",
         "archivedat"
@@ -326,6 +961,7 @@ export const adminManifest = {
         "name",
         "spacetype",
         "currency",
+        "timezone",
         "active"
       ],
       "typesense": {
@@ -361,6 +997,82 @@ export const adminManifest = {
         "ensureTable": true,
         "tableDefinition": {
           "model": "financialspace",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "hostingProvider": {
+      "key": "hostingProvider",
+      "table": "hostingprovider",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "key",
+        "name",
+        "providertype",
+        "accountname",
+        "accountreference",
+        "websiteurl",
+        "billingcadence",
+        "monthlycost",
+        "currency",
+        "status",
+        "notes"
+      ],
+      "requiredFields": [
+        "key",
+        "name",
+        "providertype",
+        "billingcadence",
+        "currency",
+        "status"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "hostingProvider.create__NAME__",
+        "update": "hostingProvider.update__NAME__",
+        "delete": "hostingProvider.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "hostingProvider",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "hostingProvider.create__NAME__",
+          "hostingProvider.delete__NAME__",
+          "hostingProvider.update__NAME__",
+          "hostingProvider.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "hostingprovider",
           "type": "NORMAL",
           "schemaType": "schemaless",
           "permissions": "full"
@@ -524,6 +1236,185 @@ export const adminManifest = {
       },
       "warnings": []
     },
+    "retainer": {
+      "key": "retainer",
+      "table": "retainer",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "key",
+        "client",
+        "title",
+        "type",
+        "status",
+        "startdate",
+        "billingcadence",
+        "amountcharged",
+        "currency",
+        "quotedamount",
+        "quotedat",
+        "quotereference",
+        "nextbillingdate",
+        "lastbilleddate",
+        "invoicecount",
+        "amountcollectedtodate",
+        "agreementsourcenotes",
+        "termsconditions",
+        "includedservices",
+        "excludedservices",
+        "supportlevel",
+        "hostingprovider",
+        "provideraccountname",
+        "coveredassets",
+        "costtome",
+        "costcadence",
+        "renewalreviewdate",
+        "recommendedaction",
+        "risksissues",
+        "nextaction",
+        "notes"
+      ],
+      "requiredFields": [
+        "key",
+        "client",
+        "title",
+        "type",
+        "status",
+        "billingcadence",
+        "currency",
+        "costcadence",
+        "recommendedaction"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "retainer.create__NAME__",
+        "update": "retainer.update__NAME__",
+        "delete": "retainer.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "retainer",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "retainer.create__NAME__",
+          "retainer.delete__NAME__",
+          "retainer.update__NAME__",
+          "retainer.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "retainer",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementComponentResolutionClaim": {
+      "key": "statementComponentResolutionClaim",
+      "table": "statementcomponentresolutionclaim",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementrowcomponent",
+        "statementtransactionmatch",
+        "transaction",
+        "key",
+        "state",
+        "claimedat",
+        "releasedat",
+        "operation"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementrowcomponent",
+        "statementtransactionmatch",
+        "transaction",
+        "key",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementComponentResolutionClaim.create__NAME__",
+        "update": "statementComponentResolutionClaim.update__NAME__",
+        "delete": "statementComponentResolutionClaim.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementComponentResolutionClaim",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementComponentResolutionClaim.create__NAME__",
+          "statementComponentResolutionClaim.delete__NAME__",
+          "statementComponentResolutionClaim.update__NAME__",
+          "statementComponentResolutionClaim.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementcomponentresolutionclaim",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
     "statementImport": {
       "key": "statementImport",
       "table": "statementimport",
@@ -539,10 +1430,39 @@ export const adminManifest = {
         "key",
         "sourcefilename",
         "sourceformat",
+        "privatesourceref",
+        "extractionassistref",
+        "originalfilesha256",
+        "extractioninputsha256",
+        "canonicalextractionsha256",
+        "previewhash",
+        "sourcemimetype",
+        "sourcebytesize",
+        "profileid",
+        "profileversion",
+        "extractorversion",
+        "validationrulesetversion",
+        "periodstart",
+        "periodend",
+        "currency",
+        "balanceconvention",
+        "balanceconventionauthority",
+        "accountcontextfingerprint",
+        "openingbalanceminor",
+        "closingbalanceminor",
+        "closingbalanceeconomicnature",
+        "coverage",
+        "sourcestate",
+        "commitoperation",
+        "committedat",
+        "replacementof",
         "importedat",
         "statementdate",
         "status",
         "rowcount",
+        "componentcount",
+        "issuecount",
+        "revision",
         "normalizedcount",
         "clarificationcount",
         "sourcechecksum",
@@ -555,7 +1475,8 @@ export const adminManifest = {
         "sourcefilename",
         "sourceformat",
         "importedat",
-        "status"
+        "status",
+        "revision"
       ],
       "typesense": {
         "enabled": false,
@@ -603,6 +1524,569 @@ export const adminManifest = {
       },
       "warnings": []
     },
+    "statementIssue": {
+      "key": "statementIssue",
+      "table": "statementissue",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementrow",
+        "statementrowcomponent",
+        "key",
+        "code",
+        "severity",
+        "blocking",
+        "state",
+        "message",
+        "revision",
+        "detectedoperation",
+        "dispositionoperation",
+        "detectedat",
+        "acknowledgedat",
+        "resolvedat",
+        "reviewedby",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "code",
+        "severity",
+        "blocking",
+        "state",
+        "message",
+        "revision",
+        "detectedoperation",
+        "detectedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementIssue.create__NAME__",
+        "update": "statementIssue.update__NAME__",
+        "delete": "statementIssue.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementIssue",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementIssue.create__NAME__",
+          "statementIssue.delete__NAME__",
+          "statementIssue.update__NAME__",
+          "statementIssue.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementissue",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementLegacyResolution": {
+      "key": "statementLegacyResolution",
+      "table": "statementlegacyresolution",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [],
+      "fields": [
+        "space",
+        "account",
+        "legacystatementimport",
+        "canonicalstatementimport",
+        "key",
+        "resolutiontype",
+        "strategy",
+        "authorityeffect",
+        "previouslegacysourcestate",
+        "previoussourceclaimstate",
+        "previousperiodclaimstate",
+        "targetresolution",
+        "predecessorresolution",
+        "databasefingerprint",
+        "sourceidentityhash",
+        "canonicalpreviewhash",
+        "legacyevidencehash",
+        "accountcontextfingerprint",
+        "crosswalkhash",
+        "expectedrevisionclaimhash",
+        "resultauthorityhash",
+        "aggregatecounts",
+        "idempotencykey",
+        "requesthash",
+        "channel",
+        "actorid",
+        "operation",
+        "recordedat"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "legacystatementimport",
+        "canonicalstatementimport",
+        "key",
+        "resolutiontype",
+        "strategy",
+        "authorityeffect",
+        "previouslegacysourcestate",
+        "previoussourceclaimstate",
+        "previousperiodclaimstate",
+        "databasefingerprint",
+        "sourceidentityhash",
+        "canonicalpreviewhash",
+        "legacyevidencehash",
+        "accountcontextfingerprint",
+        "crosswalkhash",
+        "expectedrevisionclaimhash",
+        "resultauthorityhash",
+        "aggregatecounts",
+        "idempotencykey",
+        "requesthash",
+        "channel",
+        "operation",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": false,
+        "create": null,
+        "update": null,
+        "delete": null
+      },
+      "router": {
+        "enabled": false,
+        "key": "statementLegacyResolution",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": []
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementlegacyresolution",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": false
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementLegacyResolutionItem": {
+      "key": "statementLegacyResolutionItem",
+      "table": "statementlegacyresolutionitem",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [],
+      "fields": [
+        "space",
+        "account",
+        "statementlegacyresolution",
+        "canonicalstatementimport",
+        "legacystatementimport",
+        "key",
+        "compatibilityclass",
+        "activeledgeroutcome",
+        "canonicalcomponent",
+        "canonicalcomponentids",
+        "legacystatementrow",
+        "legacytransaction",
+        "legacytransactionids",
+        "accounttransfer",
+        "itemevidencehash",
+        "expectedclaimhash",
+        "operation",
+        "recordedat"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementlegacyresolution",
+        "canonicalstatementimport",
+        "legacystatementimport",
+        "key",
+        "compatibilityclass",
+        "activeledgeroutcome",
+        "canonicalcomponentids",
+        "legacytransactionids",
+        "itemevidencehash",
+        "expectedclaimhash",
+        "operation",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": false,
+        "create": null,
+        "update": null,
+        "delete": null
+      },
+      "router": {
+        "enabled": false,
+        "key": "statementLegacyResolutionItem",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": []
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementlegacyresolutionitem",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": false
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementPeriodClaim": {
+      "key": "statementPeriodClaim",
+      "table": "statementperiodclaim",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "periodstart",
+        "periodend",
+        "originalfilesha256",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "periodstart",
+        "periodend",
+        "originalfilesha256",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementPeriodClaim.create__NAME__",
+        "update": "statementPeriodClaim.update__NAME__",
+        "delete": "statementPeriodClaim.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementPeriodClaim",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementPeriodClaim.create__NAME__",
+          "statementPeriodClaim.delete__NAME__",
+          "statementPeriodClaim.update__NAME__",
+          "statementPeriodClaim.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementperiodclaim",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementReconciliation": {
+      "key": "statementReconciliation",
+      "table": "statementreconciliation",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "periodstart",
+        "periodend",
+        "currency",
+        "openingbalanceminor",
+        "signedmovementeffectminor",
+        "expectedclosingbalanceminor",
+        "reportedclosingbalanceminor",
+        "differenceminor",
+        "printedrowcount",
+        "extractedrowcount",
+        "movementcomponentcount",
+        "informationalcomponentcount",
+        "pendingcount",
+        "proposedcount",
+        "confirmedexistingcount",
+        "newlymaterializedcount",
+        "unresolvedcount",
+        "transfercandidatecount",
+        "activeissuecount",
+        "blockingissuecount",
+        "calculationstate",
+        "coveragestate",
+        "attestationstate",
+        "calculationhash",
+        "revision",
+        "calculatedat",
+        "calculationoperation",
+        "latestattestationoperation",
+        "latestreopeningoperation",
+        "attestedat",
+        "reopenedat",
+        "provenance"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "periodstart",
+        "periodend",
+        "currency",
+        "signedmovementeffectminor",
+        "printedrowcount",
+        "extractedrowcount",
+        "movementcomponentcount",
+        "informationalcomponentcount",
+        "pendingcount",
+        "proposedcount",
+        "confirmedexistingcount",
+        "newlymaterializedcount",
+        "unresolvedcount",
+        "transfercandidatecount",
+        "activeissuecount",
+        "blockingissuecount",
+        "calculationstate",
+        "coveragestate",
+        "attestationstate",
+        "calculationhash",
+        "revision",
+        "calculatedat",
+        "calculationoperation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementReconciliation.create__NAME__",
+        "update": "statementReconciliation.update__NAME__",
+        "delete": "statementReconciliation.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementReconciliation",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementReconciliation.create__NAME__",
+          "statementReconciliation.delete__NAME__",
+          "statementReconciliation.update__NAME__",
+          "statementReconciliation.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementreconciliation",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementReconciliationEvent": {
+      "key": "statementReconciliationEvent",
+      "table": "statementreconciliationevent",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementreconciliation",
+        "key",
+        "eventtype",
+        "reconciliationrevision",
+        "calculationhash",
+        "calculationsnapshot",
+        "reason",
+        "actorid",
+        "channel",
+        "operation",
+        "recordedat"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementreconciliation",
+        "key",
+        "eventtype",
+        "reconciliationrevision",
+        "calculationhash",
+        "calculationsnapshot",
+        "channel",
+        "operation",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementReconciliationEvent.create__NAME__",
+        "update": "statementReconciliationEvent.update__NAME__",
+        "delete": "statementReconciliationEvent.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementReconciliationEvent",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementReconciliationEvent.create__NAME__",
+          "statementReconciliationEvent.delete__NAME__",
+          "statementReconciliationEvent.update__NAME__",
+          "statementReconciliationEvent.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementreconciliationevent",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
     "statementRow": {
       "key": "statementRow",
       "table": "statementrow",
@@ -616,7 +2100,19 @@ export const adminManifest = {
         "space",
         "account",
         "statementimport",
+        "key",
         "rownumber",
+        "rowkind",
+        "transactiondate",
+        "postingdate",
+        "valuedate",
+        "sourcereference",
+        "sourcelocator",
+        "reportedbalanceminor",
+        "componentcount",
+        "extractionconfidence",
+        "rowhash",
+        "commitoperation",
         "postedat",
         "description",
         "normalizeddescription",
@@ -627,6 +2123,7 @@ export const adminManifest = {
         "status",
         "confidence",
         "rawdata",
+        "sourcechecksum",
         "transaction",
         "notes"
       ],
@@ -634,6 +2131,7 @@ export const adminManifest = {
         "space",
         "account",
         "statementimport",
+        "key",
         "rownumber",
         "description",
         "amount",
@@ -687,6 +2185,371 @@ export const adminManifest = {
       },
       "warnings": []
     },
+    "statementRowComponent": {
+      "key": "statementRowComponent",
+      "table": "statementrowcomponent",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementrow",
+        "key",
+        "componentkind",
+        "componentrole",
+        "transactiondate",
+        "postingdate",
+        "valuedate",
+        "description",
+        "sourcereference",
+        "amountminor",
+        "currency",
+        "sourcedirection",
+        "sourceflow",
+        "balanceeffectminor",
+        "sourcelocator",
+        "confidence",
+        "sourcechecksum",
+        "sourcestate",
+        "commitoperation",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementrow",
+        "key",
+        "componentkind",
+        "componentrole",
+        "description",
+        "amountminor",
+        "currency",
+        "sourcedirection",
+        "sourceflow",
+        "balanceeffectminor",
+        "sourcechecksum",
+        "sourcestate",
+        "commitoperation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementRowComponent.create__NAME__",
+        "update": "statementRowComponent.update__NAME__",
+        "delete": "statementRowComponent.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementRowComponent",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementRowComponent.create__NAME__",
+          "statementRowComponent.delete__NAME__",
+          "statementRowComponent.update__NAME__",
+          "statementRowComponent.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementrowcomponent",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementSourceClaim": {
+      "key": "statementSourceClaim",
+      "table": "statementsourceclaim",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "originalfilesha256",
+        "periodstart",
+        "periodend",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "key",
+        "originalfilesha256",
+        "periodstart",
+        "periodend",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementSourceClaim.create__NAME__",
+        "update": "statementSourceClaim.update__NAME__",
+        "delete": "statementSourceClaim.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementSourceClaim",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementSourceClaim.create__NAME__",
+          "statementSourceClaim.delete__NAME__",
+          "statementSourceClaim.update__NAME__",
+          "statementSourceClaim.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementsourceclaim",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementTransactionMatch": {
+      "key": "statementTransactionMatch",
+      "table": "statementtransactionmatch",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "primarycomponent",
+        "componentids",
+        "transaction",
+        "key",
+        "state",
+        "method",
+        "reasoncodes",
+        "confidence",
+        "signedcomponenttotalminor",
+        "currency",
+        "revision",
+        "proposedoperation",
+        "confirmedoperation",
+        "rejectedoperation",
+        "supersededoperation",
+        "proposedby",
+        "reviewedby",
+        "proposedat",
+        "confirmedat",
+        "rejectedat",
+        "supersededat",
+        "rejectionreason",
+        "supersessionreason",
+        "supersedes",
+        "supersededby",
+        "sourcestate",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "primarycomponent",
+        "componentids",
+        "transaction",
+        "key",
+        "state",
+        "method",
+        "reasoncodes",
+        "confidence",
+        "signedcomponenttotalminor",
+        "currency",
+        "revision",
+        "proposedoperation",
+        "proposedat",
+        "sourcestate"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementTransactionMatch.create__NAME__",
+        "update": "statementTransactionMatch.update__NAME__",
+        "delete": "statementTransactionMatch.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementTransactionMatch",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementTransactionMatch.create__NAME__",
+          "statementTransactionMatch.delete__NAME__",
+          "statementTransactionMatch.update__NAME__",
+          "statementTransactionMatch.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementtransactionmatch",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "statementTransactionResolutionClaim": {
+      "key": "statementTransactionResolutionClaim",
+      "table": "statementtransactionresolutionclaim",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementtransactionmatch",
+        "transaction",
+        "key",
+        "periodstart",
+        "periodend",
+        "state",
+        "claimedat",
+        "releasedat",
+        "operation"
+      ],
+      "requiredFields": [
+        "space",
+        "account",
+        "statementimport",
+        "statementtransactionmatch",
+        "transaction",
+        "key",
+        "periodstart",
+        "periodend",
+        "state",
+        "claimedat",
+        "operation"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "statementTransactionResolutionClaim.create__NAME__",
+        "update": "statementTransactionResolutionClaim.update__NAME__",
+        "delete": "statementTransactionResolutionClaim.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "statementTransactionResolutionClaim",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "statementTransactionResolutionClaim.create__NAME__",
+          "statementTransactionResolutionClaim.delete__NAME__",
+          "statementTransactionResolutionClaim.update__NAME__",
+          "statementTransactionResolutionClaim.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "statementtransactionresolutionclaim",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
     "transaction": {
       "key": "transaction",
       "table": "transaction",
@@ -701,20 +2564,29 @@ export const adminManifest = {
         "account",
         "key",
         "sourcerow",
+        "sourcechecksum",
         "postedat",
         "effectiveat",
         "description",
         "normalizeddescription",
         "amount",
+        "amountminor",
         "balance",
         "currency",
         "direction",
+        "transactionkind",
+        "flowdirection",
+        "entrysource",
+        "recordedat",
         "status",
         "confidence",
         "merchantname",
         "merchant",
         "category",
         "istransfer",
+        "operation",
+        "statementmatch",
+        "transfer",
         "manualoverride",
         "notes"
       ],
@@ -762,6 +2634,165 @@ export const adminManifest = {
         "ensureTable": true,
         "tableDefinition": {
           "model": "transaction",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "transactionPurpose": {
+      "key": "transactionPurpose",
+      "table": "transactionpurpose",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "key",
+        "name",
+        "description",
+        "purposekind",
+        "occurrencepattern",
+        "defaultmerchant",
+        "defaultcategory",
+        "aliases",
+        "active",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "key",
+        "name",
+        "purposekind",
+        "occurrencepattern",
+        "active"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "transactionPurpose.create__NAME__",
+        "update": "transactionPurpose.update__NAME__",
+        "delete": "transactionPurpose.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "transactionPurpose",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "transactionPurpose.create__NAME__",
+          "transactionPurpose.delete__NAME__",
+          "transactionPurpose.update__NAME__",
+          "transactionPurpose.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "transactionpurpose",
+          "type": "NORMAL",
+          "schemaType": "schemaless",
+          "permissions": "full"
+        }
+      },
+      "admin": {
+        "enabled": true
+      },
+      "settingsRaw": {
+        "authority": "source"
+      },
+      "warnings": []
+    },
+    "transactionPurposeAssignment": {
+      "key": "transactionPurposeAssignment",
+      "table": "transactionpurposeassignment",
+      "authority": "source",
+      "data": "local",
+      "capabilities": [
+        "router",
+        "crud"
+      ],
+      "fields": [
+        "space",
+        "transaction",
+        "purpose",
+        "revision",
+        "state",
+        "iscurrent",
+        "assignmentsource",
+        "confidence",
+        "occurrencelabel",
+        "context",
+        "rule",
+        "supersedes",
+        "operation",
+        "recordedat",
+        "reviewedat",
+        "notes"
+      ],
+      "requiredFields": [
+        "space",
+        "transaction",
+        "purpose",
+        "revision",
+        "state",
+        "iscurrent",
+        "assignmentsource",
+        "recordedat"
+      ],
+      "typesense": {
+        "enabled": false,
+        "collection": null,
+        "fields": [],
+        "sortableFields": []
+      },
+      "taxonomyKeys": [],
+      "subtableKeys": [],
+      "taxonomies": [],
+      "subtables": [],
+      "relations": [],
+      "crud": {
+        "enabled": true,
+        "create": "transactionPurposeAssignment.create__NAME__",
+        "update": "transactionPurposeAssignment.update__NAME__",
+        "delete": "transactionPurposeAssignment.delete__NAME__"
+      },
+      "router": {
+        "enabled": true,
+        "key": "transactionPurposeAssignment",
+        "parent": null,
+        "embedInParent": false,
+        "procedures": [
+          "transactionPurposeAssignment.create__NAME__",
+          "transactionPurposeAssignment.delete__NAME__",
+          "transactionPurposeAssignment.update__NAME__",
+          "transactionPurposeAssignment.views"
+        ]
+      },
+      "bootstrap": {
+        "ensureTable": true,
+        "tableDefinition": {
+          "model": "transactionpurposeassignment",
           "type": "NORMAL",
           "schemaType": "schemaless",
           "permissions": "full"

@@ -86,6 +86,7 @@ Required fields:
 Optional fields:
 - targetMerchant
 - targetCategory
+- targetPurpose
 - priority
 - notes
 

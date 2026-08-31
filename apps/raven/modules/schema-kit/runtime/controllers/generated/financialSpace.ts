@@ -4,7 +4,7 @@ type FinancialSpaceDocument = any;
 type TypesenseCollectionSchema = any;
 import type { ControllerIdInput, ControllerOverride } from '../_shared'
 
-export type FinancialSpaceCreateInput = Pick<FinancialSpace, 'key' | 'name' | 'spaceType' | 'currency' | 'active'> & Partial<Omit<FinancialSpace, 'id'>>
+export type FinancialSpaceCreateInput = Pick<FinancialSpace, 'key' | 'name' | 'spaceType' | 'currency' | 'timezone' | 'active'> & Partial<Omit<FinancialSpace, 'id'>>
 
 export type FinancialSpaceUpdateInput = Partial<Omit<FinancialSpace, 'id'>>
 export type FinancialSpaceRecordId = NonNullable<FinancialSpace['id']> | FinancialSpaceId

@@ -33,7 +33,11 @@ type SchemaKitConfig = {
       sourceMaps?: boolean
     } | boolean
     redis?: { enabled?: boolean } | boolean
-    surrealdb?: { enabled?: boolean } | boolean
+    surrealdb?: {
+      enabled?: boolean
+      reconnectOnAuthLoss?: boolean
+      retryFailedRequestsAfterReconnect?: boolean
+    } | boolean
     notify?: boolean
   }
 }
@@ -746,14 +750,14 @@ type TrpcClient = ReturnType<typeof createTRPCProxyClient<AppRouter>>
 declare module '#app' {
   interface NuxtApp {
     $api: TrpcClient;
-    $client: TrpcClient;
+    $trpc: TrpcClient;
   }
 }
 
 declare module 'vue' {
   interface ComponentCustomProperties {
     $api: TrpcClient;
-    $client: TrpcClient;
+    $trpc: TrpcClient;
   }
 }
 

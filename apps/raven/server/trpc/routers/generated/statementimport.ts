@@ -13,6 +13,7 @@ const StatementImportCreateInput = Z_StatementImport.partial().merge(
   sourceFormat: true,
   importedAt: true,
   status: true,
+  revision: true,
   })
 );
 

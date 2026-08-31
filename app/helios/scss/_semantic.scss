@@ -1,0 +1,20 @@
+:root {
+  --hc-bg-canvas: #ffffff;
+  --hc-bg-surface: var(--hc-slate-50);
+  --hc-bg-surfaceAlt: var(--hc-slate-100);
+  --hc-bg-primary: var(--hc-blue-600);
+  --hc-bg-secondary: var(--hc-indigo-600);
+  --hc-bg-success: var(--hc-green-600);
+  --hc-bg-warning: var(--hc-amber-500);
+  --hc-bg-danger: var(--hc-red-600);
+  --hc-text-primary: var(--hc-slate-900);
+  --hc-text-secondary: var(--hc-slate-700);
+  --hc-text-muted: var(--hc-slate-500);
+  --hc-text-inverse: #ffffff;
+  --hc-text-onPrimary: #ffffff;
+  --hc-text-onSurface: var(--hc-slate-900);
+  --hc-border-default: var(--hc-slate-200);
+  --hc-border-muted: var(--hc-slate-100);
+  --hc-border-strong: var(--hc-slate-300);
+  --hc-border-primary: var(--hc-blue-600);
+}

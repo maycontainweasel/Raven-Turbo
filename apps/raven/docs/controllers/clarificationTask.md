@@ -87,6 +87,7 @@ Optional fields:
 - suggestedSpace
 - suggestedMerchant
 - suggestedCategory
+- suggestedPurpose
 - resolvedAt
 - resolutionNotes
 - confidence

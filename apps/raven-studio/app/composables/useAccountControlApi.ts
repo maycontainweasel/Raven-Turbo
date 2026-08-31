@@ -1,0 +1,68 @@
+import type {
+  ConfirmAccountBalanceInput,
+  CreateScheduledCashflowInput,
+  CreateAccountInput,
+  GetAccountFreshnessInput,
+  GetAccountInput,
+  GetCurrentPositionInput,
+  GetCashflowOccurrenceInput,
+  GetCashflowScheduleInput,
+  GetMonthProgressInput,
+  GetTransactionInput,
+  ListAccountsInput,
+  ListAccountTransactionsInput,
+  ListCategoriesInput,
+  ListCashflowSchedulesInput,
+  ListUpcomingCashflowsInput,
+  OccurrenceRevisionCommandInput,
+  OverrideCashflowOccurrenceAmountInput,
+  OverrideCashflowOccurrenceDueDateInput,
+  RecordExpenseInput,
+  RecordIncomeInput,
+  RecordTransferInput,
+  ReconcileCashflowOccurrenceInput,
+  ResumeScheduledCashflowInput,
+  ScheduleRevisionCommandInput,
+  SettleCashflowOccurrenceInput,
+  UpdateScheduledCashflowInput,
+} from '@raven/domain'
+
+export function useAccountControlApi() {
+  const { $api } = useNuxtApp() as any
+
+  return {
+    listAccounts: (input: ListAccountsInput = {}) => $api.accountControl.listAccounts.query(input),
+    getAccount: (input: GetAccountInput) => $api.accountControl.getAccount.query(input),
+    getCurrentPosition: (input: GetCurrentPositionInput) => $api.accountControl.getCurrentPosition.query(input),
+    getAccountFreshness: (input: GetAccountFreshnessInput = {}) =>
+      $api.accountControl.getAccountFreshness.query(input),
+    listAccountTransactions: (input: ListAccountTransactionsInput) =>
+      $api.accountControl.listAccountTransactions.query(input),
+    getTransaction: (input: GetTransactionInput) => $api.accountControl.getTransaction.query(input),
+    getMonthProgress: (input: GetMonthProgressInput) => $api.accountControl.getMonthProgress.query(input),
+    listCategories: (input: ListCategoriesInput) => $api.accountControl.listCategories.query(input),
+    createAccount: (input: CreateAccountInput) => $api.accountControl.createAccount.mutate(input),
+    confirmAccountBalance: (input: ConfirmAccountBalanceInput) =>
+      $api.accountControl.confirmAccountBalance.mutate(input),
+    recordExpense: (input: RecordExpenseInput) => $api.accountControl.recordExpense.mutate(input),
+    recordIncome: (input: RecordIncomeInput) => $api.accountControl.recordIncome.mutate(input),
+    recordTransfer: (input: RecordTransferInput) => $api.accountControl.recordTransfer.mutate(input),
+    listCashflowSchedules: (input: ListCashflowSchedulesInput = {}) => $api.accountControl.listCashflowSchedules.query(input),
+    getCashflowSchedule: (input: GetCashflowScheduleInput) => $api.accountControl.getCashflowSchedule.query(input),
+    listUpcomingCashflows: (input: ListUpcomingCashflowsInput) => $api.accountControl.listUpcomingCashflows.query(input),
+    getCashflowOccurrence: (input: GetCashflowOccurrenceInput) => $api.accountControl.getCashflowOccurrence.query(input),
+    createScheduledCashflow: (input: CreateScheduledCashflowInput) => $api.accountControl.createScheduledCashflow.mutate(input),
+    updateScheduledCashflow: (input: UpdateScheduledCashflowInput) => $api.accountControl.updateScheduledCashflow.mutate(input),
+    pauseScheduledCashflow: (input: ScheduleRevisionCommandInput) => $api.accountControl.pauseScheduledCashflow.mutate(input),
+    resumeScheduledCashflow: (input: ResumeScheduledCashflowInput) => $api.accountControl.resumeScheduledCashflow.mutate(input),
+    endScheduledCashflow: (input: ScheduleRevisionCommandInput) => $api.accountControl.endScheduledCashflow.mutate(input),
+    cancelScheduledCashflow: (input: ScheduleRevisionCommandInput) => $api.accountControl.cancelScheduledCashflow.mutate(input),
+    settleCashflowOccurrence: (input: SettleCashflowOccurrenceInput) => $api.accountControl.settleCashflowOccurrence.mutate(input),
+    reconcileCashflowOccurrence: (input: ReconcileCashflowOccurrenceInput) => $api.accountControl.reconcileCashflowOccurrence.mutate(input),
+    skipCashflowOccurrence: (input: OccurrenceRevisionCommandInput) => $api.accountControl.skipCashflowOccurrence.mutate(input),
+    waiveCashflowOccurrence: (input: OccurrenceRevisionCommandInput) => $api.accountControl.waiveCashflowOccurrence.mutate(input),
+    cancelCashflowOccurrence: (input: OccurrenceRevisionCommandInput) => $api.accountControl.cancelCashflowOccurrence.mutate(input),
+    overrideCashflowOccurrenceAmount: (input: OverrideCashflowOccurrenceAmountInput) => $api.accountControl.overrideCashflowOccurrenceAmount.mutate(input),
+    overrideCashflowOccurrenceDueDate: (input: OverrideCashflowOccurrenceDueDateInput) => $api.accountControl.overrideCashflowOccurrenceDueDate.mutate(input),
+  }
+}

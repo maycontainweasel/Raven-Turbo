@@ -79,6 +79,7 @@ Required fields:
 - space (required)
 - account (required)
 - statementImport (required)
+- key (required)
 - rowNumber (required)
 - description (required)
 - amount (required)
@@ -87,11 +88,23 @@ Required fields:
 - status (required)
 
 Optional fields:
+- rowKind
+- transactionDate
+- postingDate
+- valueDate
+- sourceReference
+- sourceLocator
+- reportedBalanceMinor
+- componentCount
+- extractionConfidence
+- rowHash
+- commitOperation
 - postedAt
 - normalizedDescription
 - balance
 - confidence
 - rawData
+- sourceChecksum
 - transaction
 - notes
 

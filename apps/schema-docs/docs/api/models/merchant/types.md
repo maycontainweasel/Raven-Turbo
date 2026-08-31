@@ -13,7 +13,7 @@ _Merchant, customer, vendor, or counterparty memory record_
 ## ID
 - Export name: `MerchantId`
 - Exported: yes
-- Structure: `"key"`
+- Structure: `"stringID<space, key>"`
 ## Notes
 - Types are inferred from the graph + generated specs.
 - Record ids returned by SurrealDB are objects; pass the record sub-id (`record.id`) to routers.

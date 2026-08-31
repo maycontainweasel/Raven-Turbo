@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_User, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_User, RecordID_z } from '@schema/types';
 
 const UserCreateInput = Z_User.partial().merge(
   Z_User.pick({
@@ -57,7 +57,7 @@ const UserRoleRouter = t.router({
         throw new Error('UserRole taxonomy payload is required');
       }
       const query = /* surql */ `
-        RETURN fn::createUserRoleTaxonomy($payload);
+        RETURN fn::createTaxonomy("u", "role", $payload);
       `;
       const result = await LRS(await dbInstance.query(query, { payload }));
       return result;

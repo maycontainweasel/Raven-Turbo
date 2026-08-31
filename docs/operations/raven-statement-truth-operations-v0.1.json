@@ -1,0 +1,521 @@
+{
+  "version": "0.1",
+  "contract": "statement-truth-v0.1",
+  "transport": "semantic-raven-mcp",
+  "rawSurrealQl": false,
+  "operationCount": 31,
+  "operations": [
+    {
+      "name": "stage_statement_source",
+      "classification": "source-write",
+      "requiredInputs": ["originalPath", "mimeType", "sourceKind"],
+      "optionalInputs": ["extractionAssistPath", "extractionAssistMimeType"],
+      "outputs": ["StatementSourceDescriptor"],
+      "errors": ["STATEMENT_SOURCE_NOT_FOUND", "STATEMENT_EXTRACTION_INVALID"]
+    },
+    {
+      "name": "list_statement_profiles",
+      "classification": "no-write",
+      "requiredInputs": [],
+      "optionalInputs": [],
+      "outputs": ["StatementProfile[]"],
+      "errors": []
+    },
+    {
+      "name": "detect_statement_profile",
+      "classification": "no-write",
+      "requiredInputs": ["sourceRef"],
+      "optionalInputs": [],
+      "outputs": ["StatementProfileCandidate[]"],
+      "errors": [
+        "STATEMENT_SOURCE_NOT_FOUND",
+        "STATEMENT_SOURCE_CHANGED",
+        "STATEMENT_EXTRACTION_INVALID"
+      ]
+    },
+    {
+      "name": "preview_statement_import",
+      "classification": "no-write",
+      "requiredInputs": [
+        "sourceRef",
+        "spaceKey",
+        "accountKey",
+        "profileId",
+        "profileVersion"
+      ],
+      "optionalInputs": [],
+      "outputs": ["StatementImportPreview"],
+      "errors": [
+        "STATEMENT_SOURCE_NOT_FOUND",
+        "STATEMENT_SOURCE_CHANGED",
+        "STATEMENT_PROFILE_UNSUPPORTED",
+        "STATEMENT_PROFILE_AMBIGUOUS",
+        "STATEMENT_ACCOUNT_MISMATCH",
+        "STATEMENT_CURRENCY_MISMATCH",
+        "STATEMENT_PERIOD_INVALID",
+        "STATEMENT_EXTRACTION_INVALID"
+      ]
+    },
+    {
+      "name": "validate_statement_preview",
+      "classification": "no-write",
+      "requiredInputs": [
+        "sourceRef",
+        "spaceKey",
+        "accountKey",
+        "profileId",
+        "profileVersion",
+        "previewHash"
+      ],
+      "optionalInputs": [],
+      "outputs": ["StatementImportPreview"],
+      "errors": [
+        "STATEMENT_SOURCE_NOT_FOUND",
+        "STATEMENT_SOURCE_CHANGED",
+        "STATEMENT_PREVIEW_STALE",
+        "STATEMENT_ACCOUNT_MISMATCH",
+        "STATEMENT_CURRENCY_MISMATCH",
+        "STATEMENT_PERIOD_INVALID",
+        "STATEMENT_EXTRACTION_INVALID"
+      ]
+    },
+    {
+      "name": "commit_statement_import",
+      "classification": "source-write",
+      "requiredInputs": [
+        "sourceRef",
+        "spaceKey",
+        "accountKey",
+        "profileId",
+        "profileVersion",
+        "previewHash",
+        "idempotencyKey"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementImportCommitResult", "FinancialOperation"],
+      "errors": [
+        "STATEMENT_SOURCE_NOT_FOUND",
+        "STATEMENT_SOURCE_CHANGED",
+        "STATEMENT_PREVIEW_STALE",
+        "STATEMENT_DUPLICATE_SOURCE",
+        "STATEMENT_ACCOUNT_MISMATCH",
+        "STATEMENT_CURRENCY_MISMATCH",
+        "STATEMENT_LEGACY_PERIOD_CONFLICT",
+        "STATEMENT_LEGACY_COMPATIBILITY_REQUIRED",
+        "STATEMENT_IMMUTABLE_CONFLICT"
+      ]
+    },
+    {
+      "name": "list_statement_imports",
+      "classification": "no-write",
+      "requiredInputs": ["spaceKey", "accountKey"],
+      "optionalInputs": ["periodStart", "periodEnd"],
+      "outputs": ["StatementImportSummary[]"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_import",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId"],
+      "optionalInputs": [],
+      "outputs": ["StatementImportDetail"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "list_statement_rows",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId"],
+      "optionalInputs": [],
+      "outputs": ["StatementRow[]"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_row",
+      "classification": "no-write",
+      "requiredInputs": ["statementRowId"],
+      "optionalInputs": [],
+      "outputs": ["StatementRowDetail"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "list_statement_row_components",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId|statementRowId"],
+      "optionalInputs": ["statementImportId", "statementRowId"],
+      "outputs": ["StatementRowComponent[]"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_row_component",
+      "classification": "no-write",
+      "requiredInputs": ["statementRowComponentId"],
+      "optionalInputs": [],
+      "outputs": ["StatementRowComponent"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "list_statement_import_issues",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId"],
+      "optionalInputs": [],
+      "outputs": ["StatementIssue[]"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_import_issue",
+      "classification": "no-write",
+      "requiredInputs": ["statementIssueId"],
+      "optionalInputs": [],
+      "outputs": ["StatementIssue"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "list_statement_match_candidates",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId", "componentIds"],
+      "optionalInputs": ["explicitTransactionId"],
+      "outputs": ["StatementMatchCandidate[]"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_IMPORT_SUPERSEDED",
+        "STATEMENT_COMPONENT_GROUP_INVALID",
+        "STATEMENT_COMPONENT_TOTAL_MISMATCH",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE"
+      ]
+    },
+    {
+      "name": "list_statement_transaction_matches",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId"],
+      "optionalInputs": [
+        "statementRowComponentId",
+        "transactionId",
+        "includeSuperseded"
+      ],
+      "outputs": ["StatementTransactionMatch[]"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_transaction_match",
+      "classification": "no-write",
+      "requiredInputs": ["statementTransactionMatchId"],
+      "optionalInputs": [],
+      "outputs": ["StatementTransactionMatch"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "get_statement_reconciliation",
+      "classification": "no-write",
+      "requiredInputs": ["statementImportId"],
+      "optionalInputs": [],
+      "outputs": ["StatementReconciliationDetail"],
+      "errors": ["NOT_FOUND"]
+    },
+    {
+      "name": "propose_statement_transaction_match",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "componentIds",
+        "transactionId",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementTransactionMatch", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_IMPORT_SUPERSEDED",
+        "STATEMENT_COMPONENT_GROUP_INVALID",
+        "STATEMENT_COMPONENT_TOTAL_MISMATCH",
+        "STATEMENT_TRANSACTION_INELIGIBLE",
+        "STATEMENT_TRANSACTION_ALREADY_MATCHED",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "confirm_statement_transaction_match",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementTransactionMatchId",
+        "expectedRevision",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": [
+        "StatementTransactionMatch",
+        "Transaction",
+        "FinancialOperation"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_MATCH_CONFLICT",
+        "STATEMENT_TRANSACTION_INELIGIBLE",
+        "STATEMENT_TRANSACTION_ALREADY_MATCHED",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "materialize_statement_component_transaction",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "componentIds",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": [
+        "StatementTransactionMatch",
+        "Transaction",
+        "FinancialOperation"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_IMPORT_SUPERSEDED",
+        "STATEMENT_COMPONENT_GROUP_INVALID",
+        "STATEMENT_COMPONENT_TOTAL_MISMATCH",
+        "STATEMENT_TRANSFER_REVIEW_REQUIRED",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "reject_statement_transaction_match",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementTransactionMatchId",
+        "expectedRevision",
+        "reason",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementTransactionMatch", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_MATCH_CONFLICT",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "supersede_statement_transaction_match",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementTransactionMatchId",
+        "expectedRevision",
+        "componentIds",
+        "transactionId",
+        "reason",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": [
+        "StatementTransactionMatch",
+        "Transaction",
+        "FinancialOperation"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_MATCH_CONFLICT",
+        "STATEMENT_TRANSACTION_INELIGIBLE",
+        "STATEMENT_TRANSACTION_ALREADY_MATCHED",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "acknowledge_statement_issue",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementIssueId",
+        "expectedRevision",
+        "note",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementIssue", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_BLOCKING_ISSUE_ACTIVE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "supersede_statement_import",
+      "classification": "source-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "expectedSourceRevision",
+        "expectedReconciliationRevision",
+        "expectedReconciliationHash",
+        "replacement",
+        "reason"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementImportSupersessionResult", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_SOURCE_SUPERSESSION_CONFLICT",
+        "STATEMENT_SOURCE_CHANGED",
+        "STATEMENT_PREVIEW_STALE",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "recalculate_statement_reconciliation",
+      "classification": "resolution-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "expectedRevision",
+        "expectedHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementReconciliationDetail", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_IMPORT_SUPERSEDED",
+        "STATEMENT_ACCOUNT_CONTEXT_STALE",
+        "STATEMENT_RECONCILIATION_STALE"
+      ]
+    },
+    {
+      "name": "attest_statement_reconciled",
+      "classification": "attestation-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "expectedRevision",
+        "calculationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": [
+        "StatementReconciliationDetail",
+        "StatementReconciliationEvent",
+        "FinancialOperation"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_RECONCILIATION_STALE",
+        "STATEMENT_RECONCILIATION_ALREADY_ATTESTED",
+        "STATEMENT_BLOCKING_ISSUE_ACTIVE",
+        "STATEMENT_RECONCILIATION_DIFFERENCE",
+        "STATEMENT_RECONCILIATION_INCOMPLETE"
+      ]
+    },
+    {
+      "name": "reopen_statement_reconciliation",
+      "classification": "attestation-write",
+      "requiredInputs": [
+        "idempotencyKey",
+        "statementImportId",
+        "expectedRevision",
+        "reason",
+        "calculationHash"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": [
+        "StatementReconciliationDetail",
+        "StatementReconciliationEvent",
+        "FinancialOperation"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_RECONCILIATION_STALE",
+        "STATEMENT_RECONCILIATION_INCOMPLETE"
+      ]
+    },
+    {
+      "name": "preview_legacy_statement_resolution",
+      "classification": "resolution-read",
+      "requiredInputs": [
+        "sourceRef",
+        "spaceKey",
+        "accountKey",
+        "profileId",
+        "profileVersion",
+        "previewHash",
+        "legacyStatementImportId"
+      ],
+      "optionalInputs": [],
+      "outputs": [
+        "PrivateExactLegacyResolutionProjection",
+        "AggregateSafeLegacyResolutionProjection"
+      ],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_PREVIEW_STALE",
+        "STATEMENT_LEGACY_ACCOUNT_CONTEXT_DRIFT",
+        "STATEMENT_LEGACY_EVIDENCE_DRIFT"
+      ]
+    },
+    {
+      "name": "apply_legacy_statement_resolution",
+      "classification": "authority-write",
+      "requiredInputs": [
+        "sourceRef",
+        "spaceKey",
+        "accountKey",
+        "profileId",
+        "profileVersion",
+        "previewHash",
+        "legacyStatementImportId",
+        "previewIdentityHash",
+        "expectedDatabaseFingerprint",
+        "expectedSourceIdentityHash",
+        "expectedLegacyEvidenceHash",
+        "expectedAccountContextFingerprint",
+        "expectedCrosswalkHash",
+        "expectedRevisionClaimHash",
+        "strategy",
+        "decisions",
+        "idempotencyKey"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementLegacyResolutionResult", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_LEGACY_EVIDENCE_DRIFT",
+        "STATEMENT_LEGACY_CROSSWALK_DRIFT",
+        "STATEMENT_LEGACY_STRATEGY_UNSUPPORTED",
+        "STATEMENT_LEGACY_TRANSFER_UNRESOLVED",
+        "STATEMENT_LEGACY_CONFLICT_UNRESOLVED",
+        "STATEMENT_LEGACY_ACTIVE_CLAIM_CONFLICT",
+        "STATEMENT_LEGACY_DUPLICATE_ACTIVE_MOVEMENT",
+        "STATEMENT_LEGACY_REPLAY_CONFLICT"
+      ]
+    },
+    {
+      "name": "reverse_legacy_statement_resolution",
+      "classification": "authority-write",
+      "requiredInputs": [
+        "statementLegacyResolutionId",
+        "expectedDatabaseFingerprint",
+        "expectedTargetRequestHash",
+        "expectedAuthorityHash",
+        "idempotencyKey"
+      ],
+      "optionalInputs": ["actorId"],
+      "outputs": ["StatementLegacyResolutionResult", "FinancialOperation"],
+      "errors": [
+        "NOT_FOUND",
+        "STATEMENT_LEGACY_REPLAY_CONFLICT",
+        "STATEMENT_LEGACY_ROLLBACK_INELIGIBLE"
+      ]
+    }
+  ]
+}

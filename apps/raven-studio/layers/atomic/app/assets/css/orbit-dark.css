@@ -1,0 +1,207 @@
+:root,
+.dark,
+.dark-mode,
+[data-theme='orbit-dark'] {
+  --ds-bg-root: #212121;
+  --ds-bg-surface: #303030;
+  --ds-bg-elevated: #1b1b1b;
+  --ds-bg-muted: #414141;
+  --ds-bg-inverted: #ffffff;
+
+  --ds-text-primary: #ffffff;
+  --ds-text-secondary: #f3f3f3;
+  --ds-text-muted: #afafaf;
+  --ds-text-inverted: #0d0d0d;
+
+  --ds-border-subtle: #ffffff0d;
+  --ds-border-default: #ffffff26;
+  --ds-border-strong: #ffffff40;
+
+  --ds-accent: #48aaff;
+  --ds-accent-strong: #0285ff;
+  --ds-accent-soft: #0285ff21;
+  --ds-accent-text: #99ceff;
+  --ds-accent-border: #0285ff66;
+
+  --ds-danger: #e02e2a;
+  --ds-warning: #ff9e6c;
+  --ds-success: #04b84c;
+  --ds-info: #48aaff;
+
+  --ds-control-bg: #ffffff00;
+  --ds-control-bg-hover: #ffffff1a;
+  --ds-control-bg-active: #ffffff26;
+  --ds-control-border: #ffffff26;
+  --ds-control-ring: #ffffff40;
+
+  --ds-radius-xs: .125rem;
+  --ds-radius-sm: .25rem;
+  --ds-radius-md: .375rem;
+  --ds-radius-lg: .5rem;
+  --ds-radius-xl: .75rem;
+
+  --ds-shadow-sm: 0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a;
+  --ds-shadow-md: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a;
+  --ds-shadow-lg: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a;
+
+  --ds-duration-fast: .15s;
+  --ds-duration-normal: .2s;
+  --ds-ease-standard: cubic-bezier(.4, 0, .2, 1);
+
+  --ds-field-height: calc(var(--h-gu, 1.4rem) * 1.75);
+  --ds-field-padding-x: calc(var(--h-gu, 1.4rem) * .5);
+  --ds-field-radius: var(--ds-radius-lg);
+  --ds-field-bg: var(--ds-bg-surface);
+  --ds-field-border: var(--ds-border-default);
+  --ds-field-text: var(--ds-text-primary);
+  --ds-field-placeholder: #fffc;
+  --ds-field-focus-ring: var(--ds-control-ring);
+  --ds-field-label-text: var(--ds-text-secondary);
+  --ds-field-help-text: var(--ds-text-muted);
+  --ds-field-error-text: #ff8583;
+
+  --ds-button-height: calc(var(--h-gu, 1.4rem) * 1.75);
+  --ds-button-padding-x: calc(var(--h-gu, 1.4rem) * .625);
+  --ds-button-radius: var(--ds-radius-lg);
+  --ds-button-font-weight: 600;
+}
+
+.ds-app {
+  min-height: 100vh;
+  background: var(--ds-bg-root);
+  color: var(--ds-text-primary);
+}
+
+.ds-surface {
+  background: var(--ds-bg-surface);
+  color: var(--ds-text-primary);
+}
+
+.ds-panel,
+.ds-card {
+  border: 1px solid var(--ds-border-subtle);
+  background: var(--ds-bg-elevated);
+  color: var(--ds-text-primary);
+  box-shadow: var(--ds-shadow-md);
+}
+
+.ds-panel {
+  border-radius: var(--ds-radius-xl);
+}
+
+.ds-card {
+  border-radius: var(--ds-radius-lg);
+}
+
+.ds-control,
+.ds-field,
+.ds-button {
+  transition:
+    background-color var(--ds-duration-fast) var(--ds-ease-standard),
+    border-color var(--ds-duration-fast) var(--ds-ease-standard),
+    box-shadow var(--ds-duration-fast) var(--ds-ease-standard),
+    color var(--ds-duration-fast) var(--ds-ease-standard);
+}
+
+.ds-control {
+  border: 1px solid var(--ds-control-border);
+  border-radius: var(--ds-radius-lg);
+  background: var(--ds-control-bg);
+  color: var(--ds-text-secondary);
+}
+
+.ds-control:hover {
+  background: var(--ds-control-bg-hover);
+}
+
+.ds-field {
+  min-height: var(--ds-field-height);
+  border: 1px solid var(--ds-field-border);
+  border-radius: var(--ds-field-radius);
+  background: var(--ds-field-bg);
+  color: var(--ds-field-text);
+  padding-inline: var(--ds-field-padding-x);
+  outline: 0;
+}
+
+.ds-field::placeholder {
+  color: var(--ds-field-placeholder);
+}
+
+.ds-field:focus,
+.ds-field:focus-visible {
+  border-color: var(--ds-border-strong);
+  box-shadow: 0 0 0 3px var(--ds-field-focus-ring);
+}
+
+.ds-button {
+  min-height: var(--ds-button-height);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  border: 1px solid transparent;
+  border-radius: var(--ds-button-radius);
+  padding-inline: var(--ds-button-padding-x);
+  font-weight: var(--ds-button-font-weight);
+  cursor: pointer;
+}
+
+.ds-button:disabled {
+  opacity: .54;
+  cursor: not-allowed;
+}
+
+.ds-button-primary {
+  background: var(--ds-bg-inverted);
+  color: var(--ds-text-inverted);
+}
+
+.ds-button-primary:hover {
+  background: color-mix(in srgb, var(--ds-bg-inverted) 88%, transparent);
+}
+
+.ds-button-secondary {
+  border-color: var(--ds-border-default);
+  background: var(--ds-control-bg);
+  color: var(--ds-text-secondary);
+}
+
+.ds-button-secondary:hover {
+  background: var(--ds-control-bg-hover);
+}
+
+.ds-text-muted {
+  color: var(--ds-text-muted);
+}
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  border: 1px solid var(--ds-border-default);
+  border-radius: 999px;
+  padding-inline: .625rem;
+  background: var(--ds-control-bg);
+  color: var(--ds-text-secondary);
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.ds-chip-success {
+  border-color: color-mix(in srgb, var(--ds-success) 44%, transparent);
+  background: color-mix(in srgb, var(--ds-success) 14%, transparent);
+  color: var(--ds-success);
+}
+
+.ds-chip-warning {
+  border-color: color-mix(in srgb, var(--ds-warning) 44%, transparent);
+  background: color-mix(in srgb, var(--ds-warning) 14%, transparent);
+  color: var(--ds-warning);
+}
+
+.ds-chip-danger {
+  border-color: color-mix(in srgb, var(--ds-danger) 44%, transparent);
+  background: color-mix(in srgb, var(--ds-danger) 14%, transparent);
+  color: #ff8583;
+}

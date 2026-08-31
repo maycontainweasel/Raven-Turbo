@@ -4,7 +4,7 @@ type StatementRowDocument = any;
 type TypesenseCollectionSchema = any;
 import type { ControllerIdInput, ControllerOverride } from '../_shared'
 
-export type StatementRowCreateInput = Pick<StatementRow, 'space' | 'account' | 'statementImport' | 'rowNumber' | 'description' | 'amount' | 'currency' | 'direction' | 'status'> & Partial<Omit<StatementRow, 'id'>>
+export type StatementRowCreateInput = Pick<StatementRow, 'space' | 'account' | 'statementImport' | 'key' | 'rowNumber' | 'description' | 'amount' | 'currency' | 'direction' | 'status'> & Partial<Omit<StatementRow, 'id'>>
 
 export type StatementRowUpdateInput = Partial<Omit<StatementRow, 'id'>>
 export type StatementRowRecordId = NonNullable<StatementRow['id']> | StatementRowId

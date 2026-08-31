@@ -4,7 +4,7 @@ type StatementImportDocument = any;
 type TypesenseCollectionSchema = any;
 import type { ControllerIdInput, ControllerOverride } from '../_shared'
 
-export type StatementImportCreateInput = Pick<StatementImport, 'space' | 'account' | 'key' | 'sourceFileName' | 'sourceFormat' | 'importedAt' | 'status'> & Partial<Omit<StatementImport, 'id'>>
+export type StatementImportCreateInput = Pick<StatementImport, 'space' | 'account' | 'key' | 'sourceFileName' | 'sourceFormat' | 'importedAt' | 'status' | 'revision'> & Partial<Omit<StatementImport, 'id'>>
 
 export type StatementImportUpdateInput = Partial<Omit<StatementImport, 'id'>>
 export type StatementImportRecordId = NonNullable<StatementImport['id']> | StatementImportId

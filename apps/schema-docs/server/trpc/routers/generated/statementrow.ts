@@ -2,13 +2,14 @@ import { z } from 'zod';
 import { t } from '@schema/server/trpc/context';
 
 import { RequestSchema } from '@schema/request-schema';
-import { Z_StatementRow, RecordID_z } from '~~/app/types/schema/generated';
+import { Z_StatementRow, RecordID_z } from '@schema/types';
 
 const StatementRowCreateInput = Z_StatementRow.partial().merge(
   Z_StatementRow.pick({
   space: true,
   account: true,
   statementImport: true,
+  key: true,
   rowNumber: true,
   description: true,
   amount: true,

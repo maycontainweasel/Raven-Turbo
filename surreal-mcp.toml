@@ -1,0 +1,14 @@
+default = "local"
+
+[profiles.local]
+mcp = "raven-surreal-local"
+label = "Raven local database"
+runtime = "command-surreal-js"
+transport = "stdio"
+env = ".env.surreal.local"
+read_only = true
+allow_raw = true
+allow_writes = false
+dangerously_allow_raw_writes = false
+connect_check = true
+codex = true

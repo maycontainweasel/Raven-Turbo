@@ -1,10 +1,15 @@
 import { existsSync } from 'node:fs'
 import { mergeConfigs } from '@unocss/core'
-import base from './.nuxt/uno.config.mjs'
-
 const heliosPath = new URL('./app/helios/generated/uno.generated.ts', import.meta.url)
 const overridesPath = new URL('./uno.overrides.config.ts', import.meta.url)
 
+let base: any = {}
+try {
+  const mod = await import('./.nuxt/uno.config.mjs')
+  base = (mod as any).default ?? mod
+} catch {
+  base = {}
+}
 let heliosGenerated: any = {}
 if (existsSync(heliosPath)) {
   try {

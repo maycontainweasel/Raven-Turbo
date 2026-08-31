@@ -619,10 +619,6 @@ const closeBreakpointManager = () => {
   breakpointDraftError.value = ''
 }
 
-const handleBreakpointDialogOpenChange = (details: { open: boolean }) => {
-  if (!details.open) closeBreakpointManager()
-}
-
 const addBreakpointDraft = () => {
   const last = breakpointDrafts.value[breakpointDrafts.value.length - 1]
   const lastMax = Number(last?.maxWidth)
@@ -1417,83 +1413,78 @@ onMounted(load)
       </main>
     </div>
 
-    <Teleport to="body">
-      <Dialog.Root
-        v-model:open="breakpointManagerOpen"
-        lazy-mount
-        unmount-on-exit
-        @open-change="handleBreakpointDialogOpenChange"
-      >
-        <div v-if="breakpointManagerOpen" class="breakpoint-dialog">
-          <Dialog.Backdrop class="breakpoint-dialog__backdrop" />
+    <Dialog.Root
+      :open="breakpointManagerOpen"
+      @open-change="({ open }) => !open && closeBreakpointManager()"
+    >
+      <Teleport to="body">
+        <Dialog.Backdrop class="breakpoint-dialog__backdrop" />
+        <Dialog.Positioner class="breakpoint-dialog__positioner">
+          <Dialog.Content class="breakpoint-dialog__panel">
+            <div class="breakpoint-dialog__header">
+              <Dialog.Title as-child>
+                <h2>Responsive Breakpoints</h2>
+              </Dialog.Title>
+              <button class="icon-btn icon-btn--small" type="button" @click="closeBreakpointManager">
+                x
+              </button>
+            </div>
 
-          <Dialog.Positioner class="breakpoint-dialog__positioner">
-            <Dialog.Content class="breakpoint-dialog__panel">
-              <div class="breakpoint-dialog__header">
-                <Dialog.Title as-child>
-                  <h2>Responsive Breakpoints</h2>
-                </Dialog.Title>
-                <button class="icon-btn icon-btn--small" type="button" @click="closeBreakpointManager">
-                  x
-                </button>
-              </div>
+            <p class="breakpoint-dialog__intro">
+              Define min and max widths for each profile. The first breakpoint automatically starts at 0px.
+            </p>
 
-              <p class="breakpoint-dialog__intro">
-                Define min and max widths for each profile. The first breakpoint automatically starts at 0px.
-              </p>
+            <div class="breakpoint-dialog__list">
+              <article v-for="(draft, index) in breakpointDrafts" :key="`${draft.sourceId ?? 'new'}-${index}`" class="draft-card">
+                <label class="control">
+                  <span>Label</span>
+                  <input v-model="draft.label" type="text" placeholder="Mobile" />
+                </label>
 
-              <div class="breakpoint-dialog__list">
-                <article v-for="(draft, index) in breakpointDrafts" :key="`${draft.sourceId ?? 'new'}-${index}`" class="draft-card">
+                <div class="draft-card__range">
                   <label class="control">
-                    <span>Label</span>
-                    <input v-model="draft.label" type="text" placeholder="Mobile" />
+                    <span>From</span>
+                    <input v-model="draft.minWidth" type="number" min="0" step="1" />
                   </label>
 
-                  <div class="draft-card__range">
-                    <label class="control">
-                      <span>From</span>
-                      <input v-model="draft.minWidth" type="number" min="0" step="1" />
-                    </label>
-
-                    <label class="control">
-                      <span>To</span>
-                      <input v-model="draft.maxWidth" type="number" min="0" step="1" placeholder="none" />
-                    </label>
-                  </div>
-
-                  <button
-                    class="btn-remove"
-                    type="button"
-                    :disabled="breakpointDrafts.length <= 1"
-                    @click="removeBreakpointDraft(index)"
-                  >
-                    Remove
-                  </button>
-                </article>
-              </div>
-
-              <p v-if="breakpointDraftError" class="status status--error">
-                {{ breakpointDraftError }}
-              </p>
-
-              <div class="breakpoint-dialog__footer">
-                <button type="button" @click="addBreakpointDraft">
-                  Add breakpoint
-                </button>
-                <div class="breakpoint-dialog__actions">
-                  <button type="button" @click="closeBreakpointManager">
-                    Cancel
-                  </button>
-                  <button class="primary" type="button" @click="saveBreakpointDrafts">
-                    Save breakpoints
-                  </button>
+                  <label class="control">
+                    <span>To</span>
+                    <input v-model="draft.maxWidth" type="number" min="0" step="1" placeholder="none" />
+                  </label>
                 </div>
+
+                <button
+                  class="btn-remove"
+                  type="button"
+                  :disabled="breakpointDrafts.length <= 1"
+                  @click="removeBreakpointDraft(index)"
+                >
+                  Remove
+                </button>
+              </article>
+            </div>
+
+            <p v-if="breakpointDraftError" class="status status--error">
+              {{ breakpointDraftError }}
+            </p>
+
+            <div class="breakpoint-dialog__footer">
+              <button type="button" @click="addBreakpointDraft">
+                Add breakpoint
+              </button>
+              <div class="breakpoint-dialog__actions">
+                <button type="button" @click="closeBreakpointManager">
+                  Cancel
+                </button>
+                <button class="primary" type="button" @click="saveBreakpointDrafts">
+                  Save breakpoints
+                </button>
               </div>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </div>
-      </Dialog.Root>
-    </Teleport>
+            </div>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Teleport>
+    </Dialog.Root>
   </div>
 </template>
 

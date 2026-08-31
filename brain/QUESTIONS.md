@@ -1,0 +1,35 @@
+# Questions
+
+- Q-0001 - Should "Elgiz Buckets Lab" remain the product/internal name, or should the buckets planning surface use another Raven-native label?
+- Q-0002 - Should bucket versioning be included in the first persistence model, or deferred until after the canvas/table interaction is proven?
+- Q-0003 - Which bucket node types are canonical for the first durable model?
+- Q-0004 - Which parts of the referenced prototype folder are safe implementation inputs, given that it also contains private financial source material?
+- Q-0005 - Resolved by `DEC-0011`: integer minor units across persistence, TypeScript, and wire contracts.
+- Q-0006 - Resolved by `DEC-0011` and Workline 02: canonical transaction/transfer, provenance, correction boundary, and idempotent semantic operations are accepted.
+- Q-0007 - Resolved by `DEC-0012`: immutable balance evidence with freshness-first selection and explicit unknown/invalid states.
+- Q-0008 - Resolved by `DEC-0013`: one neutral schedule-plus-occurrence model with audited lifecycle and occurrence operations.
+- Q-0009 - Should the July 13 parallel-lane operating model become accepted Raven sequencing, or remain working planning context?
+- Q-0010 - Resolved by `RAVEN-INGEST-0015`: the Generated Data Atlas was externally accepted, integrated surgically, verified, and completed.
+- Q-0011 - Is the isolated read-only Past Truth Reinstatement Audit authorized before any private-data inspection?
+- Q-0012 - Is the isolated Elgiz contract and pure-engine workline authorized, and what are its four approved architecture choices?
+- Q-0013 - For Tax & Transaction Meaning, is `FinancialSpace` sufficient, or does Raven require a canonical `LegalEntity` / `TaxpayerEntity`?
+- Q-0014 - What are the accepted identity, versioning, supersession, and active-version rules for transaction meaning and allocation sets?
+- Q-0015 - What allocation identity, ordering, exact-sum, mixed-use/inter-entity, concurrency, and idempotent confirmation rules are accepted?
+- Q-0016 - What is the accepted separation among management Category, ledger/accounting treatment, capital/revenue character, income-tax treatment, VAT treatment, and tax-period representation?
+- Q-0017 - What review-state vocabulary and actor/role permissions govern every promotion from proposal through professional review?
+- Q-0018 - What opaque evidence metadata, checksum, sensitivity/access, and Ground Zero interoperability boundary may Raven store?
+- Q-0019 - What identity, immutability, correction, rejection, amendment, and supersession rules govern a filed position?
+- Q-0020 - Is the proposed private pilot authorized as one closed month across every account that exchanged money with an in-scope account, and what is its exact scope?
+- Q-0021 - What is the canonical identity, lifecycle, attestation, exception, and reopening contract for an account-period reconciliation?
+- Q-0022 - What matching authority, ambiguity threshold, provenance, and correction rules prevent provisional and statement-backed observations from double counting one event?
+- Q-0023 - Is `Management` the accepted user-facing name for the non-tax interpretation lens, or should Studio use another label?
+- Q-0024 - Which statement, reconciliation, classification, and reporting operations are actually absent after inspecting the current Studio/tRPC/MCP catalog?
+- Q-0025 - Which accounts must be included in the first private month so transfers, reimbursements, cards, and funding are complete without widening the approved Tax pilot?
+- Q-0026 - Resolved by `DEC-0016`: original evidence, optional extraction assistance, canonical extraction, and preview identities remain distinct; commit reopens and revalidates artifacts and source changes stale or block prior authority.
+- Q-0027 - Resolved by `DEC-0016`: detection is advisory; Account and exact profile/version are explicitly confirmed; normalized JSON is a separate assistance artifact or remains unsupported.
+- Q-0028 - Resolved by `DEC-0016`: `StatementRowComponent` preserves zero, one, or many exact components with explicit movement/informational role, signed balance effect, source locator, and distinct printed dates.
+- Q-0029 - Resolved by `DEC-0016`: opaque contained private-source references are accepted; `ST-01` is ZAR-only, GBP requires explicit later registry/adapter approval, and there is no FX.
+- Q-0030 - Resolved by the externally accepted ST-02 closeout: preserve the manual observation date and project a separate authoritative source-backed financial date.
+- Q-0031 - Resolved by the externally accepted ST-02 closeout: current reads share active source-authority eligibility while immutable superseded history remains readable.
+- Q-0032 - Does HP-00 prove semantic MCP, private-vault, aggregate compatibility, multi-account period-selection, and Studio readiness sufficiently to authorize the first no-write private preview?
+- Q-0033 - Resolved by `RAVEN-INGEST-0033`: the exact locally supplied RA-00B final canonical-history authority closeout prompt is preserved verbatim.

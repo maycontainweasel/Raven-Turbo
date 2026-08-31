@@ -8,6 +8,7 @@ _Personal, business, trading, family, or other money context_
 | `name` | `string` | yes | `""` |
 | `spaceType` | `enum<"personal" | "business" | "trading" | "family" | "other">` | yes | `"personal"` |
 | `currency` | `string` | yes | `"ZAR"` |
+| `timezone` | `string` | yes | `"Africa/Johannesburg"` |
 | `description` | `string` | no | `""` |
 | `active` | `boolean` | yes | `true` |
 | `archivedAt` | `string` | no | `""` |

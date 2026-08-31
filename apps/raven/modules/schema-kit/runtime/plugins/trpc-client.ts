@@ -88,7 +88,6 @@ export default defineNuxtPlugin({
 
     return {
       provide: {
-        client,
         ...(hasApi ? { trpc: client } : { api: client, trpc: client }),
       },
     }

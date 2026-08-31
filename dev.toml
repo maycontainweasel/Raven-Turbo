@@ -1,0 +1,38 @@
+app = "raven-turbo"
+repo = "."
+
+[services.surrealdb]
+enabled = true
+command = "sdb start ."
+comment = "Local Raven SurrealDB from surreal.md"
+
+[services.surrealdb.ready]
+tcp = "127.0.0.1:2993"
+
+[services.typesense]
+enabled = true
+command = "docker compose -f apps/raven/docker-compose.typesense.yml up typesense"
+comment = "Typesense for Raven Schema Kit"
+
+[services.typesense.ready]
+http = "http://127.0.0.1:8109/health"
+
+[services.raven]
+enabled = true
+command = "pnpm -C apps/raven run dev"
+dependsOn = ["surrealdb", "typesense"]
+provides = ["frontend"]
+comment = "Raven Nuxt app"
+
+[services.raven.ready]
+tcp = "127.0.0.1:9274"
+
+[services.raven-studio]
+enabled = true
+command = "pnpm -C apps/raven-studio run dev"
+dependsOn = ["surrealdb", "typesense"]
+provides = ["frontend"]
+comment = "Raven Studio Nuxt app"
+
+[services.raven-studio.ready]
+tcp = "127.0.0.1:9275"
