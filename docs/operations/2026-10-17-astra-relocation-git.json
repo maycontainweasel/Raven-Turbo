@@ -1,0 +1,11 @@
+{
+  "ravenImplementationCommit": "3855ac65e916b50f043c5e3af13f9895085542e3",
+  "remoteCommitVerified": "3855ac65e916b50f043c5e3af13f9895085542e3",
+  "remote": "github",
+  "branch": "codex/recovery-snapshot-2026-08-31",
+  "canonicalTask": "node:a485ae6aa8e24b6d8afe19ae075944ec",
+  "canonicalStatus": "completed; exact outcome read back",
+  "kitAtNewRoot": "installed; no drift",
+  "financialWIP": "preserved outside operational commit; no private records added",
+  "parentStatus": "not completed by this work"
+}
