@@ -11,18 +11,18 @@ tcp = "127.0.0.1:2993"
 
 [services.typesense]
 enabled = true
-command = "docker compose -f apps/raven/docker-compose.typesense.yml up typesense"
+command = "docker compose -p raven-dev -f apps/raven/docker-compose.typesense.yml up typesense"
 comment = "Typesense for Raven Schema Kit"
 
 [services.typesense.ready]
-http = "http://127.0.0.1:8109/health"
+http = "http://127.0.0.1:8110/health"
 
 [services.raven]
-enabled = true
+enabled = false
 command = "pnpm -C apps/raven run dev"
 dependsOn = ["surrealdb", "typesense"]
 provides = ["frontend"]
-comment = "Raven Nuxt app"
+comment = "Legacy Raven V1 reference app; excluded from the primary development stack"
 
 [services.raven.ready]
 tcp = "127.0.0.1:9274"

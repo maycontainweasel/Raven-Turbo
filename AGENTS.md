@@ -113,9 +113,9 @@ Rules:
 
 ## Local Services And SurrealDB
 
-- `sr.toml` declares Raven local service ports: `surrealdb` on `2993`, `raven` on `9274`, and `typesense` on `8109`.
+- `sr.toml` declares Raven local service ports: `surrealdb` on `2993`, legacy `raven` on `9274`, `raven-studio` on `9275`, and Raven `typesense` on `8110`.
 - `surreal.md` is the canonical `sdb` artifact migrated from `database.md`; `sdb start .` preserves the existing Raven manual database command credentials.
-- `dev.toml` is the local runtime manifest for `sm`; use `pnpm services:plan`, `pnpm services:doctor`, and `pnpm services:up` from the repo root.
+- `dev.toml` is the local runtime manifest for `sm`; `pnpm run dev` is the supervised primary-stack entry point, while `pnpm services:plan` and `pnpm services:doctor` inspect it.
 - `surreal-mcp.toml` exposes the local Raven database as Codex MCP `raven-surreal-local`; use `pnpm mcp:db:static` without a live DB or `pnpm mcp:db` after starting it.
 
 <!-- project-brain-v0.2:start -->

@@ -1,5 +1,5 @@
 app = "raven-turbo"
-repo = "/Users/michaelpeters/Dev/mpd/projects/raven/raven-turbo"
+repo = "/Users/michaelpeters/projects/raven/raven-turbo"
 
 [services.raven]
 kind = "app"
@@ -18,5 +18,5 @@ comment = "Local SurrealDB managed by sdb (migrated from database.md)"
 
 [services.typesense]
 kind = "search"
-port = 8109
+port = 8110
 comment = "Typesense Docker host port for Schema Kit"

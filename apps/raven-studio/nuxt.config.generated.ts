@@ -12,12 +12,12 @@ export default {
   vite: {
     server: {
       allowedHosts: [
-        "raven.studio"
+        "raven"
       ],
-      origin: "https://raven.studio:4443",
+      origin: "https://raven:4443",
       hmr: {
         protocol: "wss",
-        host: "raven.studio",
+        host: "raven",
         clientPort: 4443,
         path: "/__vitews",
         port: 45018

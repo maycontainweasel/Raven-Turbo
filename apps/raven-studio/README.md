@@ -25,7 +25,7 @@ pnpm -C apps/raven-studio dev
 The local nginx-facing URL is:
 
 ```txt
-https://raven.studio:4443
+https://raven:4443
 ```
 
 ## Layers

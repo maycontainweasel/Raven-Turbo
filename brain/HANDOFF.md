@@ -109,3 +109,14 @@ Do not reopen ST-01/ST-02 architecture. Keep every further private source action
 ## Privacy Boundary
 
 Do not ingest, summarize, expose, or package statements, mediation exports, mailbox exports, dossiers, account records, Ground Zero evidence bodies, environment files, or credentials. Use the AI-safe archive command for external review packages.
+
+## Operational relocation — 17 October2026
+
+Raven now lives at~/projects/raven/raven-turbo with both existing worktrees under
+~/projects/raven/raven-worktrees. The old container path is a compatibility symlink.
+Standard Astra has Environments→Raven and a Raven Development Launch controlling
+the existing Studio/database/search stack together. Trustedhttps://raven:4443 and
+all3dependency endpoints are healthy after verified Start/Stop/Start; original
+persistent database and named search volume are preserved. Financial source work
+above remains unchanged by this operational move.
+[Operational evidence and limits](../docs/operations/2026-10-17-astra-relocation.md).

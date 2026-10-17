@@ -17,7 +17,7 @@ docker compose -f docker-compose.typesense.yml up -d
 
 ```bash
 docker compose -f docker-compose.typesense.yml ps
-curl http://localhost:8109/health
+curl http://localhost:8110/health
 ```
 
 Expected response:
@@ -34,7 +34,7 @@ docker compose -f docker-compose.typesense.yml down
 
 ## Connection defaults (local)
 
-- Host: `http://localhost:8109`
+- Host: `http://localhost:8110`
 - API key: `TypesenseBurntMyMoustache2025`
 
 ## Minimal API smoke test
@@ -42,7 +42,7 @@ docker compose -f docker-compose.typesense.yml down
 Create a collection:
 
 ```bash
-curl -X POST "http://localhost:8109/collections" \
+curl -X POST "http://localhost:8110/collections" \
   -H "X-TYPESENSE-API-KEY: TypesenseBurntMyMoustache2025" \
   -H "Content-Type: application/json" \
   -d '{
@@ -57,6 +57,6 @@ curl -X POST "http://localhost:8109/collections" \
 Search:
 
 ```bash
-curl "http://localhost:8109/collections/exams/documents/search?q=man&query_by=title" \
+curl "http://localhost:8110/collections/exams/documents/search?q=man&query_by=title" \
   -H "X-TYPESENSE-API-KEY: TypesenseBurntMyMoustache2025"
 ```

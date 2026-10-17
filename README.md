@@ -17,17 +17,24 @@ Raven Studio and the planned Raven domain MCP will share one semantic applicatio
 The root service manifests define:
 
 - SurrealDB on port `2993`.
-- Raven V1 on port `9274`.
 - Raven Studio on port `9275`.
-- Typesense on port `8109`.
+- Raven Typesense on port `8110`.
+- Raven V1 on port `9274` is retained as a legacy reference app but is not started by the primary stack.
 
-Inspect and start local services from the repo root:
+Start the complete primary development stack from the repo root:
 
 ```bash
 pnpm install
+pnpm run dev
+```
+
+This starts SurrealDB, Raven Typesense, and Raven Studio in one supervised foreground process. Raven is available at `https://raven:4443`; press `Ctrl+C` once to stop the stack cleanly. Nginx remains available as a user-level Homebrew service.
+
+Inspect the service plan or runtime health when needed:
+
+```bash
 pnpm services:plan
 pnpm services:doctor
-pnpm services:up
 ```
 
 Raven Studio can be run separately:
@@ -36,7 +43,7 @@ Raven Studio can be run separately:
 pnpm -C apps/raven-studio dev
 ```
 
-Its local nginx URL is `https://raven.studio:4443`.
+Its local nginx URL is `https://raven:4443`.
 
 ## Database And MCP
 

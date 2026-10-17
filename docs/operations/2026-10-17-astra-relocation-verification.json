@@ -1,0 +1,118 @@
+{
+  "observedAt": "2026-10-17T15:59:57.874420+00:00",
+  "sourceContainer": "/Users/michaelpeters/Dev/mpd/projects/raven",
+  "destinationContainer": "/Users/michaelpeters/projects/raven",
+  "mainCheckout": "/Users/michaelpeters/projects/raven/raven-turbo",
+  "metadataEntriesCompared": 74538,
+  "moveMatchedEveryInventoryEntry": true,
+  "inventorySHA256": "721c6a2c28dca38df6683eabd672f071dbbf1fca3addd8fdae04baed459e46c0",
+  "compatibilityAlias": {
+    "path": "/Users/michaelpeters/Dev/mpd/projects/raven",
+    "target": "/Users/michaelpeters/projects/raven",
+    "type": "symlink; one physical copy under ~/projects"
+  },
+  "gitCheckouts": [
+    {
+      "path": "/Users/michaelpeters/projects/raven/raven-turbo",
+      "head": "c0bf9cb298261f6aa08618e6c87770fd788a9491",
+      "headMatchesBeforeOperationalCheckpoint": true
+    },
+    {
+      "path": "/Users/michaelpeters/projects/raven/raven-worktrees/financial-read-analytics-00",
+      "head": "13028a362b893d29f87eec26f9a577f71840e757",
+      "headMatchesBeforeOperationalCheckpoint": true
+    },
+    {
+      "path": "/Users/michaelpeters/projects/raven/raven-worktrees/generated-data-atlas",
+      "head": "13028a362b893d29f87eec26f9a577f71840e757",
+      "headMatchesBeforeOperationalCheckpoint": true
+    }
+  ],
+  "orbitProjectIDPreserved": "node:f4747f07fa644ff4936572e97dbcce3a",
+  "orbitCurrentRoot": "/Users/michaelpeters/projects/raven/raven-turbo",
+  "astra": {
+    "environmentID": "native-59b99419a7df97475ef0",
+    "serviceID": "native-59b99419a7df97475ef0/service-2bf08055-9765-4072-8f65-aa6c48b27575",
+    "applicationID": "native-59b99419a7df97475ef0/raven-studio-dev",
+    "directory": "/Users/michaelpeters/projects/raven/raven-turbo",
+    "registryID": "raven-turbo",
+    "endpoint": "https://raven:4443",
+    "intake": "Supported existing-workspace native environment/save-service/save-application operations; no scaffold or new .astra contract over existing repo.",
+    "portContractLimit": "Legacy Raven SR ports are explicitly imported external assignments outside historical8120\u20138129 block; no arbitrary new allocation claimed."
+  },
+  "responses": {
+    "raven": {
+      "status": 200,
+      "bytes": 35505,
+      "title": "Today \u00b7 Raven"
+    },
+    "database": {
+      "status": 200,
+      "bytes": 0
+    },
+    "search": {
+      "status": 200,
+      "bytes": 11
+    }
+  },
+  "listeners": {
+    "2993": {
+      "pid": 98669,
+      "cwd": "/Users/michaelpeters/projects/raven/raven-turbo"
+    },
+    "9275": {
+      "pid": 99781,
+      "cwd": "/Users/michaelpeters/projects/raven/raven-turbo/apps/raven-studio"
+    }
+  },
+  "sameDatabasePath": true,
+  "sameSearchVolume": true,
+  "stopProof": {
+    "ownedListenersStopped": {
+      "2993": true,
+      "8110": true,
+      "9275": true
+    },
+    "searchVolumeRetained": true,
+    "databasePathRetained": true
+  },
+  "finalNativeState": {
+    "action": "start-application",
+    "environment": {
+      "id": "native-59b99419a7df97475ef0",
+      "name": "Raven",
+      "directory": "/Users/michaelpeters/projects/raven/raven-turbo"
+    },
+    "applications": [
+      {
+        "id": "native-59b99419a7df97475ef0/raven-studio",
+        "name": "Raven",
+        "directory": "/Users/michaelpeters/projects/raven/raven-turbo/apps/raven-studio",
+        "modes": [
+          {
+            "id": "native-59b99419a7df97475ef0/raven-studio-dev",
+            "name": "Development",
+            "notes": [],
+            "serviceIDs": [
+              "native-59b99419a7df97475ef0/service-2bf08055-9765-4072-8f65-aa6c48b27575"
+            ],
+            "active": true,
+            "issues": []
+          }
+        ]
+      }
+    ],
+    "services": [
+      {
+        "id": "native-59b99419a7df97475ef0/service-2bf08055-9765-4072-8f65-aa6c48b27575",
+        "phase": "running",
+        "health": "healthy",
+        "pid": 98137
+      }
+    ]
+  },
+  "legacyRavenStarted": false,
+  "firstStartFailure": "Relocated pnpm executable shim retained old absolute NODE_PATH; offline/frozen-lockfile/no-scripts relink regenerated shims. Then native Start/healthy Stop/Start passed.",
+  "financialRecordAccess": "No financial record reads, imports, migrations, credentials changes or data resets performed.",
+  "scopeLimit": "Existing native-workspace intake; legacy external SR assignments retained, not a new scaffold or a fully validated ten-port .astra contract."
+}
